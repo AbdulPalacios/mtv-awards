@@ -1,0 +1,53 @@
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+body {
+    font-family: sans-serif;
+    margin: 0;
+    line-height: 1.5; 
+    -webkit-font-smoothing: antialiased; /* Mejorar renderizado de fuentes */
+}
+
+/* Asegurar que las imágenes y vídeos respondan */
+img,
+picture,
+video,
+canvas,
+svg {
+    display: block;
+    max-width: 100%;
+}
+
+/* Eliminar estilos de lista en elementos ul/ol que no tengan la clase "list" */
+ul:not([class]),
+ol:not([class]) {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+/* Asegurar que todos los elementos input/button/select/textarea hereden la fuente */
+input,
+button,
+textarea,
+select {
+    font: inherit;
+}
+
+/* Evitar que el texto fluya fuera de su contenedor */
+p,
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+    overflow-wrap: break-word;
+}
+
+html {
+    scroll-behavior: smooth;
+}
