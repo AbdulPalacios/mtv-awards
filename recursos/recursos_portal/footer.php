@@ -62,6 +62,10 @@
             </ul>
         </div>
 
+        <div class="img-mtv-logo">
+            <img src="../assets/img/mtvawardsblack-removebg-pre" alt="">
+        </div>
+
         <div class="footer__bottom">
             <p>
                 © 2025 Viacom International Inc. Todos los derechos reservados. MTV, EMA y todos los títulos, logotipos y personajes relacionados son marcas comerciales de Viacom International Inc.
