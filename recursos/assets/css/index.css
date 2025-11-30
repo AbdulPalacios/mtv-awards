@@ -8,7 +8,18 @@ body{
     flex-direction: column;
     justify-content: space-between;
     min-height: 100dvh;
+    position: relative;
 }
+
+.header-container{
+    position: fixed;
+    display: block;
+    width: 100%;
+}
+
 .main{
     flex: 1;
+    background-image: url('../img/background-index.webp');
+    background-repeat: no-repeat;
+    background-size: cover;
 }
