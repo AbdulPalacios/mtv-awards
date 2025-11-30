@@ -4,6 +4,11 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Mtv-awards HOME</title>
+    
+    <link rel="stylesheet" href="../../../recursos/assets/css/reset.css">
+    <link rel="stylesheet" href="../../../recursos/assets/css/root.css">
+    <link rel="stylesheet" href="../../../recursos/assets/css/home.css">
+
 </head>
 <body>
     <div class="mtv-music-container">
@@ -26,9 +31,6 @@
                 </a>
             
             </li>
-        </ul>
-    </div>
-
-    <script src="https://kit.fontawesome.com/e2dc84faef.js" crossorigin="anonymous"></script>
+    <script src="https://kit.fontawesome.com/e2dc84faef.js" crossorigin="anonymous"></script>    
 </body>
 </html>
