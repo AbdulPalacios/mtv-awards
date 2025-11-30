@@ -6,23 +6,22 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>MTV Video Music Awards 2025</title>
-    <link rel="stylesheet" href="<?php echo $host?>recursos/assets/css/reset.css">
-    <link rel="stylesheet" href="<?php echo $host?>recursos/assets/css/root.css">
-    <link rel="stylesheet" href="<?php echo $host?>recursos/assets/css/footer.css">
+    <link rel="stylesheet" href="<?php echo $host?>recursos/assets/css/index.css">
 </head>
 <body>
-<main>
-    <header>
+    <div>
         <?php
             include('recursos/recursos_portal/header.php');
         ?>
-    </header>
+    </div>
+    <main class="main">
+        Lorem ipsum dolor sit amet consectetur adipisicing elit. Cumque, dignissimos asperiores temporibus distinctio labore voluptates nobis quia ipsa! Quo similique inventore est neque labore corporis facere voluptate exercitationem hic at!
+    </main>
     <footer>
         <?php
             include('recursos/recursos_portal/footer.php');
         ?>
     </footer>
-</main>
 <script src="https://kit.fontawesome.com/e2dc84faef.js" crossorigin="anonymous"></script>
 </body>
 </html>

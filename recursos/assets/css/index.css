@@ -1,0 +1,14 @@
+@import url('reset.css');
+@import url('root.css');
+@import url('footer.css');
+@import url('header.css');
+
+body{
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    min-height: 100dvh;
+}
+.main{
+    flex: 1;
+}
