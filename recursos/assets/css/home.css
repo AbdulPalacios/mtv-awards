@@ -1,0 +1,22 @@
+.mtv-music-container{
+    width: 80%;
+    margin: auto;
+    background-color: var(--panel-bg);
+    color: var(--text-muted);
+    padding: 10px 30px;
+}
+
+.mtv-music-container p{
+    margin: 15px 0;
+}
+
+.mtv-music-container ul{
+    display: flex;
+    gap: 10px;
+    margin: 30px 0;
+}
+
+.mtv-music-container ul a{
+    font-size: 1.5rem;
+    color: var(--text-muted);
+}
