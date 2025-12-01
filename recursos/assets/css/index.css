@@ -1,8 +1,3 @@
-@import url('reset.css');
-@import url('root.css');
-@import url('footer.css');
-@import url('header.css');
-
 body{
     display: flex;
     flex-direction: column;
@@ -17,9 +12,69 @@ body{
     width: 100%;
 }
 
+.hero{
+    width: 100%;
+    height: 80vh;
+    background-image: 
+        linear-gradient(
+            to top,
+            rgb(0, 0, 0.5)0%,
+            rgb(0, 0, 0, 0)30%
+    ),
+    url(../img/hero__mtv-awards.png);
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: center;
+    display: flex;
+    align-items: end;
+    padding-bottom: 70px;
+    padding-left: 50px;
+}
+
+h1{
+    color:var(--text-muted);
+    font-size: 1.3rem;
+    font-weight: 900;
+}
+
+.hero__container span{
+    color: #fff;
+    font-size: 1,2rem;
+    font-weight: 900;
+}
+
 .main{
+    width: 90%;
+    max-width: 1400px;
+    margin: 60px auto;
+}
+
+.bg-image{
     flex: 1;
     background-image: url('../img/background-index.webp');
     background-repeat: no-repeat;
     background-size: cover;
+}
+
+.mtv-music-container{
+    width: 80%;
+    margin: auto;
+    background-color: var(--panel-bg);
+    color: var(--text-muted);
+    padding: 10px 30px;
+}
+
+.mtv-music-container p{
+    margin: 15px 0;
+}
+
+.mtv-music-container ul{
+    display: flex;
+    gap: 10px;
+    margin: 30px 0;
+}
+
+.mtv-music-container ul a{
+    font-size: 1.5rem;
+    color: var(--text-muted);
 }
