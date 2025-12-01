@@ -31,7 +31,7 @@
         </nav>
     </div>
     <div class="navbar-right">
-        <button class="paramount-btn">Iniciar sesion</button>
+        <a class="paramount-btn">Iniciar sesion</a>
     </div>
 </div>
 </header>
