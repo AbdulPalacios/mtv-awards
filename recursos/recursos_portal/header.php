@@ -3,7 +3,7 @@
     <div class="navbar-left">
         <div class="logo">
             <a href="#">
-                <img src="<?php echo $host;?>recursos/assets/img/mtv-icon.svg" alt="Logo de la marca" class="nav-icon">
+                <img src="<?php echo HOST;?>recursos/assets/img/mtv-icon.svg" alt="Logo de la marca" class="nav-icon">
             </a>
         </div> 
         <nav class="nav-links">

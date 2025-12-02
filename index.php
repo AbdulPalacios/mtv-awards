@@ -1,4 +1,4 @@
-<?php include('config/host.php');?>
+<?php include('config/constantes.php');?>
 
 <!DOCTYPE html>
 <html lang="en">
@@ -8,11 +8,11 @@
 
     <title>MTV Video Music Awards 2025</title>
 
-    <link rel="stylesheet" href="<?php echo $host?>recursos/assets/css/reset.css">
-    <link rel="stylesheet" href="<?php echo $host?>recursos/assets/css/root.css">
-    <link rel="stylesheet" href="<?php echo $host?>recursos/assets/css/header.css">
-    <link rel="stylesheet" href="<?php echo $host?>recursos/assets/css/index.css">
-    <link rel="stylesheet" href="<?php echo $host?>recursos/assets/css/footer.css">
+    <link rel="stylesheet" href="<?php echo HOST; ?>recursos/assets/css/reset.css">
+    <link rel="stylesheet" href="<?php echo HOST; ?>recursos/assets/css/root.css">
+    <link rel="stylesheet" href="<?php echo HOST; ?>recursos/assets/css/header.css">
+    <link rel="stylesheet" href="<?php echo HOST; ?>recursos/assets/css/index.css">
+    <link rel="stylesheet" href="<?php echo HOST; ?>recursos/assets/css/footer.css">
 </head>
 <body>
     <div class="header-container">
@@ -25,7 +25,7 @@
         <div class="hero__container">
             <h1>MTV VMAs 2025</h1>
             <span>
-                Decide cuál de tus celebridades favoritas ganara a lo grande y se llevara a casa una Moon Person en el show de este año.
+                Decide cuál de tus celebridades favoritas ganará a lo grande y se llevara a casa una Moon Person en el show de este año.
             </span>
         </div>
     </div>
