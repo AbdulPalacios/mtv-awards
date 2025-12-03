@@ -3,14 +3,14 @@ session_start();
 
 // 1. Validar si existe la sesión
 if (!isset($_SESSION['id_usuario'])) {
-    header("Location: ../login.php");
+    header("Location: ../../backend/portal/login.php");
     exit();
 }
 
 // 2. Validar si es Administrador (Rol 1)
 if ($_SESSION['rol'] != 1) {
     // Si es usuario normal o artista, lo mandamos al inicio público
-    header("Location: ../index.php");
+    header("Location: ../../../index.php");
     exit();
 }
 ?>
@@ -36,14 +36,14 @@ if ($_SESSION['rol'] != 1) {
         <p>Hola, <?php echo $_SESSION['nombre']; ?></p>
         <hr>
         <nav>
-            <a href="index.php">Inicio</a>
+            <a href="../../../index.php">Inicio</a>
             <a href="generos.php">Gestionar Géneros</a>
             <a href="artistas.php">Gestionar Artistas</a>
             <a href="albumes.php">Gestionar Álbumes</a>
             <a href="canciones.php">Gestionar Canciones</a>
             <a href="nominaciones.php">Crear Nominaciones</a>
             <hr>
-            <a href="../actions/public_actions/logout.php" style="color: #ff6b6b;">Cerrar Sesión</a>
+            <a href="../../backend/portal/logout.php" style="color: #ff6b6b;">Cerrar Sesión</a>
         </nav>
     </aside>
 
