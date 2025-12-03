@@ -66,18 +66,50 @@
                 </div>
                 <h3>mejor artista</h3>
                 <div class="nominados__container">
-                    <div class="card" id="faraon"></div>
-                    <div class="card" id="badbunny"></div>
-                    <div class="card" id="romeo_santos"></div>
-                    <div class="card" id="the_weeknd"></div>
+                    <div class="card" id="faraon">
+                        <span class="nombre"></span>
+                        <p></p>
+                        <a href="">ver en Spotify</a>
+                    </div>
+                    <div class="card" id="badbunny">
+                        <span class="nombre"></span>
+                        <p></p>
+                        <a href="">ver en Spotify</a>
+                    </div>
+                    <div class="card" id="romeo_santos">
+                        <span class="nombre"></span>
+                        <p></p>
+                        <a href="">ver en Spotify</a>
+                    </div>
+                    <div class="card" id="the_weeknd">
+                        <span class="nombre"></span>
+                        <p></p>
+                        <a href="">ver en Spotify</a>
+                    </div>
                 </div>
                 
                 <h3>mejor albúm</h3>
                 <div class="nominados__container">
-                    <div class="card" id="stars_dance"></div>
-                    <div class="card" id="verano"></div>
-                    <div class="card" id="formula"></div>
-                    <div class="card" id="genesis"></div>
+                    <div class="card" id="stars_dance">
+                        <span class="nombre"></span>
+                        <p></p>
+                        <a href="">ver en Spotify</a>
+                    </div>
+                    <div class="card" id="verano">
+                        <span class="nombre"></span>
+                        <p></p>
+                        <a href="">ver en Spotify</a>
+                    </div>
+                    <div class="card" id="formula">
+                        <span class="nombre"></span>
+                        <p></p>
+                        <a href="">ver en Spotify</a>
+                    </div>
+                    <div class="card" id="genesis">
+                        <span class="nombre"></span>
+                        <p></p>
+                        <a href="">ver en Spotify</a>
+                    </div>
                 </div>
             </section>
         </main>
