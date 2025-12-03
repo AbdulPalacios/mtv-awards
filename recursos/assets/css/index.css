@@ -38,8 +38,17 @@ h1{
 }
 
 .hero__container span{
+    display: block;
     color: #fff;
     font-size: 1,2rem;
+    font-weight: 900;
+    margin: 10px 0;
+}
+
+.votar{
+    color: var(--text-on-edit);
+    background-color: #fcb114;
+    padding: 5px 20px;
     font-weight: 900;
 }
 
@@ -60,8 +69,8 @@ h1{
     width: 80%;
     margin: auto;
     background-color: var(--panel-bg);
-    color: var(--text-muted);
     padding: 10px 30px;
+    color: var(--text-muted);
 }
 
 .mtv-music-container p{

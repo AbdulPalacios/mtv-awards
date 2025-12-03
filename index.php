@@ -26,7 +26,10 @@
             <h1>MTV VMAs 2025</h1>
             <span>
                 Decide cuál de tus celebridades favoritas ganará a lo grande y se llevara a casa una Moon Person en el show de este año.
-            </span>
+            </span> <br>
+
+            <a class="votar" href="#"> IR A VOTAR</a>
+            
         </div>
     </div>
     
@@ -55,6 +58,28 @@
                     </li>
                 </ul>
             </div>
+
+            <section class="nominados">
+                <div class="nominados__ver-mas">
+                    <h2>nominaciones</h2>
+                    <a href="#">Ver Más</a>
+                </div>
+                <h3>mejor artista</h3>
+                <div class="nominados__container">
+                    <div class="card" id="faraon"></div>
+                    <div class="card" id="badbunny"></div>
+                    <div class="card" id="romeo_santos"></div>
+                    <div class="card" id="the_weeknd"></div>
+                </div>
+                
+                <h3>mejor albúm</h3>
+                <div class="nominados__container">
+                    <div class="card" id="stars_dance"></div>
+                    <div class="card" id="verano"></div>
+                    <div class="card" id="formula"></div>
+                    <div class="card" id="genesis"></div>
+                </div>
+            </section>
         </main>
     </div>
 
