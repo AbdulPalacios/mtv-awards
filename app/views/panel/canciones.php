@@ -1,8 +1,8 @@
 <?php
 session_start();
-require_once '../config/conexion-bd.php';
+require_once '../../../config/conexion-bd.php';
 
-if (!isset($_SESSION['rol']) || $_SESSION['rol'] != 1) { header("Location: ../login.php"); exit(); }
+if (!isset($_SESSION['rol']) || $_SESSION['rol'] != 1) { header("Location: ../../backend/portal/login.php"); exit(); }
 
 // Cargas de listas (igual que antes)
 $artistas = $conexion->query("SELECT * FROM artistas WHERE estatus_artista = 1")->fetchAll(PDO::FETCH_ASSOC);
@@ -23,7 +23,7 @@ $lista_canciones = $conexion->query($sql_list)->fetchAll(PDO::FETCH_ASSOC);
 <head>
     <meta charset="UTF-8">
     <title>Gestionar Canciones - Admin</title>
-    <link rel="stylesheet" href="../recursos/assets/css/root.css">
+    <link rel="stylesheet" href="../../../recursos/assets/css/root.css">
     <style>
         /* (Tus estilos previos se mantienen igual) */
         body { font-family: sans-serif; display: flex; }
@@ -51,14 +51,14 @@ $lista_canciones = $conexion->query($sql_list)->fetchAll(PDO::FETCH_ASSOC);
         <p><?php echo $_SESSION['nombre']; ?></p>
         <hr>
         <nav>
-            <a href="index.php">Inicio</a>
+            <a href="../../../index.php">Inicio</a>
             <a href="generos.php">Gestionar Géneros</a>
             <a href="artistas.php">Gestionar Artistas</a>
             <a href="albumes.php">Gestionar Álbumes</a>
-            <a href="canciones.php" style="color: white; font-weight: bold;">Gestionar Canciones</a>
+            <a href="canciones.php">Gestionar Canciones</a>
             <a href="nominaciones.php">Crear Nominaciones</a>
             <hr>
-            <a href="../actions/public_actions/logout.php">Cerrar Sesión</a>
+            <a href="../../backend/portal/logout.php">Cerrar Sesión</a>
         </nav>
     </aside>
 
@@ -68,7 +68,7 @@ $lista_canciones = $conexion->query($sql_list)->fetchAll(PDO::FETCH_ASSOC);
         <div class="formulario-caja">
             <h3>Registrar Nueva Canción</h3>
             
-            <form action="../actions/admin_actions/acc_canciones.php" method="POST" enctype="multipart/form-data">
+            <form action="../../backend/panel/acc_canciones.php" method="POST" enctype="multipart/form-data">
                 <input type="hidden" name="accion" value="crear">
 
                 <label>Nombre de la Canción:</label>
@@ -131,7 +131,7 @@ $lista_canciones = $conexion->query($sql_list)->fetchAll(PDO::FETCH_ASSOC);
                     <td><?php echo $c['pseudonimo_artista']; ?></td>
                     <td><?php echo $c['nombre_genero']; ?></td>
                     <td>
-                        <a href="../actions/admin_actions/acc_canciones.php?accion=borrar&id=<?php echo $c['id_cancion']; ?>" 
+                        <a href="../../backend/panel/acc_canciones.php?accion=borrar&id=<?php echo $c['id_cancion']; ?>" 
                            class="btn btn-borrar"
                            onclick="return confirm('¿Eliminar esta canción?');">Borrar</a>
                     </td>

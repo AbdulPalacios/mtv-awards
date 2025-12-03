@@ -1,9 +1,9 @@
 <?php
 session_start();
-require_once '../config/conexion-bd.php';
+require_once '../../../config/conexion-bd.php';
 
 if (!isset($_SESSION['rol']) || $_SESSION['rol'] != 1) {
-    header("Location: ../login.php");
+    header("Location: ../../backend/portal/login.php");
     exit();
 }
 
@@ -25,7 +25,7 @@ $lista_albumes = $conexion->query($sql_list)->fetchAll(PDO::FETCH_ASSOC);
 <head>
     <meta charset="UTF-8">
     <title>Gestionar Álbumes - Admin</title>
-    <link rel="stylesheet" href="../recursos/assets/css/root.css">
+    <link rel="stylesheet" href="../../../recursos/assets/css/root.css">
     <style>
         body { font-family: sans-serif; display: flex; }
         aside { width: 250px; background: #222; color: #fff; min-height: 100vh; padding: 20px; }
@@ -53,7 +53,7 @@ $lista_albumes = $conexion->query($sql_list)->fetchAll(PDO::FETCH_ASSOC);
         <div class="formulario-caja">
             <h3>Registrar Nuevo Álbum</h3>
             
-            <form action="../actions/admin_actions/acc_albumes.php" method="POST" enctype="multipart/form-data">
+            <form action="../../backend/panel/acc_albumes.php" method="POST" enctype="multipart/form-data">
                 <input type="hidden" name="accion" value="crear">
 
                 <label>Título del Álbum:</label>
@@ -112,7 +112,7 @@ $lista_albumes = $conexion->query($sql_list)->fetchAll(PDO::FETCH_ASSOC);
                     <td><?php echo $alb['pseudonimo_artista']; ?></td>
                     <td><?php echo $alb['fecha_lanzamiento_album']; ?></td>
                     <td>
-                        <a href="../actions/admin_actions/acc_albumes.php?accion=borrar&id=<?php echo $alb['id_album']; ?>" 
+                        <a href="../../backend/panel/acc_albumes.php?accion=borrar&id=<?php echo $alb['id_album']; ?>" 
                            class="btn btn-borrar"
                            onclick="return confirm('¿Eliminar álbum?');">Borrar</a>
                     </td>

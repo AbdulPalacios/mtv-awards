@@ -1,7 +1,7 @@
 <?php
 session_start();
-require_once '../config/conexion-bd.php';
-if (!isset($_SESSION['rol']) || $_SESSION['rol'] != 1) { header("Location: ../login.php"); exit(); }
+require_once '../../../config/conexion-bd.php';
+if (!isset($_SESSION['rol']) || $_SESSION['rol'] != 1) { header("Location: ../../backend/portal/login.php"); exit(); }
 
 // Consultas necesarias
 $stmt_gen = $conexion->prepare("SELECT * FROM generos WHERE estatus_genero = 1");
@@ -40,7 +40,7 @@ $lista_artistas = $stmt_list->fetchAll(PDO::FETCH_ASSOC);
 <head>
     <meta charset="UTF-8">
     <title>Gestionar Artistas - Admin</title>
-    <link rel="stylesheet" href="../recursos/assets/css/root.css">
+    <link rel="stylesheet" href="../../../recursos/assets/css/root.css">
     <style>
         /* Estilos básicos */
         body { font-family: sans-serif; display: flex; }
@@ -69,14 +69,14 @@ $lista_artistas = $stmt_list->fetchAll(PDO::FETCH_ASSOC);
         <p><?php echo $_SESSION['nombre']; ?></p>
         <hr>
         <nav>
-            <a href="index.php">Inicio</a>
+            <a href="../../../index.php">Inicio</a>
             <a href="generos.php">Gestionar Géneros</a>
-            <a href="artistas.php" style="color: white; font-weight: bold;">Gestionar Artistas</a>
+            <a href="artistas.php">Gestionar Artistas</a>
             <a href="albumes.php">Gestionar Álbumes</a>
             <a href="canciones.php">Gestionar Canciones</a>
             <a href="nominaciones.php">Crear Nominaciones</a>
             <hr>
-            <a href="../actions/public_actions/logout.php">Cerrar Sesión</a>
+            <a href="../../backend/portal/logout.php">Cerrar Sesión</a>
         </nav>
     </aside>
 
@@ -86,7 +86,7 @@ $lista_artistas = $stmt_list->fetchAll(PDO::FETCH_ASSOC);
         <div class="formulario-caja">
             <h3><?php echo $artista_editar ? 'Editar Artista' : 'Registrar Nuevo Artista'; ?></h3>
             
-            <form action="../actions/admin_actions/acc_artistas.php" method="POST" enctype="multipart/form-data">
+            <form action="../../backend/panel/acc_artistas.php" method="POST" enctype="multipart/form-data">
                 <input type="hidden" name="accion" value="<?php echo $artista_editar ? 'editar' : 'crear'; ?>">
                 <?php if ($artista_editar): ?>
                     <input type="hidden" name="id_artista" value="<?php echo $artista_editar['id_artista']; ?>">
@@ -159,7 +159,7 @@ $lista_artistas = $stmt_list->fetchAll(PDO::FETCH_ASSOC);
                     <td><?php echo $a['nombre_usuario']; ?></td>
                     <td>
                         <a href="artistas.php?editar_id=<?php echo $a['id_artista']; ?>" class="btn btn-editar">Editar</a>
-                        <a href="../actions/admin_actions/acc_artistas.php?accion=borrar&id=<?php echo $a['id_artista']; ?>" 
+                        <a href="../../backend/panel/acc_artistas.php?accion=borrar&id=<?php echo $a['id_artista']; ?>" 
                            class="btn btn-borrar" onclick="return confirm('¿Borrar artista?');">Borrar</a>
                     </td>
                 </tr>
