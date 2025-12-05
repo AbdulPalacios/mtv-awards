@@ -28,15 +28,25 @@
                 Decide cuál de tus celebridades favoritas ganará a lo grande y se llevara a casa una Moon Person en el show de este año.
             </span> <br>
 
-            <a class="votar" href="#"> IR A VOTAR</a>
+            <a class="votar" href="app/views/portal/votar.php"> IR A VOTAR</a>
             
         </div>
     </div>
     
     <div class="bg-image">
         <main class="main">
+            <div class="voting-deadline">
+                <p>¡No te quedes fuera! Las votaciones cierran el: <time datetime="2025-12-31">31 de Diciembre de 2025</time>.</p>
+                <p>
+                    <span id="dias" class="countdown-number">00</span>D 
+                    <span id="horas" class="countdown-number">00</span>H 
+                    <span id="minutos" class="countdown-number">00</span>M 
+                    <span id="segundos" class="countdown-number">00</span>S
+                </p>
+            </div>
+
             <div class="mtv-music-container">
-                <h3>MTV Video Music Awards</h3>
+                <h2>MTV Video Music Awards</h2>
                 <p>Los MTV Video Music Awards están dedicados a celebrar a los artistas y videos musicales más importantes del año con actuaciones, honores y más.</p>
                 <p>Somos el puente directo entre los artistas y sus seguidores. A través de este sistema integral de votación, gestionamos millones de voces alrededor del mundo para garantizar que cada voto cuente de manera transparente y segura.</p>
                 <ul>
@@ -59,6 +69,15 @@
                 </ul>
             </div>
 
+            <section class="about-awards">
+                <h2>Sobre los MTV Awards</h2>
+                <p>
+                    Los MTV Awards son la premiación definitiva que celebra la excelencia musical. 
+                    Reconocemos la trayectoria de los artistas más influyentes y las producciones 
+                    discográficas que marcaron el año. Tu voz es lo más importante: decide quién 
+                    se lleva el galardón votando por tus favoritos en categorías como Mejor Artista y Mejor Álbum.
+                </p>
+            </section>
             <section class="nominados">
                 <div class="nominados__ver-mas">
                     <h2>Nominaciones</h2>
@@ -151,6 +170,7 @@
             include('recursos/recursos_portal/footer.php');
         ?>
     </footer>
-<script src="https://kit.fontawesome.com/e2dc84faef.js" crossorigin="anonymous"></script>
+    <script src="https://kit.fontawesome.com/e2dc84faef.js" crossorigin="anonymous"></script>
+    <script src="recursos/assets/js/cuenta-regresiva.js"></script>
 </body>
 </html>

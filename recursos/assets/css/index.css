@@ -85,6 +85,14 @@ h1{
     background-color: var(--panel-bg);
     padding: 10px 30px;
     color: var(--text-muted);
+    box-shadow: 0 4px 15px rgba(0,0,0,0.7); 
+}
+
+.mtv-music-container h2{
+    color: var(--neon-pink);
+    text-transform: uppercase;
+    font-style: italic; 
+    margin-bottom: 10px;
 }
 
 .mtv-music-container p{
@@ -100,6 +108,58 @@ h1{
 .mtv-music-container ul a{
     font-size: 1.5rem;
     color: var(--text-muted);
+}
+
+/* Estilo para la fecha límite */
+.voting-deadline {
+    background-color: rgba(5, 5, 5, 0.9); 
+    border: 2px solid var(--neon-pink);
+    color: var(--text-color);
+    text-align: center;
+    padding: 15px 0;
+    text-transform: uppercase;
+    font-weight: 700;
+    font-size: 1.2rem;
+    letter-spacing: 1px;
+    box-shadow: 0 0 15px rgba(255, 0, 204, 0.3); 
+    width: 80%;
+    margin: auto;
+    margin-bottom: 60px;
+}
+
+.voting-deadline time {
+    color: var(--neon-lime); 
+    font-weight: bold;
+    font-size: 1.1em;
+    text-shadow: 0 0 5px var(--neon-lime); 
+}
+
+.countdown-number {
+    color: var(--neon-lime);
+    font-weight: bold;
+    font-size: 1.3rem;
+    margin-left: 5px;
+    text-shadow: 0 0 8px var(--neon-lime);
+}
+
+.about-awards{
+    background: var(--panel-bg);
+    padding: 10px 30px;
+    width: 80%;
+    margin: 60px auto;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.7); 
+}
+
+.about-awards h2 {
+    color: var(--neon-pink);
+    text-transform: uppercase;
+    font-style: italic; 
+    margin-bottom: 10px;
+}
+
+.about-awards p {
+    color: var(--text-muted);
+    margin-bottom: 30px;
 }
 
 /* NOMINACIONES */
