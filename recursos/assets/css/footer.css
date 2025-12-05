@@ -10,7 +10,7 @@
     0 0 10px #ff00cc,
     0 0 20px #3333ff,
     0 0 30px #00ff99; 
-   border-image: linear-gradient(45deg, #FF00CC, #9D00FF, #00FFFF) 1;
+    border-image: linear-gradient(45deg, #FF00CC, #9D00FF, #00FFFF) 1;
 }
 
 .footer__container ul{
