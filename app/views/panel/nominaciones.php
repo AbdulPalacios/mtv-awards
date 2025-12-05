@@ -1,8 +1,13 @@
 <?php
 session_start();
-require_once '../config/conexion-bd.php';
+require_once '../../../config/conexion-bd.php';
+require_once '../../../config/constantes.php';
 
-if (!isset($_SESSION['rol']) || $_SESSION['rol'] != 1) { header("Location: ../login.php"); exit(); }
+// 2. Seguridad: Redirigir usando HOST
+if (!isset($_SESSION['rol']) || $_SESSION['rol'] != 1) {
+    header("Location: " . HOST . "app/views/portal/login.php");
+    exit();
+}
 
 // 1. Cargar Categorías Activas
 $categorias = $conexion->query("SELECT * FROM categorias_nominaciones WHERE estatus_categoria_nominacion = 1 ORDER BY id_categoria_nominacion DESC")->fetchAll(PDO::FETCH_ASSOC);
@@ -18,7 +23,7 @@ $canciones = $conexion->query("SELECT id_cancion, nombre_cancion FROM canciones 
 <head>
     <meta charset="UTF-8">
     <title>Nominaciones - Admin</title>
-    <link rel="stylesheet" href="../recursos/assets/css/root.css">
+    <link rel="stylesheet" href="<?php echo HOST; ?>recursos/assets/css/root.css">
     <style>
         body { font-family: sans-serif; display: flex; background: #f0f0f0; }
         aside { width: 250px; background: #222; color: #fff; min-height: 100vh; padding: 20px; flex-shrink: 0;}
@@ -52,28 +57,14 @@ $canciones = $conexion->query("SELECT id_cancion, nombre_cancion FROM canciones 
 </head>
 <body>
 
-    <aside>
-        <h3>Admin Panel</h3>
-        <p><?php echo $_SESSION['nombre']; ?></p>
-        <hr>
-        <nav>
-            <a href="index.php">Inicio</a>
-            <a href="generos.php">Gestionar Géneros</a>
-            <a href="artistas.php">Gestionar Artistas</a>
-            <a href="albumes.php">Gestionar Álbumes</a>
-            <a href="canciones.php">Gestionar Canciones</a>
-            <a href="nominaciones.php" style="color: white; font-weight: bold;">Crear Nominaciones</a>
-            <hr>
-            <a href="../actions/public_actions/logout.php">Cerrar Sesión</a>
-        </nav>
-    </aside>
+    <?php include '../../../recursos/recursos_panel/menu_lateral.php'; ?>
 
     <main>
         <h1>Centro de Nominaciones</h1>
 
         <div class="panel-crear">
             <h3>Crear Nueva Categoría de Premios</h3>
-            <form action="../actions/admin_actions/acc_nominaciones.php" method="POST">
+            <form action="../../backend/panel/acc_nominaciones.php" method="POST">
                 <input type="hidden" name="accion" value="crear_categoria">
                 
                 <div style="display: flex; gap: 20px;">
@@ -115,11 +106,11 @@ $canciones = $conexion->query("SELECT id_cancion, nombre_cancion FROM canciones 
                         <strong style="font-size: 1.2rem;"><?php echo $cat['nombre_categoria_nominacion']; ?></strong>
                         <span class="badge"><?php echo $tipo_txt; ?></span>
                     </div>
-                    <a href="../actions/admin_actions/acc_nominaciones.php?accion=borrar_cat&id=<?php echo $cat['id_categoria_nominacion']; ?>" 
+                    <a href="../../backend/panel/acc_nominaciones.php?accion=borrar_cat&id=<?php echo $cat['id_categoria_nominacion']; ?>" 
                        style="color: red; font-size: 0.8rem;" onclick="return confirm('¿Borrar categoría?')">Eliminar</a>
                 </div>
 
-                <form class="form-nominar" action="../actions/admin_actions/acc_nominaciones.php" method="POST">
+                <form class="form-nominar" action="../../backend/panel/acc_nominaciones.php" method="POST">
                     <input type="hidden" name="accion" value="agregar_nominado">
                     <input type="hidden" name="id_categoria" value="<?php echo $cat['id_categoria_nominacion']; ?>">
                     <input type="hidden" name="tipo_categoria" value="<?php echo $cat['tipo_categoria_nominacion']; ?>">
@@ -170,7 +161,7 @@ $canciones = $conexion->query("SELECT id_cancion, nombre_cancion FROM canciones 
                                 if($n['titulo_album']) echo "💿 " . $n['titulo_album'];
                                 if($n['nombre_cancion']) echo "🎵 " . $n['nombre_cancion'];
                             ?>
-                            <a href="../actions/admin_actions/acc_nominaciones.php?accion=borrar_nom&id=<?php echo $n['id_nominacion']; ?>" class="btn-x">×</a>
+                            <a href="../../backend/panel/acc_nominaciones.php?accion=borrar_nom&id=<?php echo $n['id_nominacion']; ?>" class="btn-x">×</a>
                         </li>
                     <?php endforeach; ?>
                     

@@ -1,13 +1,14 @@
+<?php require_once __DIR__ . '/../../config/constantes.php';?>
 <header class="navbar">
 <div class="navbar-content">
     <div class="navbar-left">
         <div class="logo">
-            <a href="#">
+            <a href="<?php echo HOST; ?>index.php">
                 <img src="<?php echo HOST;?>recursos/assets/img/mtv-icon.svg" alt="Logo de la marca" class="nav-icon">
             </a>
         </div> 
         <nav class="nav-links">
-            <a href="#">Home</a>
+            <a href="<?php echo HOST; ?>index.php">Home</a>
             <a href="https://www.mtv.com/series/all-content">Browse</a>
             <div class="dropdown">
                     <a href="#">Fan Favorites <span class="dropdown-arrow">▼</span></a>
@@ -31,7 +32,7 @@
         </nav>
     </div>
     <div class="navbar-right">
-        <a class="paramount-btn">Iniciar sesion</a>
+        <a href="<?php echo HOST; ?>app/views/portal/login.php" class="paramount-btn">Iniciar sesión</a>
     </div>
 </div>
 </header>

@@ -1,6 +1,7 @@
 <?php
 // 1. Incluir la conexión
-require_once '../../config/conexion-bd.php'; 
+require_once '../../../config/conexion-bd.php';
+require_once '../../../config/constantes.php';
 
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     // Recibir datos
@@ -18,7 +19,10 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $stmt_check->execute();
 
     if ($stmt_check->rowCount() > 0) {
-        echo "<script>alert('El correo ya está registrado.');</script>";
+        echo "<script>
+                alert('El correo ya está registrado.');
+                window.history.back();
+              </script>";
         exit();
     }
 
@@ -46,9 +50,16 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         $stmt->bindParam(':rol', $id_rol);
 
         if ($stmt->execute()) {
-            echo "<script>alert('Registro exitoso. Por favor inicia sesión.');</script>";
+            // ÉXITO: Usamos HOST para redirigir al login
+            echo "<script>
+                    alert('Registro exitoso. Por favor inicia sesión.');
+                    window.location.href = '" . HOST . "app/views/portal/login.php';
+                  </script>";
         } else {
-            echo "Error al registrar.";
+            echo "<script>
+                    alert('Error al registrar.');
+                    window.history.back();
+                  </script>";
         }
 
     } catch (PDOException $e) {

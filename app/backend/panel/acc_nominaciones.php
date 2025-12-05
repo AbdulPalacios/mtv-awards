@@ -1,9 +1,11 @@
 <?php
 session_start();
-require_once '../../config/conexion-bd.php';
+require_once '../../../config/conexion-bd.php';
+require_once '../../../config/constantes.php';
 
+// Validar Admin con HOST
 if (!isset($_SESSION['rol']) || $_SESSION['rol'] != 1) {
-    header("Location: ../../login.php");
+    header("Location: " . HOST . "app/views/portal/login.php");
     exit();
 }
 
@@ -26,7 +28,7 @@ if (isset($_POST['accion']) && $_POST['accion'] == 'crear_categoria') {
         $stmt->bindParam(':fecha', $fecha_limite);
         $stmt->execute();
 
-        header("Location: ../../admin/nominaciones.php?msj=cat_creada");
+        header("Location: " . HOST . "app/views/panel/nominaciones.php?msj=cat_creada");
     } catch (PDOException $e) {
         echo "Error: " . $e->getMessage();
     }
@@ -64,7 +66,7 @@ if (isset($_POST['accion']) && $_POST['accion'] == 'agregar_nominado') {
         $stmt_check->execute();
 
         if ($stmt_check->rowCount() > 0) {
-            header("Location: ../../admin/nominaciones.php?error=ya_nominado");
+            header("Location: " . HOST . "app/views/panel/nominaciones.php?error=ya_nominado");
             exit();
         }
 
@@ -78,7 +80,7 @@ if (isset($_POST['accion']) && $_POST['accion'] == 'agregar_nominado') {
         $stmt->bindParam(':can', $id_cancion);
         $stmt->execute();
 
-        header("Location: ../../admin/nominaciones.php?msj=nominado_ok");
+        header("Location: " . HOST . "app/views/panel/nominaciones.php?msj=nominado_ok");
 
     } catch (PDOException $e) {
         echo "Error: " . $e->getMessage();
@@ -92,7 +94,7 @@ if (isset($_GET['accion']) && $_GET['accion'] == 'borrar_cat') {
     $id = $_GET['id'];
     // Aquí solo desactivamos la categoría
     $conexion->query("UPDATE categorias_nominaciones SET estatus_categoria_nominacion = 0 WHERE id_categoria_nominacion = $id");
-    header("Location: ../../admin/nominaciones.php");
+    header("Location: " . HOST . "app/views/panel/nominaciones.php?msj=cat_borrada");
 }
 
 // ---------------------------------------------------
@@ -102,6 +104,6 @@ if (isset($_GET['accion']) && $_GET['accion'] == 'borrar_nom') {
     $id = $_GET['id'];
     // Borrado físico porque es una tabla de relación
     $conexion->query("DELETE FROM nominaciones WHERE id_nominacion = $id");
-    header("Location: ../../admin/nominaciones.php");
+    header("Location: " . HOST . "app/views/panel/nominaciones.php?msj=nom_borrado");
 }
 ?>

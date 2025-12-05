@@ -1,9 +1,12 @@
 <?php
 session_start();
+// 1. Incluir constantes y conexión
 require_once '../../../config/conexion-bd.php';
+require_once '../../../config/constantes.php';
 
+// 2. Seguridad: Redirigir usando HOST
 if (!isset($_SESSION['rol']) || $_SESSION['rol'] != 1) {
-    header("Location: ../../backend/portal/login.php");
+    header("Location: " . HOST . "app/views/portal/login.php");
     exit();
 }
 
@@ -25,7 +28,7 @@ $lista_albumes = $conexion->query($sql_list)->fetchAll(PDO::FETCH_ASSOC);
 <head>
     <meta charset="UTF-8">
     <title>Gestionar Álbumes - Admin</title>
-    <link rel="stylesheet" href="../../../recursos/assets/css/root.css">
+    <link rel="stylesheet" href="<?php echo HOST; ?>recursos/assets/css/root.css">
     <style>
         body { font-family: sans-serif; display: flex; }
         aside { width: 250px; background: #222; color: #fff; min-height: 100vh; padding: 20px; }
@@ -45,7 +48,7 @@ $lista_albumes = $conexion->query($sql_list)->fetchAll(PDO::FETCH_ASSOC);
 </head>
 <body>
 
-    
+    <?php include '../../../recursos/recursos_panel/menu_lateral.php'; ?>
 
     <main>
         <h1>Gestión de Álbumes</h1>
@@ -103,7 +106,7 @@ $lista_albumes = $conexion->query($sql_list)->fetchAll(PDO::FETCH_ASSOC);
                 <tr>
                     <td>
                         <?php if ($alb['imagen_album']): ?>
-                            <img src="../<?php echo $alb['imagen_album']; ?>" class="portada-mini">
+                            <img src="<?php echo HOST . ltrim($alb['imagen_album'], '/'); ?>" class="portada-mini">
                         <?php else: ?>
                             Sin foto
                         <?php endif; ?>

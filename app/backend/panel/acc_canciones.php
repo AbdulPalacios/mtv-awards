@@ -1,9 +1,11 @@
 <?php
 session_start();
-require_once '../../config/conexion-bd.php';
+require_once '../../../config/conexion-bd.php';
+require_once '../../../config/constantes.php';
 
+// Validar Admin con HOST
 if (!isset($_SESSION['rol']) || $_SESSION['rol'] != 1) {
-    header("Location: ../../login.php");
+    header("Location: " . HOST . "app/views/portal/login.php");
     exit();
 }
 
@@ -29,9 +31,9 @@ if (isset($_POST['accion']) && $_POST['accion'] == 'crear') {
         
         // Rutas definidas
         // 1. Ruta física donde PHP guardará el archivo (subiendo 2 niveles desde actions/admin_actions)
-        $ruta_fisica = "../../recursos/assets/uploads/canciones/" . $nombre_archivo;
+        $ruta_fisica = "../../../recursos/assets/uploads/canciones/" . $nombre_archivo;
         
-        // 2. Ruta relativa para guardar en la BD (para usar en HTML)
+        // Ruta para guardar en la BD (limpia)
         $ruta_bd = "recursos/assets/uploads/canciones/" . $nombre_archivo;
         
         if (move_uploaded_file($_FILES['imagen']['tmp_name'], $ruta_fisica)) {
@@ -55,7 +57,7 @@ if (isset($_POST['accion']) && $_POST['accion'] == 'crear') {
         $stmt->bindParam(':gen', $id_genero);
         $stmt->execute();
         
-        header("Location: ../../admin/canciones.php?msj=creado");
+        header("Location: " . HOST . "app/views/panel/canciones.php?msj=creado");
 
     } catch (PDOException $e) {
         echo "Error: " . $e->getMessage();
@@ -72,7 +74,7 @@ if (isset($_GET['accion']) && $_GET['accion'] == 'borrar') {
         $stmt = $conexion->prepare($sql);
         $stmt->bindParam(':id', $id);
         $stmt->execute();
-        header("Location: ../../admin/canciones.php?msj=borrado");
+        header("Location: " . HOST . "app/views/panel/canciones.php?msj=borrado");
     } catch (PDOException $e) {
         echo "Error: " . $e->getMessage();
     }
