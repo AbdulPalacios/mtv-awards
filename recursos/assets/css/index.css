@@ -14,7 +14,7 @@ body{
 
 .hero{
     width: 100%;
-    height: 80vh;
+    height: 85vh;
     background-image: 
         linear-gradient(
             to top,
@@ -35,21 +35,33 @@ h1{
     color:var(--text-muted);
     font-size: 1.3rem;
     font-weight: 900;
+    text-shadow: 1px 1px 5px rgba(0, 0, 0, 0.8);
 }
 
 .hero__container span{
+    max-width: 60%;
     display: block;
     color: #fff;
     font-size: 1,2rem;
     font-weight: 900;
     margin: 10px 0;
+    text-shadow: 1px 1px 5px rgba(0, 0, 0, 0.8);
 }
 
 .votar{
+    display: block;
+    width: 15%;
+    text-align: center;
     color: var(--text-on-edit);
     background-color: #fcb114;
     padding: 5px 20px;
     font-weight: 900;
+    transition: 
+        transform 0.5s ease;
+}
+
+.votar:hover{
+    transform: scale(1.1);
 }
 
 .main{
@@ -63,6 +75,8 @@ h1{
     background-image: url('../img/background-index.webp');
     background-repeat: no-repeat;
     background-size: cover;
+    background-position: center;
+    background-attachment: fixed;
 }
 
 .mtv-music-container{
@@ -91,14 +105,14 @@ h1{
 /* NOMINACIONES */
 
 .nominados{
-    width: 85%;
+    width: 80%;
     margin: 60px auto;
 }
 
 .nominados__ver-mas{
     display: flex;
     justify-content: space-between;
-    color: var(--text-muted);
+    align-items: center;
 }
 
 .nominados__ver-mas h2{
@@ -108,4 +122,204 @@ h1{
 
 .nominados__ver-mas a{
     font-size: 1.2rem;
+}
+
+.nominados-h3{
+    font-size: 1.2rem;
+    font-weight: 800;
+}
+
+.nominados__container{
+    width: 100%;
+    display: flex;
+    gap: 20px;
+}
+
+.card{
+    width: 20%;
+    height: 40vh;
+    background-position: top center;
+    background-size: cover;
+    background-repeat: no-repeat;
+    display: flex;
+    flex-direction: column;
+    justify-content: end;
+    padding: 5px 15px;
+    border-radius: 12px; 
+    box-shadow: 0 4px 15px rgba(0,0,0,0.7); 
+}
+
+/* Nombre del Artista */
+.nombre {
+    font-size: 1.1rem;
+    font-weight: 800; 
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    text-shadow: 1px 1px 5px rgba(0, 0, 0, 0.8);
+}
+
+.card p {
+    font-size: 0.9rem;
+    color: var(--text-muted); 
+    line-height: 1.4;
+}
+
+.card a {
+    display: inline-block;
+    text-align: center;
+    background-color: #1DB954; 
+    color: white;
+    padding: 8px 16px;
+    border-radius: 20px;
+    font-weight: bold;
+    font-size: 0.8rem;
+    transition: transform 0.2s ease;
+}
+
+.card a:hover {
+    transform: scale(1.05);
+    background-color: #1ed760;
+}
+
+.card p, .card a {
+    opacity: 0;
+    transform: translateY(20px);
+    transition: all 0.3s ease-in-out;
+}
+
+.card:hover p, .card:hover a {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+#faraon{
+    background-image: 
+    linear-gradient(
+            to top,
+            rgb(0, 0, 0)0%,
+            rgba(0, 0, 0, 0.6)30%,
+            rgba(0, 0, 0, 0)70%
+    ),
+    url(../uploads/artistas/1764557080_images.webp);
+}
+#badbunny{
+    background-image: 
+    linear-gradient(
+            to top,
+            rgb(0, 0, 0)0%,
+            rgba(0, 0, 0, 0.5)40%,
+            rgba(0, 0, 0, 0)70%
+    ),
+    url(../uploads/artistas/badbunny.jpg);
+}
+
+#romeo_santos{
+    background-image: 
+    linear-gradient(
+            to top,
+            rgb(0, 0, 0)0%,
+            rgba(0, 0, 0, 0.5)40%,
+            rgba(0, 0, 0, 0)70%
+    ),
+    url(../uploads/artistas/romeo_santos.jpg)
+}
+
+#the_weeknd{
+    background-image: 
+    linear-gradient(
+            to top,
+            rgb(0, 0, 0)0%,
+            rgba(0, 0, 0, 0.5)40%,
+            rgba(0, 0, 0, 0)70%
+    ),
+    url(../uploads/artistas/the_weeknd.png);
+    background-position: right;
+}
+
+#xxxtentacion{
+    background-image: 
+    linear-gradient(
+            to top,
+            rgb(0, 0, 0)0%,
+            rgba(0, 0, 0, 0.5)40%,
+            rgba(0, 0, 0, 0)70%
+    ),
+    url(../uploads/artistas/Xxxtentacion.jpg)
+}
+
+#canserbero{
+    background-image: 
+    linear-gradient(
+            to top,
+            rgb(0, 0, 0)0%,
+            rgba(0, 0, 0, 0.5)40%,
+            rgba(0, 0, 0, 0)70%
+    ),
+    url(../uploads/artistas/canserberojpg.jpg)
+}
+
+#stars_dance{
+    background-image: 
+    linear-gradient(
+            to top,
+            rgb(0, 0, 0)0%,
+            rgba(0, 0, 0, 0.5)40%,
+            rgba(0, 0, 0, 0)70%
+    ),
+    url(../uploads/album/stars_dance.jpg)
+}
+
+#verano{
+    background-image: 
+    linear-gradient(
+            to top,
+            rgb(0, 0, 0)0%,
+            rgba(0, 0, 0, 0.5)40%,
+            rgba(0, 0, 0, 0)70%
+    ),
+    url(../uploads/album/verano.jpg)
+}
+
+#formula{
+    background-image: 
+    linear-gradient(
+            to top,
+            rgb(0, 0, 0)0%,
+            rgba(0, 0, 0, 0.5)40%,
+            rgba(0, 0, 0, 0)70%
+    ),
+    url(../uploads/album/formula_vol3.jpg);
+}
+
+#genesis{
+    background-image: 
+    linear-gradient(
+            to top,
+            rgb(0, 0, 0)0%,
+            rgba(0, 0, 0, 0.5)40%,
+            rgba(0, 0, 0, 0)70%
+    ),
+    url(../uploads/album/genesis.jpg)
+}
+
+#muerte{
+    background-image: 
+    linear-gradient(
+            to top,
+            rgb(0, 0, 0)0%,
+            rgba(0, 0, 0, 0.5)40%,
+            rgba(0, 0, 0, 0)70%
+    ),
+    url(../uploads/album/muerte.jpg)
+}
+
+#x17{
+    background-image: 
+    linear-gradient(
+            to top,
+            rgb(0, 0, 0)0%,
+            rgba(0, 0, 0, 0.5)40%,
+            rgba(0, 0, 0, 0)70%
+    ),
+    url(../uploads/album/albumXTentacion.jpg)
 }

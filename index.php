@@ -61,54 +61,85 @@
 
             <section class="nominados">
                 <div class="nominados__ver-mas">
-                    <h2>nominaciones</h2>
+                    <h2>Nominaciones</h2>
                     <a href="#">Ver Más</a>
                 </div>
-                <h3>mejor artista</h3>
+
+                <h3 class="nominados-h3">Mejor Artista</h3>
                 <div class="nominados__container">
                     <div class="card" id="faraon">
-                        <span class="nombre"></span>
-                        <p></p>
-                        <a href="">ver en Spotify</a>
+                        <span class="nombre">Faraón Love Shady</span>
+                        <p>El artista peruano que ha viralizado el internet con su estilo único y extravagante.</p>
+                        <a href="https://open.spotify.com/artist/3j8f1t1g2y2z3x4k5l6m7n" target="_blank">Ver en Spotify</a>
                     </div>
+
                     <div class="card" id="badbunny">
-                        <span class="nombre"></span>
-                        <p></p>
-                        <a href="">ver en Spotify</a>
+                        <span class="nombre">Bad Bunny</span>
+                        <p>El "Conejo Malo", ícono global del trap y reguetón puertorriqueño.</p>
+                        <a href="https://open.spotify.com/artist/4q3ewBCX7sLwd24euuV69X" target="_blank">Ver en Spotify</a>
                     </div>
+
                     <div class="card" id="romeo_santos">
-                        <span class="nombre"></span>
-                        <p></p>
-                        <a href="">ver en Spotify</a>
+                        <span class="nombre">Romeo Santos</span>
+                        <p>El Rey de la Bachata, conocido por su voz suave y letras románticas.</p>
+                        <a href="https://open.spotify.com/artist/5lwmRuXgjX8xIvF36k7jx4" target="_blank">Ver en Spotify</a>
                     </div>
+
                     <div class="card" id="the_weeknd">
-                        <span class="nombre"></span>
-                        <p></p>
-                        <a href="">ver en Spotify</a>
+                        <span class="nombre">The Weeknd</span>
+                        <p>Estrella canadiense del pop y R&B alternativo con éxitos mundiales.</p>
+                        <a href="https://open.spotify.com/artist/1Xyo4u8uXC1ZmMpatF05PJ" target="_blank">Ver en Spotify</a>
+                    </div>
+
+                    <div class="card" id="xxxtentacion">
+                        <span class="nombre">XXXTentacion</span>
+                        <p>Artista versátil que revolucionó el emo-rap y el trap con un impacto global masivo.</p>
+                        <a href="https://open.spotify.com/artist/15UsOTVnJzReFVN1VCnxy4" target="_blank">Ver en Spotify</a>
+                    </div>
+
+                    <div class="card" id="canserbero">
+                        <span class="nombre">Canserbero</span>
+                        <p>El legendario rapero venezolano, voz eterna del rap conciencia y la lírica profunda.</p>
+                        <a href="https://open.spotify.com/artist/1bAftSH8umNcGZ0uyV7LMg" target="_blank">Ver en Spotify</a>
                     </div>
                 </div>
-                
-                <h3>mejor albúm</h3>
+
+                <h3 class="nominados-h3">Mejor Álbum</h3>
                 <div class="nominados__container">
                     <div class="card" id="stars_dance">
-                        <span class="nombre"></span>
-                        <p></p>
-                        <a href="">ver en Spotify</a>
+                        <span class="nombre">Stars Dance</span>
+                        <p>El álbum debut en solitario de Selena Gomez, lleno de energía pop y electrónica.</p>
+                        <a href="https://open.spotify.com/album/6AorUqeD0b6zXU5JgS2Q4H" target="_blank">Ver en Spotify</a>
                     </div>
+
                     <div class="card" id="verano">
-                        <span class="nombre"></span>
-                        <p></p>
-                        <a href="">ver en Spotify</a>
+                        <span class="nombre">Un Verano Sin Ti</span>
+                        <p>Un viaje por los sonidos del Caribe que rompió récords de streaming.</p>
+                        <a href="https://open.spotify.com/album/3RQQmkQEvNCY4prGKE6oc5" target="_blank">Ver en Spotify</a>
                     </div>
+
                     <div class="card" id="formula">
-                        <span class="nombre"></span>
-                        <p></p>
-                        <a href="">ver en Spotify</a>
+                        <span class="nombre">Fórmula, Vol. 3</span>
+                        <p>La tercera entrega de su exitosa saga, mezclando bachata con nuevos ritmos.</p>
+                        <a href="https://open.spotify.com/album/151w1FgRZfvjnWTkVKsvry" target="_blank">Ver en Spotify</a>
                     </div>
+
                     <div class="card" id="genesis">
-                        <span class="nombre"></span>
-                        <p></p>
-                        <a href="">ver en Spotify</a>
+                        <span class="nombre">GÉNESIS</span>
+                        <p>El álbum que consolidó a Peso Pluma y los corridos tumbados a nivel mundial.</p>
+                        <a href="https://open.spotify.com/album/4jOXszrE3t7QYlFqpF4wK6" target="_blank">Ver en Spotify</a>
+                    </div>
+
+                    <div class="card" id="muerte">
+                        <span class="nombre">Muerte</span>
+                        <p>Considerado su obra maestra, un álbum oscuro y narrativo que marcó la historia del hip-hop latino.</p>
+                        <a href="https://open.spotify.com/album/3fC24U9L6U3zR5W5zF5z5z" target="_blank">Ver en Spotify</a>
+                    </div>
+
+                    <div class="card" id="x17">
+                        <span class="nombre">17</span>
+                        <p>El álbum más exitoso de X, incluye éxitos mundiales como "SAD!" y "Moonlight".</p>
+                        <a href="https://open.spotify.com/album/2Ti79nwTsont5ZHfdxIzAm" target="_blank">Ver en Spotify</a>
                     </div>
                 </div>
             </section>
