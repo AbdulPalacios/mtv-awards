@@ -1,0 +1,133 @@
+.bg-image-login{
+    background-image: 
+        linear-gradient(
+            0deg,
+            rgba(0, 0, 0, 0.5)0%,
+            rgba(0, 0, 0, 0.5)100%
+        ),
+        url(../img/bg-image-login.png);
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: center;
+
+    height: 100vh;
+}
+
+.container {
+    background-color: rgba(10, 10, 10, 0.7); 
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px); 
+    border: 1px solid rgba(255, 255, 255, 0.1); 
+    border-radius: 12px;
+    padding: 40px;
+    width: 100%;
+    max-width: 400px;
+    margin: 80px auto;
+    box-shadow: 0 0 30px rgba(0, 0, 0, 0.5); 
+    display: flex;
+    flex-direction: column;
+}
+
+.container input {
+    background-color: rgba(255, 255, 255, 0.05);
+    border: 1px solid var(--table-border);
+    border-radius: 8px;
+    padding: 12px 15px;
+    color: var(--text-color);
+    font-size: 1rem;
+    outline: none;
+    transition: all 0.3s ease;
+}
+
+.container input:focus {
+    background-color: rgba(0, 0, 0, 0.5); 
+    border-color: var(--neon-cyan);
+    box-shadow: 0 0 8px rgba(0, 255, 255, 0.3);
+}
+
+.container h2 {
+    color: var(--neon-pink);
+    text-align: center;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    margin-bottom: 30px;
+    font-size: 2rem;
+    text-shadow: 0 0 10px rgba(255, 0, 204, 0.4);
+}
+
+.container label {
+    color: var(--text-muted);
+    font-size: 0.9rem;
+    font-weight: 600;
+    margin-left: 5px;
+}
+
+.container form {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+.container button {
+    background-color: var(--neon-lime);
+    color: #000;
+    border: none;
+    padding: 15px;
+    margin-top: 10px;
+    font-size: 1.1rem;
+    font-weight: 800;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    border-radius: 50px;
+    cursor: pointer;
+    transition: transform 0.2s, box-shadow 0.2s;
+}
+
+.container button:hover {
+    transform: scale(1.02);
+    box-shadow: 0 0 15px var(--neon-lime);
+}
+
+.container p {
+    text-align: center;
+    color: var(--text-muted);
+    margin-top: 25px;
+    font-size: 0.9rem;
+}
+
+.container p a {
+    color: var(--neon-cyan);
+    text-decoration: none;
+    font-weight: bold;
+}
+
+.input-group {
+    position: relative;
+    width: 100%;
+}
+
+.input-group .icon {
+    position: absolute;
+    left: 15px; 
+    top: 50%;
+    transform: translateY(-50%); 
+    color: var(--neon-cyan); 
+    font-size: 1rem;
+    pointer-events: none; 
+    transition: color 0.3s ease;
+}
+
+.container input {
+    width: 100%; 
+    padding: 12px 15px 12px 45px; 
+}
+
+.container input:focus + .icon, 
+.input-group:focus-within .icon { 
+    color: var(--neon-pink); 
+    text-shadow: 0 0 8px var(--neon-pink);
+}
+
+button i {
+    margin-left: 10px; 
+}
