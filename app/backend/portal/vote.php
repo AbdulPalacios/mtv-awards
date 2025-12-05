@@ -1,11 +1,12 @@
 <?php
 session_start();
-require_once '../../config/conexion-bd.php';
+require_once '../../../config/conexion-bd.php';
+require_once '../../../config/constantes.php';
 
 // 1. Validar que esté logueado
 if (!isset($_SESSION['id_usuario'])) {
-    // Si no está logueado, lo mandamos al login con un mensaje
-    header("Location: ../../login.php?error=necesitas_login");
+    // Si no está logueado, lo mandamos al login (Vista) usando HOST
+    header("Location: " . HOST . "app/views/portal/login.php?error=necesitas_login");
     exit();
 }
 
@@ -28,8 +29,8 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         $stmt_check->execute();
 
         if ($stmt_check->rowCount() > 0) {
-            // YA VOTÓ: Lo regresamos con error
-            header("Location: ../../index.php?error=ya_votaste");
+            // YA VOTÓ: Lo regresamos a la página de votar con error
+            header("Location: " . HOST . "app/views/portal/votar.php?error=ya_votaste");
             exit();
         }
 
@@ -51,7 +52,8 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
         $conexion->commit();
         
-        header("Location: ../../index.php?msj=voto_exitoso");
+        // ÉXITO: Regresamos a la página de votar
+        header("Location: " . HOST . "app/views/portal/votar.php?msj=voto_exitoso");
 
     } catch (PDOException $e) {
         $conexion->rollBack();
