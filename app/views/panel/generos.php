@@ -1,10 +1,11 @@
 <?php
 session_start();
-require_once '../config/conexion-bd.php';
+require_once '../../../config/conexion-bd.php';
+require_once '../../../config/constantes.php';
 
-// Seguridad: Solo Admins
+// 2. Seguridad: Redirigir usando HOST
 if (!isset($_SESSION['rol']) || $_SESSION['rol'] != 1) {
-    header("Location: ../login.php");
+    header("Location: " . HOST . "app/views/portal/login.php");
     exit();
 }
 
@@ -28,7 +29,7 @@ $lista_generos = $stmt_lista->fetchAll(PDO::FETCH_ASSOC);
 <head>
     <meta charset="UTF-8">
     <title>Gestionar Géneros - Admin</title>
-    <link rel="stylesheet" href="../recursos/assets/css/root.css">
+    <link rel="stylesheet" href="<?php echo HOST; ?>recursos/assets/css/root.css">
     <style>
         /* Estilos rápidos para el panel */
         body { font-family: sans-serif; display: flex; }
@@ -49,21 +50,7 @@ $lista_generos = $stmt_lista->fetchAll(PDO::FETCH_ASSOC);
 </head>
 <body>
 
-    <aside>
-        <h3>Admin Panel</h3>
-        <p>Usuario: <?php echo $_SESSION['nombre']; ?></p>
-        <hr>
-        <nav>
-            <a href="index.php">Inicio</a>
-            <a href="generos.php" style="color: white; font-weight: bold;">Gestionar Géneros</a>
-            <a href="artistas.php">Gestionar Artistas</a>
-            <a href="albumes.php">Gestionar Álbumes</a>
-            <a href="canciones.php">Gestionar Canciones</a>
-            <a href="nominaciones.php">Crear Nominaciones</a>
-            <hr>
-            <a href="../actions/public_actions/logout.php">Cerrar Sesión</a>
-        </nav>
-    </aside>
+    <?php include '../../../recursos/recursos_panel/menu_lateral.php'; ?>
 
     <main>
         <h1>Gestión de Géneros Musicales</h1>
@@ -71,7 +58,7 @@ $lista_generos = $stmt_lista->fetchAll(PDO::FETCH_ASSOC);
         <div class="formulario-caja">
             <h3><?php echo $genero_editar ? 'Editar Género' : 'Agregar Nuevo Género'; ?></h3>
             
-            <form action="../actions/admin_actions/acc_generos.php" method="POST">
+            <form action="../../backend/panel/acc_generos.php" method="POST">
                 <input type="hidden" name="accion" value="<?php echo $genero_editar ? 'editar' : 'crear'; ?>">
                 
                 <?php if ($genero_editar): ?>
@@ -108,7 +95,7 @@ $lista_generos = $stmt_lista->fetchAll(PDO::FETCH_ASSOC);
                     <td>
                         <a href="generos.php?editar_id=<?php echo $g['id_genero']; ?>" class="btn btn-editar">Editar</a>
                         
-                        <a href="../actions/admin_actions/acc_generos.php?accion=borrar&id=<?php echo $g['id_genero']; ?>" 
+                        <a href="../../backend/panel/acc_generos.php?accion=borrar&id=<?php echo $g['id_genero']; ?>" 
                            class="btn btn-borrar" 
                            onclick="return confirm('¿Seguro que deseas eliminar este género?');">
                            Eliminar

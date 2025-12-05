@@ -1,19 +1,24 @@
+<?php
+// 1. Incluimos constantes para poder usar HOST en el <head>
+require_once '../../../config/constantes.php';
+?>
+
 <!DOCTYPE html>
 <html lang="es">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Registro - MTV Awards</title>
-    <link rel="stylesheet" href="recursos/assets/css/root.css">
-    <link rel="stylesheet" href="recursos/assets/css/index.css">
+    <link rel="stylesheet" href="<?php echo HOST; ?>recursos/assets/css/root.css">
+    <link rel="stylesheet" href="<?php echo HOST; ?>recursos/assets/css/index.css">
 </head>
 <body>
     
-     <?php include 'recursos/recursos_portal/header.php'; ?>
+     <?php include '../../../recursos/recursos_portal/header.php'; ?>
 
     <main class="container">
         <h2>Crear Cuenta</h2>
-        <form action="actions/public_actions/register.php" method="POST">
+        <form action="../../backend/portal/register.php" method="POST">
             
             <label for="nombre">Nombre:</label>
             <input type="text" name="nombre" required>
@@ -42,7 +47,7 @@
         <p>¿Ya tienes cuenta? <a href="login.php">Inicia sesión aquí</a></p>
     </main>
 
-    <?php include 'recursos/recursos_portal/footer.php'; ?>
+    <?php include '../../../recursos/recursos_portal/footer.php'; ?>
 
 </body>
 </html>

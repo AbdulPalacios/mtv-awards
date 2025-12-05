@@ -1,6 +1,8 @@
 <?php
 session_start();
-require_once 'config/conexion-bd.php';
+require_once '../../../config/constantes.php';
+// Incluimos la lógica del backend (esto carga $categorias y $mis_votos_categorias)
+require_once '../../backend/portal/get_votar.php';
 
 // 1. Obtener todas las categorías activas
 $categorias = $conexion->query("SELECT * FROM categorias_nominaciones WHERE estatus_categoria_nominacion = 1 ORDER BY id_categoria_nominacion DESC")->fetchAll(PDO::FETCH_ASSOC);
@@ -24,14 +26,14 @@ if (isset($_SESSION['id_usuario'])) {
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>MTV Awards - Vota Ahora</title>
-    <link rel="stylesheet" href="recursos/assets/css/root.css">
+    <link rel="stylesheet" href="<?php echo HOST; ?>recursos/assets/css/root.css">
     <style>
         /* Estilos rápidos para el Home (puedes moverlos a index.css) */
         body { font-family: 'Arial', sans-serif; background-color: #121212; color: white; margin: 0; }
         
         /* HERO SECTION */
         .hero { 
-            background: url('recursos/assets/img/hero__mtv-awards.png') no-repeat center center/cover; 
+            background: url('<?php echo HOST; ?>recursos/assets/img/hero__mtv-awards.png') no-repeat center center/cover;
             height: 400px; display: flex; align-items: center; justify-content: center; text-align: center;
             position: relative;
         }
@@ -80,17 +82,21 @@ if (isset($_SESSION['id_usuario'])) {
 </head>
 <body>
 
-    <?php include('recursos/recursos_portal/header.php'); ?>
+    <?php include('../../../recursos/recursos_portal/header.php'); ?>
 
     <header class="hero">
         <div class="hero-content">
             <h1>Vote Now</h1>
             <p>Tu voz define a los ganadores.</p>
+            
             <?php if (!isset($_SESSION['id_usuario'])): ?>
-                <a href="registro.php" style="color: white; font-size: 1.2rem; text-decoration: underline;">Regístrate para votar</a>
+                <a href="registrarse.php" style="color: white; font-size: 1.2rem; text-decoration: underline;">Regístrate para votar</a>
             <?php else: ?>
                 <p>Hola, <strong><?php echo $_SESSION['nombre']; ?></strong></p>
-                <?php if($_SESSION['rol'] == 1) echo '<a href="admin/index.php" style="background:red; color:white; padding:5px 10px; text-decoration:none;">Ir al Panel Admin</a>'; ?>
+                
+                <?php if($_SESSION['rol'] == 1): ?>
+                    <a href="<?php echo HOST; ?>app/views/panel/dashboard.php" style="background:red; color:white; padding:5px 10px; text-decoration:none;">Ir al Panel Admin</a>
+                <?php endif; ?>
             <?php endif; ?>
         </div>
     </header>
@@ -134,7 +140,7 @@ if (isset($_SESSION['id_usuario'])) {
                        <?php 
                             $titulo = "Desconocido";
                             $subtitulo = "";
-                            $imagen = "recursos/assets/img/mtv-logo.jpg"; // Imagen global por defecto
+                            $imagen = HOST . "recursos/assets/img/mtv-logo.jpg"; // Imagen global por defecto
 
                             // CASO 1: Es un Álbum
                             if ($nom['titulo_album']) {
@@ -143,10 +149,10 @@ if (isset($_SESSION['id_usuario'])) {
                                 
                                 // Verificar si tiene portada en la BD
                                 if (!empty($nom['imagen_album'])) {
-                                    $imagen = $nom['imagen_album'];
+                                    $imagen = HOST . ltrim($nom['imagen_album'], '/');
                                 } else {
                                     // Si no tiene, usa esta genérica
-                                    $imagen = "recursos/assets/img/mtv-logo.jpg"; 
+                                    $imagen = HOST . "recursos/assets/img/mtv-logo.jpg"; 
                                 }
                             }
                             // CASO 2: Es una Canción
@@ -157,10 +163,10 @@ if (isset($_SESSION['id_usuario'])) {
                                 // --- CAMBIO AQUÍ ---
                                 // Si la base de datos trae una imagen, úsala.
                                 if (!empty($nom['imagen_cancion'])) {
-                                    $imagen = $nom['imagen_cancion'];
+                                    $imagen = HOST . ltrim($nom['imagen_cancion'], '/');
                                 } else {
                                     // Si está vacía, usa la genérica por defecto
-                                    $imagen = "recursos/assets/img/mtv-icon.svg"; 
+                                    $imagen = HOST . "recursos/assets/img/mtv-icon.svg"; 
                                 }
                             }
                             // CASO 3: Es un Artista
@@ -170,9 +176,9 @@ if (isset($_SESSION['id_usuario'])) {
                                 
                                 // VERIFICAR SI TIENE FOTO PERSONALIZADA
                                 if (!empty($nom['imagen_artista'])) {
-                                    $imagen = $nom['imagen_artista'];
+                                    $imagen = HOST . ltrim($nom['imagen_artista'], '/');
                                 } else {
-                                    $imagen = "recursos/assets/img/mtvawardsblack.jpg"; // Genérica
+                                    $imagen = HOST . "recursos/assets/img/mtvawardsblack.jpg"; //Genérica
                                 }
                             }
                         ?>
@@ -184,7 +190,7 @@ if (isset($_SESSION['id_usuario'])) {
                                 <h3 class="card-title"><?php echo $titulo; ?></h3>
                                 <span class="card-subtitle"><?php echo $subtitulo; ?></span>
 
-                                <form action="actions/public_actions/vote.php" method="POST">
+                                <form action="../../backend/portal/vote.php" method="POST">
                                     <input type="hidden" name="id_nominacion" value="<?php echo $nom['id_nominacion']; ?>">
                                     <input type="hidden" name="id_categoria" value="<?php echo $cat['id_categoria_nominacion']; ?>">
 
@@ -220,7 +226,7 @@ if (isset($_SESSION['id_usuario'])) {
 
     </main>
 
-    <?php include('recursos/recursos_portal/footer.php'); ?>
+    <?php include('../../../recursos/recursos_portal/footer.php'); ?>
 
 </body>
 </html>

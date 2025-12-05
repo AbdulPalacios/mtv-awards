@@ -1,7 +1,13 @@
 <?php
 session_start();
 require_once '../../../config/conexion-bd.php';
-if (!isset($_SESSION['rol']) || $_SESSION['rol'] != 1) { header("Location: ../../backend/portal/login.php"); exit(); }
+require_once '../../../config/constantes.php';
+
+// 2. Seguridad: Redirigir usando HOST
+if (!isset($_SESSION['rol']) || $_SESSION['rol'] != 1) {
+    header("Location: " . HOST . "app/views/portal/login.php");
+    exit();
+}
 
 // Consultas necesarias
 $stmt_gen = $conexion->prepare("SELECT * FROM generos WHERE estatus_genero = 1");
@@ -40,7 +46,7 @@ $lista_artistas = $stmt_list->fetchAll(PDO::FETCH_ASSOC);
 <head>
     <meta charset="UTF-8">
     <title>Gestionar Artistas - Admin</title>
-    <link rel="stylesheet" href="../../../recursos/assets/css/root.css">
+    <link rel="stylesheet" href="<?php echo HOST; ?>recursos/assets/css/root.css">
     <style>
         /* Estilos básicos */
         body { font-family: sans-serif; display: flex; }
@@ -64,21 +70,7 @@ $lista_artistas = $stmt_list->fetchAll(PDO::FETCH_ASSOC);
 </head>
 <body>
 
-    <aside>
-        <h3>Admin Panel</h3>
-        <p><?php echo $_SESSION['nombre']; ?></p>
-        <hr>
-        <nav>
-            <a href="../../../index.php">Inicio</a>
-            <a href="generos.php">Gestionar Géneros</a>
-            <a href="artistas.php">Gestionar Artistas</a>
-            <a href="albumes.php">Gestionar Álbumes</a>
-            <a href="canciones.php">Gestionar Canciones</a>
-            <a href="nominaciones.php">Crear Nominaciones</a>
-            <hr>
-            <a href="../../backend/portal/logout.php">Cerrar Sesión</a>
-        </nav>
-    </aside>
+    <?php include '../../../recursos/recursos_panel/menu_lateral.php'; ?>
 
     <main>
         <h1>Gestión de Artistas</h1>
@@ -149,7 +141,7 @@ $lista_artistas = $stmt_list->fetchAll(PDO::FETCH_ASSOC);
                 <tr>
                     <td>
                         <?php if (!empty($a['imagen_artista'])): ?>
-                            <img src="../<?php echo $a['imagen_artista']; ?>" class="img-artista">
+                            <img src="<?php echo HOST . ltrim($a['imagen_artista'], '/'); ?>" class="img-artista">
                         <?php else: ?>
                             <span>Sin Foto</span>
                         <?php endif; ?>

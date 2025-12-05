@@ -1,10 +1,11 @@
 <?php
 session_start();
-require_once '../../config/conexion-bd.php';
+require_once '../../../config/conexion-bd.php';
+require_once '../../../config/constantes.php';
 
 // Validar Admin
 if (!isset($_SESSION['rol']) || $_SESSION['rol'] != 1) {
-    header("Location: ../../login.php");
+    header("Location: " . HOST . "app/views/portal/login.php");
     exit();
 }
 
@@ -21,11 +22,13 @@ if (isset($_POST['accion']) && $_POST['accion'] == 'crear') {
     $ruta_imagen = null;
     if (isset($_FILES['imagen']) && $_FILES['imagen']['error'] == 0) {
         $nombre_archivo = time() . "_" . $_FILES['imagen']['name']; // Evitar nombres duplicados
-        $ruta_destino = "../../recursos/assets/uploads/album/" . $nombre_archivo;
+        $ruta_destino = "../../../recursos/assets/uploads/album/" . $nombre_archivo;
+
+        // Ruta para guardar en BD (sin barra inicial para que HOST funcione bien)
+        $ruta_bd = "recursos/assets/uploads/album/" . $nombre_archivo;
         
         if (move_uploaded_file($_FILES['imagen']['tmp_name'], $ruta_destino)) {
-            // Guardamos la ruta relativa para usarla en el HTML
-            $ruta_imagen = "/recursos/assets/uploads/album/" . $nombre_archivo;
+            $ruta_imagen = $ruta_bd;
         }
     }
 
@@ -43,7 +46,8 @@ if (isset($_POST['accion']) && $_POST['accion'] == 'crear') {
         $stmt->bindParam(':gen', $id_genero);
         $stmt->execute();
         
-        header("Location: ../../admin/albumes.php?msj=creado");
+        // Redirigir a la vista del panel usando HOST
+        header("Location: " . HOST . "app/views/panel/albumes.php?msj=creado");
 
     } catch (PDOException $e) {
         echo "Error: " . $e->getMessage();
@@ -58,7 +62,7 @@ if (isset($_GET['accion']) && $_GET['accion'] == 'borrar') {
         $stmt = $conexion->prepare($sql);
         $stmt->bindParam(':id', $id);
         $stmt->execute();
-        header("Location: ../../admin/albumes.php?msj=borrado");
+        header("Location: " . HOST . "app/views/panel/albumes.php?msj=borrado");
     } catch (PDOException $e) {
         echo "Error: " . $e->getMessage();
     }

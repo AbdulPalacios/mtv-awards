@@ -1,8 +1,13 @@
 <?php
 session_start();
 require_once '../../../config/conexion-bd.php';
+require_once '../../../config/constantes.php';
 
-if (!isset($_SESSION['rol']) || $_SESSION['rol'] != 1) { header("Location: ../../backend/portal/login.php"); exit(); }
+// 2. Seguridad: Redirigir usando HOST
+if (!isset($_SESSION['rol']) || $_SESSION['rol'] != 1) {
+    header("Location: " . HOST . "app/views/portal/login.php");
+    exit();
+}
 
 // Cargas de listas (igual que antes)
 $artistas = $conexion->query("SELECT * FROM artistas WHERE estatus_artista = 1")->fetchAll(PDO::FETCH_ASSOC);
@@ -23,7 +28,7 @@ $lista_canciones = $conexion->query($sql_list)->fetchAll(PDO::FETCH_ASSOC);
 <head>
     <meta charset="UTF-8">
     <title>Gestionar Canciones - Admin</title>
-    <link rel="stylesheet" href="../../../recursos/assets/css/root.css">
+    <link rel="stylesheet" href="<?php echo HOST; ?>recursos/assets/css/root.css">
     <style>
         /* (Tus estilos previos se mantienen igual) */
         body { font-family: sans-serif; display: flex; }
@@ -46,21 +51,7 @@ $lista_canciones = $conexion->query($sql_list)->fetchAll(PDO::FETCH_ASSOC);
 </head>
 <body>
 
-    <aside>
-        <h3>Admin Panel</h3>
-        <p><?php echo $_SESSION['nombre']; ?></p>
-        <hr>
-        <nav>
-            <a href="../../../index.php">Inicio</a>
-            <a href="generos.php">Gestionar Géneros</a>
-            <a href="artistas.php">Gestionar Artistas</a>
-            <a href="albumes.php">Gestionar Álbumes</a>
-            <a href="canciones.php">Gestionar Canciones</a>
-            <a href="nominaciones.php">Crear Nominaciones</a>
-            <hr>
-            <a href="../../backend/portal/logout.php">Cerrar Sesión</a>
-        </nav>
-    </aside>
+    <?php include '../../../recursos/recursos_panel/menu_lateral.php'; ?>
 
     <main>
         <h1>Gestión de Canciones</h1>
@@ -121,7 +112,7 @@ $lista_canciones = $conexion->query($sql_list)->fetchAll(PDO::FETCH_ASSOC);
                 <tr>
                     <td>
                         <?php if ($c['imagen_cancion']): ?>
-                            <img src="../<?php echo $c['imagen_cancion']; ?>" class="img-cancion" alt="Portada">
+                            <img src="<?php echo HOST . ltrim($c['imagen_cancion'], '/'); ?>" class="img-cancion" alt="Portada">
                         <?php else: ?>
                             <span>Sin foto</span>
                         <?php endif; ?>
