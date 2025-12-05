@@ -3,7 +3,7 @@
 $host = "localhost";
 $db_name = "mtvawards";
 $username = "root";
-$password = "root";
+$password = "";
 $conexion = null;
 
 try {

@@ -1,8 +1,13 @@
 <?php
 session_start();
 require_once '../../../config/conexion-bd.php';
+require_once '../../../config/constantes.php';
 
-if (!isset($_SESSION['rol']) || $_SESSION['rol'] != 1) { header("Location: ../login.php"); exit(); }
+// 2. Seguridad: Redirigir usando HOST
+if (!isset($_SESSION['rol']) || $_SESSION['rol'] != 1) {
+    header("Location: " . HOST . "app/views/portal/login.php");
+    exit();
+}
 
 // 1. Cargar Categorías Activas
 $categorias = $conexion->query("SELECT * FROM categorias_nominaciones WHERE estatus_categoria_nominacion = 1 ORDER BY id_categoria_nominacion DESC")->fetchAll(PDO::FETCH_ASSOC);
@@ -18,7 +23,7 @@ $canciones = $conexion->query("SELECT id_cancion, nombre_cancion FROM canciones 
 <head>
     <meta charset="UTF-8">
     <title>Nominaciones - Admin</title>
-    <link rel="stylesheet" href="../../../recursos/assets/css/root.css">
+    <link rel="stylesheet" href="<?php echo HOST; ?>recursos/assets/css/root.css">
     <style>
         body { font-family: sans-serif; display: flex; background: #f0f0f0; }
         aside { width: 250px; background: #222; color: #fff; min-height: 100vh; padding: 20px; flex-shrink: 0;}
@@ -51,22 +56,8 @@ $canciones = $conexion->query("SELECT id_cancion, nombre_cancion FROM canciones 
     </style>
 </head>
 <body>
-<a href="../../backend/portal/logout.php"></a>
-    <aside>
-        <h3>Admin Panel</h3>
-        <p><?php echo $_SESSION['nombre']; ?></p>
-        <hr>
-        <nav>
-            <a href="index.php">Inicio</a>
-            <a href="generos.php">Gestionar Géneros</a>
-            <a href="artistas.php">Gestionar Artistas</a>
-            <a href="albumes.php">Gestionar Álbumes</a>
-            <a href="canciones.php">Gestionar Canciones</a>
-            <a href="nominaciones.php">Crear Nominaciones</a>
-            <hr>
-            <a href="../../backend/portal/logout.php">Cerrar Sesión</a>
-        </nav>
-    </aside>
+
+    <?php include '../../../recursos/recursos_panel/menu_lateral.php'; ?>
 
     <main>
         <h1>Centro de Nominaciones</h1>

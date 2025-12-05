@@ -1,16 +1,18 @@
 <?php
 session_start();
+// 1. Incluir constantes (para usar HOST)
+require_once '../../../config/constantes.php';
 
 // 1. Validar si existe la sesión
 if (!isset($_SESSION['id_usuario'])) {
-    header("Location: ../../backend/portal/login.php");
+    header("Location: " . HOST . "app/views/portal/login.php");
     exit();
 }
 
 // 2. Validar si es Administrador (Rol 1)
 if ($_SESSION['rol'] != 1) {
     // Si es usuario normal o artista, lo mandamos al inicio público
-    header("Location: ../../../index.php");
+    header("Location: " . HOST . "index.php");
     exit();
 }
 ?>
@@ -20,6 +22,7 @@ if ($_SESSION['rol'] != 1) {
 <head>
     <meta charset="UTF-8">
     <title>Panel Admin - MTV Awards</title>
+    <link rel="stylesheet" href="<?php echo HOST; ?>recursos/assets/css/root.css">
     <style>
         /* Luego elimina esto we, es provisinal xd */
         body { font-family: sans-serif; display: flex; }
@@ -31,25 +34,16 @@ if ($_SESSION['rol'] != 1) {
 </head>
 <body>
 
-    <aside>
-        <h3>Admin Panel</h3>
-        <p>Hola, <?php echo $_SESSION['nombre']; ?></p>
-        <hr>
-        <nav>
-            <a href="../../../index.php">Inicio</a>
-            <a href="generos.php">Gestionar Géneros</a>
-            <a href="artistas.php">Gestionar Artistas</a>
-            <a href="albumes.php">Gestionar Álbumes</a>
-            <a href="canciones.php">Gestionar Canciones</a>
-            <a href="nominaciones.php">Crear Nominaciones</a>
-            <hr>
-            <a href="../../backend/portal/logout.php" style="color: #ff6b6b;">Cerrar Sesión</a>
-        </nav>
-    </aside>
+    <?php include '../../../recursos/recursos_panel/menu_lateral.php'; ?>
 
     <main>
         <h1>Bienvenido al Panel de Control</h1>
         <p>Desde aquí podrás administrar todo el contenido de los MTV Awards.</p>
+        
+        <div style="margin-top: 20px; padding: 20px; background: #f4f4f4; border-radius: 8px;">
+            <p><strong>Usuario activo:</strong> <?php echo $_SESSION['nombre']; ?></p>
+            <p>Selecciona una opción del menú lateral para comenzar.</p>
+        </div>
     </main>
 
 </body>

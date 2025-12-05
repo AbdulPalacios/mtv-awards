@@ -1,10 +1,11 @@
 <?php
 session_start();
-require_once '../../config/conexion-bd.php';
+require_once '../../../config/conexion-bd.php';
+require_once '../../../config/constantes.php';
 
-// Validar que sea admin (seguridad extra)
+// Validar Admin con HOST
 if (!isset($_SESSION['rol']) || $_SESSION['rol'] != 1) {
-    header("Location: ../../login.php");
+    header("Location: " . HOST . "app/views/portal/login.php");
     exit();
 }
 
@@ -21,12 +22,12 @@ if (isset($_POST['accion']) && $_POST['accion'] == 'crear') {
             $stmt->bindParam(':nombre', $nombre);
             $stmt->execute();
             
-            header("Location: ../../admin/generos.php?msj=creado");
+            header("Location: " . HOST . "app/views/panel/generos.php?msj=creado");
         } catch (PDOException $e) {
             echo "Error: " . $e->getMessage();
         }
     } else {
-        header("Location: ../../admin/generos.php?error=vacio");
+        header("Location: " . HOST . "app/views/panel/generos.php?error=vacio");
     }
 }
 
@@ -43,7 +44,7 @@ if (isset($_POST['accion']) && $_POST['accion'] == 'editar') {
             $stmt->bindParam(':id', $id);
             $stmt->execute();
             
-            header("Location: ../../admin/generos.php?msj=editado");
+            header("Location: " . HOST . "app/views/panel/generos.php?msj=editado");
         } catch (PDOException $e) {
             echo "Error: " . $e->getMessage();
         }
@@ -61,7 +62,7 @@ if (isset($_GET['accion']) && $_GET['accion'] == 'borrar' && isset($_GET['id']))
         $stmt->bindParam(':id', $id);
         $stmt->execute();
 
-        header("Location: ../../admin/generos.php?msj=borrado");
+        header("Location: " . HOST . "app/views/panel/generos.php?msj=borrado");
     } catch (PDOException $e) {
         echo "Error: " . $e->getMessage();
     }

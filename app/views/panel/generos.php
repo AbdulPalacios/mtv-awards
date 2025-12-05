@@ -1,10 +1,11 @@
 <?php
 session_start();
 require_once '../../../config/conexion-bd.php';
+require_once '../../../config/constantes.php';
 
-// Seguridad: Solo Admins
+// 2. Seguridad: Redirigir usando HOST
 if (!isset($_SESSION['rol']) || $_SESSION['rol'] != 1) {
-    header("Location: ../../backend/portal/login.php");
+    header("Location: " . HOST . "app/views/portal/login.php");
     exit();
 }
 
@@ -28,7 +29,7 @@ $lista_generos = $stmt_lista->fetchAll(PDO::FETCH_ASSOC);
 <head>
     <meta charset="UTF-8">
     <title>Gestionar Géneros - Admin</title>
-    <link rel="stylesheet" href="../../../recursos/assets/css/root.css">
+    <link rel="stylesheet" href="<?php echo HOST; ?>recursos/assets/css/root.css">
     <style>
         /* Estilos rápidos para el panel */
         body { font-family: sans-serif; display: flex; }
@@ -49,21 +50,7 @@ $lista_generos = $stmt_lista->fetchAll(PDO::FETCH_ASSOC);
 </head>
 <body>
 
-    <aside>
-        <h3>Admin Panel</h3>
-        <p>Usuario: <?php echo $_SESSION['nombre']; ?></p>
-        <hr>
-        <nav>
-            <a href="index.php">Inicio</a>
-            <a href="generos.php">Gestionar Géneros</a>
-            <a href="artistas.php">Gestionar Artistas</a>
-            <a href="albumes.php">Gestionar Álbumes</a>
-            <a href="canciones.php">Gestionar Canciones</a>
-            <a href="nominaciones.php">Crear Nominaciones</a>
-            <hr>
-            <a href="../../backend/portal/logout.php">Cerrar Sesión</a>
-        </nav>
-    </aside>
+    <?php include '../../../recursos/recursos_panel/menu_lateral.php'; ?>
 
     <main>
         <h1>Gestión de Géneros Musicales</h1>
