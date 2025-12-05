@@ -9,6 +9,7 @@ body {
     margin: 0;
     line-height: 1.5; 
     -webkit-font-smoothing: antialiased; /* Mejorar renderizado de fuentes */
+    color: var(--text-muted);
 }
 
 /* Asegurar que las imágenes y vídeos respondan */
