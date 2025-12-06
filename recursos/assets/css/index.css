@@ -184,6 +184,10 @@ h1{
     font-size: 1.2rem;
 }
 
+.nominados__ver-mas:hover a{
+    text-decoration: underline;
+}
+
 .nominados-h3{
     font-size: 1.2rem;
     font-weight: 800;

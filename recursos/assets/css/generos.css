@@ -1,0 +1,162 @@
+body {
+    background-color: var(--admin-bg);
+    color: var(--text-primary);
+    min-height: 100vh;
+}
+
+main {
+    margin-left: 280px; 
+    padding: 40px 50px;
+    width: calc(100% - 280px);
+    min-height: 100vh;
+    background-color: var(--admin-bg);
+}
+
+main h1 {
+    color: var(--neon-pink);
+    font-size: 2.5rem;
+    margin-bottom: 30px;
+    text-transform: uppercase;
+    font-weight: 800;
+    text-shadow: 0 0 10px rgba(255, 0, 204, 0.2);
+    border-bottom: 1px solid #333;
+    padding-bottom: 10px;
+}
+
+main h3 {
+    color: var(--btn-create);
+    margin-top: 40px;
+    margin-bottom: 15px;
+    font-size: 1.5rem;
+    border-left: 5px solid var(--btn-create);
+    padding-left: 15px;
+}
+
+.formulario-caja {
+    background-color: var(--panel-bg);
+    padding: 30px;
+    border-radius: 12px;
+    border: 1px solid var(--table-border);
+    max-width: 600px;
+    box-shadow: 0 5px 20px rgba(0,0,0,0.4);
+}
+
+.formulario-caja label {
+    display: block;
+    color: var(--text-secondary);
+    font-size: 0.9rem;
+    margin-bottom: 8px;
+    margin-top: 10px;
+    font-weight: 600;
+}
+
+.formulario-caja input[type="text"] {
+    width: 100%;
+    background-color: var(--admin-bg);
+    border: 1px solid #444;
+    color: white;
+    padding: 12px 15px;
+    border-radius: 6px;
+    font-size: 1rem;
+    outline: none;
+    transition: all 0.3s ease;
+}
+
+.formulario-caja input:focus {
+    border-color: var(--btn-create);
+    box-shadow: 0 0 8px rgba(0, 255, 255, 0.2);
+}
+
+.formulario-caja a {
+    color: var(--text-secondary) !important;
+    text-decoration: none;
+    margin-left: 15px;
+    font-size: 0.9rem;
+    transition: color 0.3s;
+}
+
+.formulario-caja a:hover {
+    color: var(--neon-pink) !important;
+    text-decoration: underline;
+}
+
+.btn-guardar {
+    background-color: var(--btn-create);
+    color: #000;
+    border: none;
+    padding: 12px 25px;
+    margin-top: 20px;
+    font-weight: bold;
+    text-transform: uppercase;
+    border-radius: 6px;
+    cursor: pointer;
+    transition: transform 0.2s, box-shadow 0.2s;
+}
+
+.btn-guardar:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 0 15px var(--btn-create);
+}
+
+table {
+    width: 100%;
+    max-width: 800px;
+    border-collapse: separate;
+    border-spacing: 0;
+    background-color: var(--panel-bg);
+    border-radius: 10px;
+    overflow: hidden;
+    margin-top: 20px;
+    margin-bottom: 50px;
+    border: 1px solid var(--table-border);
+}
+
+thead {
+    background-color: #252525;
+}
+
+th {
+    padding: 18px;
+    text-align: left;
+    color: var(--neon-cyan);
+    font-size: 0.85rem;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    border-bottom: 2px solid #444;
+}
+
+td {
+    padding: 15px;
+    border-bottom: 1px solid #333;
+    color: var(--text-primary);
+    vertical-align: middle;
+}
+
+tbody tr:hover {
+    background-color: rgba(255, 255, 255, 0.03);
+}
+
+.btn {
+    text-decoration: none;
+    padding: 8px 12px;
+    border-radius: 4px;
+    font-size: 0.8rem;
+    font-weight: bold;
+    display: inline-block;
+    margin-right: 5px;
+    transition: opacity 0.2s;
+}
+
+.btn:hover {
+    opacity: 0.8;
+}
+
+.btn-editar {
+    background-color: var(--btn-edit);
+    color: #000;
+}
+
+.btn-borrar {
+    background-color: var(--btn-delete);
+    color: white;
+}

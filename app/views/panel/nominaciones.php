@@ -23,37 +23,10 @@ $canciones = $conexion->query("SELECT id_cancion, nombre_cancion FROM canciones 
 <head>
     <meta charset="UTF-8">
     <title>Nominaciones - Admin</title>
+    <link rel="stylesheet" href="<?php echo HOST; ?>recursos/assets/css/reset.css">
     <link rel="stylesheet" href="<?php echo HOST; ?>recursos/assets/css/root.css">
-    <style>
-        body { font-family: sans-serif; display: flex; background: #f0f0f0; }
-        aside { width: 250px; background: #222; color: #fff; min-height: 100vh; padding: 20px; flex-shrink: 0;}
-        aside a { display: block; color: #ccc; text-decoration: none; margin: 10px 0; padding: 10px; }
-        aside a:hover { color: #fff; background: #444; }
-        
-        main { flex: 1; padding: 30px; overflow-y: auto; }
-
-        .panel-crear { background: white; padding: 20px; border-radius: 8px; box-shadow: 0 2px 5px rgba(0,0,0,0.1); margin-bottom: 30px; }
-        
-        .categoria-card { 
-            background: white; border-radius: 8px; padding: 20px; margin-bottom: 20px; border-left: 5px solid #e1306c; 
-            box-shadow: 0 2px 5px rgba(0,0,0,0.05);
-        }
-        .header-cat { display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid #eee; padding-bottom: 10px; margin-bottom: 15px;}
-        .badge { background: #333; color: white; padding: 3px 8px; border-radius: 10px; font-size: 0.8rem; }
-        
-        /* Formulario Inline dentro de la tarjeta */
-        .form-nominar { display: flex; gap: 10px; background: #f9f9f9; padding: 10px; border-radius: 5px; }
-        .form-nominar select { flex: 1; padding: 8px; }
-        .btn-add { background: #2ecc71; color: white; border: none; padding: 0 15px; cursor: pointer; border-radius: 4px;}
-        
-        /* Lista de nominados */
-        .lista-nominados { list-style: none; padding: 0; margin-top: 15px; display: flex; flex-wrap: wrap; gap: 10px;}
-        .nominado-item { background: #eee; padding: 5px 15px; border-radius: 20px; display: flex; align-items: center; gap: 10px; font-size: 0.9rem;}
-        .btn-x { color: red; text-decoration: none; font-weight: bold; }
-
-        input, select { padding: 8px; margin: 5px 0; }
-        .btn-main { background: #e1306c; color: white; border: none; padding: 10px 20px; cursor: pointer; border-radius: 4px; }
-    </style>
+    <link rel="stylesheet" href="<?php echo HOST; ?>recursos/assets/css/menu-lateral.css">
+    <link rel="stylesheet" href="<?php echo HOST; ?>recursos/assets/css/nominaciones.css">
 </head>
 <body>
 

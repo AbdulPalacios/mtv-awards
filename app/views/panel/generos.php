@@ -29,24 +29,10 @@ $lista_generos = $stmt_lista->fetchAll(PDO::FETCH_ASSOC);
 <head>
     <meta charset="UTF-8">
     <title>Gestionar Géneros - Admin</title>
+    <link rel="stylesheet" href="<?php echo HOST; ?>recursos/assets/css/reset.css">
     <link rel="stylesheet" href="<?php echo HOST; ?>recursos/assets/css/root.css">
-    <style>
-        /* Estilos rápidos para el panel */
-        body { font-family: sans-serif; display: flex; }
-        aside { width: 250px; background: #222; color: #fff; min-height: 100vh; padding: 20px; }
-        aside a { display: block; color: #ccc; text-decoration: none; margin: 10px 0; padding: 10px; }
-        aside a:hover { color: #fff; background: #444; }
-        main { flex: 1; padding: 40px; }
-        
-        .formulario-caja { background: #f4f4f4; padding: 20px; border-radius: 8px; margin-bottom: 30px; }
-        table { width: 100%; border-collapse: collapse; margin-top: 20px; }
-        th, td { border: 1px solid #ddd; padding: 12px; text-align: left; }
-        th { background-color: #333; color: white; }
-        .btn { padding: 5px 10px; text-decoration: none; border-radius: 4px; color: white; font-size: 0.9rem; }
-        .btn-editar { background-color: #f39c12; }
-        .btn-borrar { background-color: #e74c3c; }
-        .btn-guardar { background-color: #2ecc71; border: none; padding: 10px 20px; cursor: pointer; }
-    </style>
+    <link rel="stylesheet" href="<?php echo HOST; ?>recursos/assets/css/menu-lateral.css">
+    <link rel="stylesheet" href="<?php echo HOST; ?>recursos/assets/css/generos.css">
 </head>
 <body>
 

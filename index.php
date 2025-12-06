@@ -81,7 +81,7 @@
             <section class="nominados">
                 <div class="nominados__ver-mas">
                     <h2>Nominaciones</h2>
-                    <a href="#">Ver Más</a>
+                    <a href="app/views/portal/votar.php">Ver Más</a>
                 </div>
 
                 <h3 class="nominados-h3">Mejor Artista</h3>

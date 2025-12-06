@@ -1,0 +1,206 @@
+body {
+    background-color: var(--admin-bg);
+    color: var(--text-primary);
+    min-height: 100vh;
+}
+
+main {
+    margin-left: 280px; 
+    padding: 40px 50px;
+    width: calc(100% - 280px);
+    min-height: 100vh;
+    background-color: var(--admin-bg);
+}
+
+main h1 {
+    color: var(--neon-pink);
+    font-size: 2.5rem;
+    margin-bottom: 30px;
+    text-transform: uppercase;
+    font-weight: 800;
+    text-shadow: 0 0 10px rgba(255, 0, 204, 0.2);
+    border-bottom: 1px solid #333;
+    padding-bottom: 10px;
+}
+
+main h2 {
+    color: var(--text-primary);
+    margin-top: 50px;
+    margin-bottom: 20px;
+    font-size: 1.8rem;
+    border-left: 5px solid var(--neon-lime);
+    padding-left: 15px;
+}
+
+.panel-crear {
+    background-color: var(--panel-bg);
+    padding: 30px;
+    border-radius: 12px;
+    border: 1px solid var(--table-border);
+    box-shadow: 0 5px 20px rgba(0,0,0,0.4);
+    margin-bottom: 40px;
+}
+
+.panel-crear h3 {
+    color: var(--btn-create);
+    margin-bottom: 20px;
+    font-size: 1.4rem;
+    text-transform: uppercase;
+}
+
+.panel-crear label {
+    display: block;
+    color: var(--text-secondary);
+    font-size: 0.9rem;
+    margin-bottom: 8px;
+    font-weight: 600;
+}
+
+.panel-crear input[type="text"],
+.panel-crear input[type="date"],
+.panel-crear select {
+    background-color: var(--admin-bg);
+    border: 1px solid #444;
+    color: white;
+    padding: 12px 15px;
+    border-radius: 6px;
+    font-size: 1rem;
+    outline: none;
+    transition: all 0.3s ease;
+}
+
+.panel-crear input:focus,
+.panel-crear select:focus {
+    border-color: var(--btn-create);
+    box-shadow: 0 0 8px rgba(0, 255, 255, 0.2);
+}
+
+.btn-main {
+    background-color: var(--btn-create);
+    color: #000;
+    border: none;
+    padding: 12px 30px;
+    font-weight: bold;
+    text-transform: uppercase;
+    border-radius: 6px;
+    cursor: pointer;
+    transition: transform 0.2s;
+    font-size: 1rem;
+}
+
+.btn-main:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 0 15px var(--btn-create);
+}
+
+.categoria-card {
+    background-color: var(--panel-bg);
+    border: 1px solid var(--table-border);
+    border-radius: 10px;
+    padding: 20px;
+    margin-bottom: 30px;
+    position: relative;
+    transition: border-color 0.3s;
+}
+
+.categoria-card:hover {
+    border-color: var(--neon-violet);
+}
+
+.header-cat {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-bottom: 1px solid #333;
+    padding-bottom: 15px;
+    margin-bottom: 15px;
+}
+
+.header-cat strong {
+    color: var(--text-primary);
+    font-size: 1.3rem !important;
+}
+
+.badge {
+    background-color: var(--neon-violet);
+    color: white;
+    padding: 4px 10px;
+    border-radius: 20px;
+    font-size: 0.8rem;
+    margin-left: 10px;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+
+.form-nominar {
+    display: flex;
+    gap: 10px;
+    margin-bottom: 20px;
+    background-color: rgba(0,0,0,0.2);
+    padding: 15px;
+    border-radius: 8px;
+}
+
+.form-nominar select {
+    flex-grow: 1;
+    background-color: var(--admin-bg);
+    border: 1px solid #444;
+    color: white;
+    padding: 10px;
+    border-radius: 4px;
+    outline: none;
+}
+
+.btn-add {
+    background-color: var(--neon-lime);
+    color: black;
+    border: none;
+    padding: 0 20px;
+    font-weight: bold;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background 0.2s;
+}
+
+.btn-add:hover {
+    background-color: white;
+}
+
+.lista-nominados {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.nominado-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px;
+    border-bottom: 1px solid #333;
+    color: var(--text-secondary);
+}
+
+.nominado-item:last-child {
+    border-bottom: none;
+}
+
+.nominado-item:hover {
+    background-color: rgba(255, 255, 255, 0.05);
+    color: var(--text-primary);
+}
+
+.btn-x {
+    color: var(--btn-delete);
+    text-decoration: none;
+    font-weight: bold;
+    font-size: 1.2rem;
+    padding: 0 10px;
+    transition: color 0.2s;
+}
+
+.btn-x:hover {
+    color: white;
+    background-color: var(--btn-delete);
+    border-radius: 50%;
+}
