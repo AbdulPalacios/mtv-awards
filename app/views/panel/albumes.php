@@ -28,23 +28,10 @@ $lista_albumes = $conexion->query($sql_list)->fetchAll(PDO::FETCH_ASSOC);
 <head>
     <meta charset="UTF-8">
     <title>Gestionar Álbumes - Admin</title>
+    <link rel="stylesheet" href="<?php echo HOST; ?>recursos/assets/css/reset.css">
     <link rel="stylesheet" href="<?php echo HOST; ?>recursos/assets/css/root.css">
-    <style>
-        body { font-family: sans-serif; display: flex; }
-        aside { width: 250px; background: #222; color: #fff; min-height: 100vh; padding: 20px; }
-        aside a { display: block; color: #ccc; text-decoration: none; margin: 10px 0; padding: 10px; }
-        aside a:hover { color: #fff; background: #444; }
-        main { flex: 1; padding: 40px; }
-        .formulario-caja { background: #f9f9f9; padding: 20px; border-radius: 8px; margin-bottom: 30px; border: 1px solid #ddd; }
-        input, select, textarea { width: 100%; padding: 8px; margin: 5px 0 15px; box-sizing: border-box; }
-        table { width: 100%; border-collapse: collapse; }
-        th, td { border: 1px solid #ddd; padding: 10px; text-align: left; vertical-align: middle; }
-        th { background-color: #333; color: white; }
-        .portada-mini { width: 60px; height: 60px; object-fit: cover; border-radius: 4px; }
-        .btn { padding: 5px 10px; color: white; text-decoration: none; border-radius: 4px; }
-        .btn-borrar { background: #e74c3c; }
-        .btn-guardar { background: #2ecc71; border: none; padding: 10px 20px; cursor: pointer; }
-    </style>
+    <link rel="stylesheet" href="<?php echo HOST; ?>recursos/assets/css/menu-lateral.css">
+    <link rel="stylesheet" href="<?php echo HOST; ?>recursos/assets/css/albumes.css">
 </head>
 <body>
 

@@ -1,0 +1,82 @@
+/* --- ESTILOS DEL MENÚ LATERAL (ADMIN) --- */
+
+aside {
+    position: fixed;
+    top: 0;
+    left: 0;
+    height: 100vh;
+    width: 260px;
+    background-color: var(--panel-bg);
+    border-right: 1px solid var(--table-border); 
+    padding: 30px 20px;
+    display: flex;
+    flex-direction: column;
+    box-shadow: 4px 0 15px rgba(0,0,0,0.3); 
+    z-index: 1000;
+}
+
+aside h3 {
+    color: var(--btn-create); 
+    font-size: 1.5rem;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    margin-bottom: 5px;
+    font-weight: 800;
+}
+
+aside p {
+    color: var(--text-secondary);
+    font-size: 0.9rem;
+    margin-bottom: 20px;
+}
+
+aside hr {
+    border: 0;
+    height: 1px;
+    background-color: var(--table-border);
+    margin: 15px 0;
+}
+
+aside nav {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+aside nav a {
+    text-decoration: none;
+    color: var(--text-primary);
+    padding: 12px 15px;
+    border-radius: 8px;
+    font-size: 0.95rem;
+    font-weight: 500;
+    transition: all 0.3s ease;
+    border-left: 3px solid transparent;
+}
+
+aside nav a:hover {
+    background-color: rgba(255, 255, 255, 0.05); 
+    color: var(--btn-create); 
+    border-left-color: var(--btn-create);
+    padding-left: 20px; 
+}
+
+aside nav a.active {
+    background-color: rgba(0, 255, 255, 0.1);
+    color: var(--btn-create);
+    border-left-color: var(--btn-create);
+}
+
+aside nav a.logout {
+    margin-top: 10px;
+    color: var(--btn-delete) !important;
+    border: 1px solid var(--btn-delete);
+    text-align: center;
+    border-left: 1px solid var(--btn-delete);
+}
+
+aside nav a.logout:hover {
+    background-color: var(--btn-delete);
+    color: var(--text-on-delete) !important;
+    padding-left: 15px;
+}

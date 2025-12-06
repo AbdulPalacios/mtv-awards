@@ -15,6 +15,6 @@ require_once __DIR__ . '/../../config/constantes.php';
         <a href="<?php echo HOST; ?>app/views/panel/canciones.php">Gestionar Canciones</a>
         <a href="<?php echo HOST; ?>app/views/panel/nominaciones.php">Crear Nominaciones</a>
         <hr>
-        <a href="<?php echo HOST; ?>app/backend/portal/logout.php" style="color:red;">Cerrar Sesión</a>
+        <a href="<?php echo HOST; ?>app/backend/portal/logout.php" class="logout">Cerrar Sesión</a>
     </nav>
 </aside>

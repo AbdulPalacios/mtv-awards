@@ -1,0 +1,55 @@
+.main {
+    margin-left: 260px; 
+    padding: 40px 50px;
+    min-height: 100vh;
+    background-color: var(--admin-bg);
+    color: var(--text-primary);
+    transition: margin-left 0.3s ease;
+}
+
+.main h1 {
+    color: var(--neon-pink);
+    font-size: 2.5rem;
+    font-weight: 700;
+    margin-bottom: 10px;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    text-shadow: 0 0 10px rgba(255, 0, 204, 0.2);
+}
+
+.main > p {
+    color: var(--text-secondary);
+    font-size: 1.1rem;
+    margin-bottom: 40px;
+    border-bottom: 1px solid var(--table-border);
+    padding-bottom: 20px;
+    width: 100%;
+}
+
+.dashboard {
+    background-color: var(--panel-bg);
+    border: 1px solid var(--table-border);
+    border-radius: 10px;
+    padding: 30px;
+    max-width: 800px;
+    border-left: 5px solid var(--btn-create); 
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+}
+
+.dashboard p strong {
+    color: var(--btn-create);
+    font-size: 1.2rem;
+}
+
+.dashboard p {
+    margin-bottom: 10px;
+    line-height: 1.6;
+    font-size: 1rem;
+    color: var(--text-primary);
+}
+
+.dashboard p:last-child {
+    color: var(--text-secondary);
+    font-style: italic;
+    margin-top: 15px;
+}

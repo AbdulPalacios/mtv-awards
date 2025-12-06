@@ -7,7 +7,7 @@
 body {
     font-family: sans-serif;
     margin: 0;
-    line-height: 1.5; 
+    line-height: 1.5;
     -webkit-font-smoothing: antialiased; /* Mejorar renderizado de fuentes */
     color: var(--text-muted);
 }
