@@ -1,0 +1,84 @@
+body { 
+            background-color: var(--bg-color); 
+            color: white; 
+            background-image: url('../img/background-index.webp'); 
+            background-attachment: fixed; 
+            background-size: cover; 
+        }
+        .detalle-container {
+            max-width: 900px; 
+            margin: 100px auto; 
+            background: rgba(15, 15, 15, 0.95);
+            padding: 40px; 
+            border-radius: 15px; 
+            border: 1px solid var(--neon-violet);
+            display: flex; 
+            gap: 40px; 
+            box-shadow: 0 0 40px rgba(157, 0, 255, 0.3);
+            flex-wrap: wrap; /* Para móviles */
+        }
+        .img-col {
+            flex: 1;
+            min-width: 300px;
+        }
+        .img-col img { 
+            width: 100%; 
+            border-radius: 12px; 
+            border: 3px solid var(--neon-cyan); 
+            box-shadow: 0 0 15px var(--neon-cyan);
+        }
+        .info-col {
+            flex: 1.5;
+            min-width: 300px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+        .info-col h1 { 
+            color: var(--neon-lime); 
+            font-size: 3rem; 
+            text-transform: uppercase; 
+            margin-bottom: 5px; 
+            line-height: 1;
+            text-shadow: 0 0 10px rgba(204, 255, 0, 0.4);
+        }
+        .subtitle {
+            color: var(--neon-pink);
+            font-size: 1.2rem;
+            font-weight: bold;
+            margin-bottom: 25px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+        .desc-box {
+            background-color: rgba(255,255,255,0.05);
+            padding: 20px;
+            border-radius: 10px;
+            border-left: 4px solid var(--neon-cyan);
+            margin-bottom: 20px;
+        }
+        .desc-box p {
+            line-height: 1.6;
+            color: #ddd;
+            font-size: 1rem;
+        }
+        .extra-data {
+            font-size: 0.9rem;
+            color: #aaa;
+            margin-bottom: 30px;
+        }
+        .btn-back { 
+            align-self: flex-start;
+            padding: 10px 30px; 
+            border: 1px solid white; 
+            color: white; 
+            text-decoration: none; 
+            border-radius: 30px; 
+            font-weight: bold;
+            transition: all 0.3s;
+        }
+        .btn-back:hover { 
+            background: white; 
+            color: black; 
+            box-shadow: 0 0 15px white;
+        }

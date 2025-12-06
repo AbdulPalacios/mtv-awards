@@ -1,4 +1,12 @@
-<?php require_once __DIR__ . '/../../config/constantes.php';?>
+<?php 
+require_once __DIR__ . '/../../config/constantes.php';
+
+// Asegurarnos que la sesión esté iniciada para poder leer $_SESSION
+if (session_status() === PHP_SESSION_NONE) {
+    session_start();
+}
+?>
+
 <header class="navbar">
 <div class="navbar-content">
     <div class="navbar-left">
@@ -9,7 +17,7 @@
         </div> 
         <nav class="nav-links">
             <a href="<?php echo HOST; ?>index.php">Home</a>
-            <a href="<?php echo HOST; ?>app/views/portal/ranking.php">Ranking en Vivo</a> <!-- style="color: var(--neon-lime);" -->
+            <a href="<?php echo HOST; ?>app/views/portal/ranking.php">Ranking en Vivo</a>
             <a href="https://www.mtv.com/series/all-content">Browse</a>
             <div class="dropdown">
                     <a href="#">Fan Favorites <span class="dropdown-arrow">▼</span></a>
@@ -32,8 +40,37 @@
             <a href="https://www.mtv.com/how-to-watch">How to Watch</a>
         </nav>
     </div>
-    <div class="navbar-right">
-        <a href="<?php echo HOST; ?>app/views/portal/login.php" class="paramount-btn">Iniciar sesión</a>
+    
+    <div class="navbar-right" style="display: flex; gap: 15px; align-items: center;">
+        
+        <?php if(isset($_SESSION['id_usuario'])): ?>
+            
+            <?php 
+                // 1. URL por defecto (Genera una imagen con la inicial del nombre)
+                $foto_perfil = "https://ui-avatars.com/api/?name=" . urlencode($_SESSION['nombre']) . "&background=random&color=fff";
+
+                // 2. Si el usuario tiene imagen en BD (y la sesión la tiene guardada), la usamos
+                if (!empty($_SESSION['imagen'])) {
+                    $foto_perfil = HOST . ltrim($_SESSION['imagen'], '/');
+                }
+            ?>
+
+            <img src="<?php echo $foto_perfil; ?>" alt="Perfil" class="user-avatar" title="Hola, <?php echo $_SESSION['nombre']; ?>">
+
+            <?php if($_SESSION['rol'] == 1): ?>
+                <a href="<?php echo HOST; ?>app/views/panel/dashboard.php" class="paramount-btn" style="background-color: var(--neon-cyan); color: black;">
+                    Panel Admin
+                </a>
+            <?php endif; ?>
+
+            <a href="<?php echo HOST; ?>app/backend/portal/logout.php" class="paramount-btn">
+                Cerrar Sesión
+            </a>
+
+        <?php else: ?>
+            <a href="<?php echo HOST; ?>app/views/portal/login.php" class="paramount-btn">Iniciar sesión</a>
+        <?php endif; ?>
+        
     </div>
 </div>
 </header>

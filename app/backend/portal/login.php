@@ -29,6 +29,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                 $_SESSION['id_usuario'] = $usuario['id_usuario'];
                 $_SESSION['nombre'] = $usuario['nombre_usuario'];
                 $_SESSION['rol'] = $usuario['id_rol'];
+                $_SESSION['imagen'] = $usuario['imagen_usuario']; // <--- NUEVA LÍNEA
 
                 // 5. Redireccionar según rol (Usando HOST)
                 // En tu SQL actual: 1 = Admin

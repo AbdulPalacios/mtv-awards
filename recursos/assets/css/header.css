@@ -110,3 +110,16 @@
 .paramount-btn:hover {
     background-color: #d19316;
 }
+
+.user-avatar {
+        width: 40px;
+        height: 40px;
+        border-radius: 50%;       /* Hace la imagen redonda */
+        object-fit: cover;        /* Evita que la imagen se deforme */
+        border: 2px solid #CCFF00; /* Borde color Neón Lime (acorde a tu tema) */
+        transition: transform 0.2s;
+        cursor: pointer;
+    }
+    .user-avatar:hover {
+        transform: scale(1.1);
+    }

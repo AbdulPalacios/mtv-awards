@@ -31,8 +31,8 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $pass_hash = password_hash($password, PASSWORD_DEFAULT);
 
     // 4. Valores por defecto
-    $estatus = 1; // 1 = Activo
-    $id_rol = 2;  // Asumimos que 2 es 'Fan' o 'Usuario'. Asegúrate de tener este rol en la tabla `roles`.
+    $estatus = 1; // 1 = Admin
+    $id_rol = 4;  //Rol 4 es Audiencia
 
     // 5. Insertar usuario
     try {
