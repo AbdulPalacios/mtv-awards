@@ -1,0 +1,89 @@
+body {
+            background-image: url('../img/background-index.webp');
+            background-size: cover;
+            background-attachment: fixed;
+            color: white;
+        }
+        .ranking-container {
+            max-width: 1000px;
+            margin: 50px auto;
+            padding: 20px;
+        }
+        .titulo-ranking {
+            text-align: center;
+            color: var(--neon-lime);
+            font-size: 3rem;
+            text-transform: uppercase;
+            margin-bottom: 40px;
+            text-shadow: 0 0 15px var(--neon-lime);
+            font-style: italic;
+            font-weight: 900;
+        }
+        
+        /* Tarjeta de Ranking */
+        .rank-card {
+            display: flex;
+            align-items: center;
+            background: rgba(20, 20, 20, 0.9);
+            border: 1px solid var(--neon-pink);
+            margin-bottom: 20px;
+            border-radius: 15px;
+            overflow: hidden;
+            box-shadow: 0 0 20px rgba(255, 0, 204, 0.2);
+            transition: transform 0.3s;
+        }
+        .rank-card:hover {
+            transform: scale(1.02);
+            border-color: var(--neon-cyan);
+        }
+
+        /* Posición (1, 2, 3...) */
+        .rank-number {
+            font-size: 4rem;
+            font-weight: 900;
+            padding: 0 30px;
+            color: var(--text-muted);
+            font-style: italic;
+        }
+        .rank-1 .rank-number { color: #FFD700; text-shadow: 0 0 10px #FFD700; } /* Oro */
+        .rank-2 .rank-number { color: #C0C0C0; text-shadow: 0 0 10px #C0C0C0; } /* Plata */
+        .rank-3 .rank-number { color: #CD7F32; text-shadow: 0 0 10px #CD7F32; } /* Bronce */
+
+        .rank-img {
+            width: 120px;
+            height: 120px;
+            object-fit: cover;
+            border-right: 2px solid var(--neon-violet);
+        }
+
+        .rank-info {
+            padding: 20px;
+            flex-grow: 1;
+        }
+        .rank-info h3 {
+            margin: 0;
+            font-size: 1.5rem;
+            color: white;
+            text-transform: uppercase;
+        }
+        .rank-info span {
+            color: var(--neon-cyan);
+            font-size: 0.9rem;
+            font-weight: bold;
+        }
+        .rank-votes {
+            padding: 0 30px;
+            text-align: center;
+            border-left: 1px solid #444;
+        }
+        .vote-count {
+            font-size: 1.8rem;
+            color: var(--neon-lime);
+            font-weight: bold;
+            display: block;
+        }
+        .vote-label {
+            font-size: 0.8rem;
+            color: #aaa;
+            text-transform: uppercase;
+        }

@@ -9,6 +9,7 @@
         </div> 
         <nav class="nav-links">
             <a href="<?php echo HOST; ?>index.php">Home</a>
+            <a href="<?php echo HOST; ?>app/views/portal/ranking.php">Ranking en Vivo</a> <!-- style="color: var(--neon-lime);" -->
             <a href="https://www.mtv.com/series/all-content">Browse</a>
             <div class="dropdown">
                     <a href="#">Fan Favorites <span class="dropdown-arrow">▼</span></a>
