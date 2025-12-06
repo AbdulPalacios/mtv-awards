@@ -32,7 +32,6 @@ $top_ranking = $conexion->query($sql_ranking)->fetchAll(PDO::FETCH_ASSOC);
     <link rel="stylesheet" href="<?php echo HOST; ?>recursos/assets/css/header.css">
     <link rel="stylesheet" href="<?php echo HOST; ?>recursos/assets/css/footer.css">
     <link rel="stylesheet" href="<?php echo HOST; ?>recursos/assets/css/ranking.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 </head>
 <body>
 
@@ -100,5 +99,6 @@ $top_ranking = $conexion->query($sql_ranking)->fetchAll(PDO::FETCH_ASSOC);
         <?php include('../../../recursos/recursos_portal/footer.php'); ?>
     </footer>
 
+    <script src="https://kit.fontawesome.com/e2dc84faef.js" crossorigin="anonymous"></script>
 </body>
 </html>
