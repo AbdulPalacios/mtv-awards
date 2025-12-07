@@ -4,12 +4,14 @@ body{
     justify-content: space-between;
     min-height: 100dvh;
     position: relative;
+    font-family: sans-serif;
 }
 
 .header-container{
     position: fixed;
     display: block;
     width: 100%;
+    z-index: 1000;
 }
 
 .hero{
@@ -42,7 +44,7 @@ h1{
     max-width: 60%;
     display: block;
     color: #fff;
-    font-size: 1,2rem;
+    font-size: 1.2rem;
     font-weight: 900;
     margin: 10px 0;
     text-shadow: 1px 1px 5px rgba(0, 0, 0, 0.8);
@@ -56,8 +58,9 @@ h1{
     background-color: #fcb114;
     padding: 5px 20px;
     font-weight: 900;
-    transition: 
-        transform 0.5s ease;
+    transition: transform 0.5s ease;
+    text-decoration: none;
+    border-radius: 5px;
 }
 
 .votar:hover{
@@ -162,10 +165,10 @@ h1{
     margin-bottom: 30px;
 }
 
-/* NOMINACIONES */
+/* NOMINACIONES Y SLIDER */
 
 .nominados{
-    width: 80%;
+    width: 95%; /* Más ancho para el slider */
     margin: 60px auto;
 }
 
@@ -173,15 +176,18 @@ h1{
     display: flex;
     justify-content: space-between;
     align-items: center;
+    margin-bottom: 20px;
 }
 
 .nominados__ver-mas h2{
     text-transform: uppercase;
     font-weight: 700;
+    color: white;
 }
 
 .nominados__ver-mas a{
     font-size: 1.2rem;
+    color: var(--neon-cyan);
 }
 
 .nominados__ver-mas:hover a{
@@ -189,201 +195,109 @@ h1{
 }
 
 .nominados-h3{
-    font-size: 1.2rem;
+    font-size: 1.5rem;
     font-weight: 800;
+    color: var(--neon-lime);
+    margin-bottom: 15px;
+    text-transform: uppercase;
 }
 
-.nominados__container{
-    width: 100%;
+/* --- ESTILOS DEL SLIDER HORIZONTAL --- */
+
+.nominados__container {
     display: flex;
+    flex-wrap: nowrap !important; /* Fuerza una sola línea */
+    overflow-x: auto;             /* Activa el scroll horizontal */
     gap: 20px;
+    padding-bottom: 20px;         /* Espacio para la barra de desplazamiento */
+    scroll-behavior: smooth;      /* Deslizamiento suave */
+    -webkit-overflow-scrolling: touch; /* Mejor experiencia en táctil */
+    width: 100%;
 }
 
-.card{
-    width: 15%;
-    height: 40vh;
-    background-position: top center;
+/* Personalización de la barra de desplazamiento (Scrollbar Neón) */
+.nominados__container::-webkit-scrollbar {
+    height: 8px;
+}
+.nominados__container::-webkit-scrollbar-track {
+    background: #111;
+    border-radius: 4px;
+}
+.nominados__container::-webkit-scrollbar-thumb {
+    background: var(--neon-pink);
+    border-radius: 4px;
+}
+.nominados__container::-webkit-scrollbar-thumb:hover {
+    background: var(--neon-violet);
+}
+
+/* Ajuste de las tarjetas para que no se deformen en el slider */
+.card {
+    flex: 0 0 auto;  /* Evita que se encojan, mantienen su tamaño */
+    width: 200px;    /* Ancho fijo para uniformidad */
+    min-height: 300px;
     background-size: cover;
-    background-repeat: no-repeat;
+    background-position: center;
+    border: 1px solid #333;
+    transition: transform 0.3s ease;
+    position: relative;
     display: flex;
     flex-direction: column;
-    justify-content: end;
-    padding: 5px 15px;
-    border-radius: 12px; 
-    box-shadow: 0 4px 15px rgba(0,0,0,0.7); 
+    justify-content: flex-end;
+    padding: 15px;
+    border-radius: 12px; /* Redondeo acorde a tu diseño */
+    overflow: hidden;
 }
 
-/* Nombre del Artista */
-.nombre {
-    font-size: 1.1rem;
-    font-weight: 800; 
-    text-transform: uppercase;
-    letter-spacing: 1px;
-    text-shadow: 1px 1px 5px rgba(0, 0, 0, 0.8);
+/* Degradado oscuro para que el texto se lea siempre sobre la imagen */
+.card::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0; bottom: 0;
+    background: linear-gradient(to top, rgba(0,0,0,0.9) 0%, rgba(0,0,0,0.3) 50%, rgba(0,0,0,0) 100%);
+    z-index: 1;
 }
 
-.card p {
-    font-size: 0.9rem;
-    color: var(--text-muted); 
-    line-height: 1.4;
+.card > * {
+    position: relative;
+    z-index: 2;
 }
 
-.card a {
-    display: inline-block;
+.card:hover {
+    transform: scale(1.02);
+    border-color: var(--neon-cyan);
+    z-index: 10;
+}
+
+/* Botón Detalles estilo Neón */
+.btn-detalles {
+    display: block;
     text-align: center;
-    background-color: #1DB954; 
+    background-color: var(--neon-pink);
     color: white;
-    padding: 8px 16px;
+    padding: 8px 0;
     border-radius: 20px;
+    text-decoration: none;
     font-weight: bold;
-    font-size: 0.8rem;
-    transition: transform 0.2s ease;
+    font-size: 0.9rem;
+    margin-top: 10px;
+    width: 100%;
+    box-shadow: 0 0 10px rgba(255, 0, 204, 0.3);
+    transition: all 0.2s;
 }
 
-.card a:hover {
+.btn-detalles:hover {
+    background-color: white;
+    color: var(--neon-pink);
     transform: scale(1.05);
-    background-color: #1ed760;
 }
 
-.card p, .card a {
-    opacity: 0;
-    transform: translateY(20px);
-    transition: all 0.3s ease-in-out;
-}
-
-.card:hover p, .card:hover a {
-    opacity: 1;
-    transform: translateY(0);
-}
-
-#faraon{
-    background-image: 
-    linear-gradient(
-            to top,
-            rgb(0, 0, 0)0%,
-            rgba(0, 0, 0, 0.6)30%,
-            rgba(0, 0, 0, 0)70%
-    ),
-    url(../uploads/artistas/1764557080_images.webp);
-}
-#badbunny{
-    background-image: 
-    linear-gradient(
-            to top,
-            rgb(0, 0, 0)0%,
-            rgba(0, 0, 0, 0.5)40%,
-            rgba(0, 0, 0, 0)70%
-    ),
-    url(../uploads/artistas/badbunny.jpg);
-}
-
-#romeo_santos{
-    background-image: 
-    linear-gradient(
-            to top,
-            rgb(0, 0, 0)0%,
-            rgba(0, 0, 0, 0.5)40%,
-            rgba(0, 0, 0, 0)70%
-    ),
-    url(../uploads/artistas/romeo_santos.jpg)
-}
-
-#the_weeknd{
-    background-image: 
-    linear-gradient(
-            to top,
-            rgb(0, 0, 0)0%,
-            rgba(0, 0, 0, 0.5)40%,
-            rgba(0, 0, 0, 0)70%
-    ),
-    url(../uploads/artistas/the_weeknd.png);
-    background-position: right;
-}
-
-#xxxtentacion{
-    background-image: 
-    linear-gradient(
-            to top,
-            rgb(0, 0, 0)0%,
-            rgba(0, 0, 0, 0.5)40%,
-            rgba(0, 0, 0, 0)70%
-    ),
-    url(../uploads/artistas/Xxxtentacion.jpg)
-}
-
-#canserbero{
-    background-image: 
-    linear-gradient(
-            to top,
-            rgb(0, 0, 0)0%,
-            rgba(0, 0, 0, 0.5)40%,
-            rgba(0, 0, 0, 0)70%
-    ),
-    url(../uploads/artistas/canserberojpg.jpg)
-}
-
-#stars_dance{
-    background-image: 
-    linear-gradient(
-            to top,
-            rgb(0, 0, 0)0%,
-            rgba(0, 0, 0, 0.5)40%,
-            rgba(0, 0, 0, 0)70%
-    ),
-    url(../uploads/album/stars_dance.jpg)
-}
-
-#verano{
-    background-image: 
-    linear-gradient(
-            to top,
-            rgb(0, 0, 0)0%,
-            rgba(0, 0, 0, 0.5)40%,
-            rgba(0, 0, 0, 0)70%
-    ),
-    url(../uploads/album/verano.jpg)
-}
-
-#formula{
-    background-image: 
-    linear-gradient(
-            to top,
-            rgb(0, 0, 0)0%,
-            rgba(0, 0, 0, 0.5)40%,
-            rgba(0, 0, 0, 0)70%
-    ),
-    url(../uploads/album/formula_vol3.jpg);
-}
-
-#genesis{
-    background-image: 
-    linear-gradient(
-            to top,
-            rgb(0, 0, 0)0%,
-            rgba(0, 0, 0, 0.5)40%,
-            rgba(0, 0, 0, 0)70%
-    ),
-    url(../uploads/album/genesis.jpg)
-}
-
-#muerte{
-    background-image: 
-    linear-gradient(
-            to top,
-            rgb(0, 0, 0)0%,
-            rgba(0, 0, 0, 0.5)40%,
-            rgba(0, 0, 0, 0)70%
-    ),
-    url(../uploads/album/muerte.jpg)
-}
-
-#x17{
-    background-image: 
-    linear-gradient(
-            to top,
-            rgb(0, 0, 0)0%,
-            rgba(0, 0, 0, 0.5)40%,
-            rgba(0, 0, 0, 0)70%
-    ),
-    url(../uploads/album/albumXTentacion.jpg)
+.nombre {
+    text-shadow: 2px 2px 4px rgba(0,0,0,0.9);
+    font-size: 1.1rem;
+    font-weight: 800;
+    text-transform: uppercase;
+    margin-bottom: 5px;
+    color: white;
+    line-height: 1.2;
 }

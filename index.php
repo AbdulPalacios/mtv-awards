@@ -2,11 +2,10 @@
 require_once 'config/conexion-bd.php';
 require_once 'config/constantes.php';
 
-// CONSULTA DINÁMICA: Traer todos los artistas activos
+// CONSULTAS DINÁMICAS
 $sql_artistas = "SELECT * FROM artistas WHERE estatus_artista = 1";
 $artistas = $conexion->query($sql_artistas)->fetchAll(PDO::FETCH_ASSOC);
 
-// CONSULTA DINÁMICA: Traer todos los álbumes activos
 $sql_albumes = "SELECT * FROM albumes WHERE estatus_album = 1";
 $albumes = $conexion->query($sql_albumes)->fetchAll(PDO::FETCH_ASSOC);
 ?>
@@ -17,6 +16,7 @@ $albumes = $conexion->query($sql_albumes)->fetchAll(PDO::FETCH_ASSOC);
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>MTV Video Music Awards 2025</title>
+    
     <link rel="stylesheet" href="<?php echo HOST; ?>recursos/assets/css/reset.css">
     <link rel="stylesheet" href="<?php echo HOST; ?>recursos/assets/css/root.css">
     <link rel="stylesheet" href="<?php echo HOST; ?>recursos/assets/css/header.css">
@@ -47,6 +47,25 @@ $albumes = $conexion->query($sql_albumes)->fetchAll(PDO::FETCH_ASSOC);
                     <span id="segundos" class="countdown-number">00</span>S
                 </p>
             </div>
+
+            <div class="mtv-music-container">
+                <h2>MTV Video Music Awards</h2>
+                <p>Los MTV Video Music Awards están dedicados a celebrar a los artistas y videos musicales más importantes del año con actuaciones, honores y más.</p>
+                <ul>
+                    <li><a href="https://www.facebook.com/VMAs/"><i class="fa-brands fa-square-facebook"></i></a></li>
+                    <li><a href="https://www.instagram.com/vmas/"><i class="fa-brands fa-instagram"></i></a></li>
+                    <li><a href="https://x.com/vmas"><i class="fa-brands fa-x-twitter"></i></a></li>
+                </ul>
+            </div>
+
+            <section class="about-awards">
+                <h2>Sobre los MTV Awards</h2>
+                <p>
+                    Los MTV Awards son la premiación definitiva que celebra la excelencia musical. 
+                    Reconocemos la trayectoria de los artistas más influyentes y las producciones 
+                    discográficas que marcaron el año. Tu voz es lo más importante.
+                </p>
+            </section>
             
             <section class="nominados">
                 <div class="nominados__ver-mas">
@@ -55,47 +74,45 @@ $albumes = $conexion->query($sql_albumes)->fetchAll(PDO::FETCH_ASSOC);
                 </div>
 
                 <h3 class="nominados-h3">Mejor Artista</h3>
-                <div class="nominados__container" style="flex-wrap: wrap;"> <?php foreach($artistas as $art): ?>
+                
+                <div class="nominados__container">
+                    <?php foreach($artistas as $art): ?>
                         <?php 
-                            // Construir ruta de imagen
                             $img = !empty($art['imagen_artista']) ? HOST . ltrim($art['imagen_artista'], '/') : 'https://via.placeholder.com/300x400';
                         ?>
                         
-                        <div class="card" style="background-image: linear-gradient(to top, black 0%, transparent 70%), url('<?php echo $img; ?>');">
+                        <div class="card" style="background-image: url('<?php echo $img; ?>');">
+                            
                             <span class="nombre"><?php echo htmlspecialchars($art['pseudonimo_artista']); ?></span>
                             
-                            <div style="margin-top: auto; display: flex; gap: 5px; justify-content: center; width: 100%;">
-                                <a href="app/views/portal/detalles.php?tipo=artista&id=<?php echo $art['id_artista']; ?>" 
-                                   style="background-color: var(--neon-pink); width: 100%;">
-                                   Detalles
-                                </a>
-                            </div>
+                            <a href="app/views/portal/detalles.php?tipo=artista&id=<?php echo $art['id_artista']; ?>" class="btn-detalles">
+                               Detalles
+                            </a>
+
                         </div>
                     <?php endforeach; ?>
-
                 </div>
 
-                <h3 class="nominados-h3" style="margin-top: 50px;">Mejor Álbum</h3>
-                <div class="nominados__container" style="flex-wrap: wrap;">
-                    
+                <h3 class="nominados-h3" style="margin-top: 40px;">Mejor Álbum</h3>
+                
+                <div class="nominados__container">
                     <?php foreach($albumes as $alb): ?>
                         <?php 
                             $img_alb = !empty($alb['imagen_album']) ? HOST . ltrim($alb['imagen_album'], '/') : 'https://via.placeholder.com/300x400';
                         ?>
                         
-                        <div class="card" style="background-image: linear-gradient(to top, black 0%, transparent 70%), url('<?php echo $img_alb; ?>');">
+                        <div class="card" style="background-image: url('<?php echo $img_alb; ?>');">
+                            
                             <span class="nombre"><?php echo htmlspecialchars($alb['titulo_album']); ?></span>
                             
-                            <div style="margin-top: auto; display: flex; gap: 5px; justify-content: center; width: 100%;">
-                                <a href="app/views/portal/detalles.php?tipo=album&id=<?php echo $alb['id_album']; ?>" 
-                                   style="background-color: var(--neon-pink); width: 100%;">
-                                   Detalles
-                                </a>
-                            </div>
+                            <a href="app/views/portal/detalles.php?tipo=album&id=<?php echo $alb['id_album']; ?>" class="btn-detalles">
+                               Detalles
+                            </a>
+
                         </div>
                     <?php endforeach; ?>
-
                 </div>
+
             </section>
         </main>
     </div>
