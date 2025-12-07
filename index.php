@@ -2,11 +2,31 @@
 require_once 'config/conexion-bd.php';
 require_once 'config/constantes.php';
 
-// CONSULTAS DINÁMICAS
-$sql_artistas = "SELECT * FROM artistas WHERE estatus_artista = 1";
+// --- LÓGICA DE "LOS MEJORES" (TOP 10) ---
+
+// 1. TOP 10 ARTISTAS
+// Traemos al artista Y sus votos, ordenados de mayor a menor.
+$sql_artistas = "SELECT a.*, n.contador_nominacion 
+                 FROM artistas a 
+                 INNER JOIN nominaciones n ON a.id_artista = n.id_artista
+                 WHERE a.estatus_artista = 1 
+                 AND n.id_categoria_nominacion = 1 
+                 AND n.contador_nominacion > 0 
+                 ORDER BY n.contador_nominacion DESC 
+                 LIMIT 10"; // <--- AQUÍ ESTÁ EL CAMBIO A TOP 10
+
 $artistas = $conexion->query($sql_artistas)->fetchAll(PDO::FETCH_ASSOC);
 
-$sql_albumes = "SELECT * FROM albumes WHERE estatus_album = 1";
+// 2. TOP 10 ÁLBUMES
+$sql_albumes = "SELECT al.*, n.contador_nominacion 
+                FROM albumes al 
+                INNER JOIN nominaciones n ON al.id_album = n.id_album
+                WHERE al.estatus_album = 1 
+                AND n.id_categoria_nominacion = 2 
+                AND n.contador_nominacion > 0 
+                ORDER BY n.contador_nominacion DESC 
+                LIMIT 10"; // <--- CAMBIO A TOP 10
+
 $albumes = $conexion->query($sql_albumes)->fetchAll(PDO::FETCH_ASSOC);
 ?>
 
@@ -63,7 +83,8 @@ $albumes = $conexion->query($sql_albumes)->fetchAll(PDO::FETCH_ASSOC);
                 <p>
                     Los MTV Awards son la premiación definitiva que celebra la excelencia musical. 
                     Reconocemos la trayectoria de los artistas más influyentes y las producciones 
-                    discográficas que marcaron el año. Tu voz es lo más importante.
+                    discográficas que marcaron el año. Tu voz es lo más importante: decide quién 
+                    se lleva el galardón votando por tus favoritos en categorías como Mejor Artista y Mejor Álbum.
                 </p>
             </section>
             
@@ -73,44 +94,68 @@ $albumes = $conexion->query($sql_albumes)->fetchAll(PDO::FETCH_ASSOC);
                     <a href="app/views/portal/votar.php">Ver Más</a>
                 </div>
 
-                <h3 class="nominados-h3">Mejor Artista</h3>
+                <h3 class="nominados-h3">Mejor Artista (Top 10)</h3>
                 
                 <div class="nominados__container">
-                    <?php foreach($artistas as $art): ?>
-                        <?php 
-                            $img = !empty($art['imagen_artista']) ? HOST . ltrim($art['imagen_artista'], '/') : 'https://via.placeholder.com/300x400';
-                        ?>
-                        
-                        <div class="card" style="background-image: url('<?php echo $img; ?>');">
+                    
+                    <?php if(count($artistas) > 0): ?>
+                        <?php foreach($artistas as $art): ?>
+                            <?php 
+                                $img = !empty($art['imagen_artista']) ? HOST . ltrim($art['imagen_artista'], '/') : 'https://via.placeholder.com/300x400?text=No+Image';
+                            ?>
                             
-                            <span class="nombre"><?php echo htmlspecialchars($art['pseudonimo_artista']); ?></span>
-                            
-                            <a href="app/views/portal/detalles.php?tipo=artista&id=<?php echo $art['id_artista']; ?>" class="btn-detalles">
-                               Detalles
-                            </a>
+                            <div class="card" style="background-image: linear-gradient(to top, rgba(0,0,0,0.9) 10%, rgba(0,0,0,0) 60%), url('<?php echo $img; ?>');">
+                                
+                                <span class="nombre"><?php echo htmlspecialchars($art['pseudonimo_artista']); ?></span>
+                                
+                                <span style="color: var(--neon-lime); font-size: 0.8rem; font-weight: bold; margin-bottom: 5px;">
+                                    <i class="fa-solid fa-fire"></i> <?php echo $art['contador_nominacion']; ?> Votos
+                                </span>
 
-                        </div>
-                    <?php endforeach; ?>
+                                <a href="app/views/portal/detalles.php?tipo=artista&id=<?php echo $art['id_artista']; ?>" class="btn-detalles">
+                                   Detalles
+                                </a>
+
+                            </div>
+                        <?php endforeach; ?>
+                    <?php else: ?>
+                        <p style="color: #666; font-style: italic; padding: 20px;">
+                            Aún no hay suficientes votos para mostrar el Top Artistas. ¡Sé el primero en votar!
+                        </p>
+                    <?php endif; ?>
+
                 </div>
 
-                <h3 class="nominados-h3" style="margin-top: 40px;">Mejor Álbum</h3>
+                <h3 class="nominados-h3" style="margin-top: 40px;">Mejor Álbum (Top 10)</h3>
                 
                 <div class="nominados__container">
-                    <?php foreach($albumes as $alb): ?>
-                        <?php 
-                            $img_alb = !empty($alb['imagen_album']) ? HOST . ltrim($alb['imagen_album'], '/') : 'https://via.placeholder.com/300x400';
-                        ?>
-                        
-                        <div class="card" style="background-image: url('<?php echo $img_alb; ?>');">
+                    
+                    <?php if(count($albumes) > 0): ?>
+                        <?php foreach($albumes as $alb): ?>
+                            <?php 
+                                $img_alb = !empty($alb['imagen_album']) ? HOST . ltrim($alb['imagen_album'], '/') : 'https://via.placeholder.com/300x400?text=No+Image';
+                            ?>
                             
-                            <span class="nombre"><?php echo htmlspecialchars($alb['titulo_album']); ?></span>
-                            
-                            <a href="app/views/portal/detalles.php?tipo=album&id=<?php echo $alb['id_album']; ?>" class="btn-detalles">
-                               Detalles
-                            </a>
+                            <div class="card" style="background-image: linear-gradient(to top, rgba(0,0,0,0.9) 10%, rgba(0,0,0,0) 60%), url('<?php echo $img_alb; ?>');">
+                                
+                                <span class="nombre"><?php echo htmlspecialchars($alb['titulo_album']); ?></span>
+                                
+                                <span style="color: var(--neon-lime); font-size: 0.8rem; font-weight: bold; margin-bottom: 5px;">
+                                    <i class="fa-solid fa-fire"></i> <?php echo $alb['contador_nominacion']; ?> Votos
+                                </span>
 
-                        </div>
-                    <?php endforeach; ?>
+                                <a href="app/views/portal/detalles.php?tipo=album&id=<?php echo $alb['id_album']; ?>" class="btn-detalles">
+                                   Detalles
+                                </a>
+
+                            </div>
+                        <?php endforeach; ?>
+                    <?php else: ?>
+                        <p style="color: #666; font-style: italic; padding: 20px;">
+                            Aún no hay suficientes votos para mostrar el Top Álbumes.
+                        </p>
+                    <?php endif; ?>
+
                 </div>
 
             </section>
