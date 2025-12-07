@@ -9,9 +9,9 @@ if (!isset($_SESSION['id_usuario'])) {
     exit();
 }
 
-// 2. Validar si es Administrador (Rol 1)
-if ($_SESSION['rol'] != 1) {
-    // Si es usuario normal o artista, lo mandamos al inicio público
+// 2. Validar si es Rol permitido (1=Admin, 2=Manager, 3=Artista)
+// Si NO es ninguno de estos, va para afuera.
+if (!in_array($_SESSION['rol'], [1, 2, 3])) {
     header("Location: " . HOST . "index.php");
     exit();
 }
@@ -33,10 +33,17 @@ if ($_SESSION['rol'] != 1) {
 
     <main class="main">
         <h1>Bienvenido al Panel de Control</h1>
-        <p>Desde aquí podrás administrar todo el contenido de los MTV Awards.</p>
+        <p>Desde aquí podrás administrar el contenido de los MTV Awards.</p>
         
         <div class="dashboard">
             <p><strong>Usuario activo:</strong> <?php echo $_SESSION['nombre']; ?></p>
+            <p><strong>Rol:</strong> 
+                <?php 
+                    if($_SESSION['rol'] == 1) echo "Administrador Global";
+                    elseif($_SESSION['rol'] == 2) echo "Manager";
+                    elseif($_SESSION['rol'] == 3) echo "Artista";
+                ?>
+            </p>
             <p>Selecciona una opción del menú lateral para comenzar.</p>
         </div>
     </main>

@@ -3,23 +3,45 @@ session_start();
 require_once '../../../config/conexion-bd.php';
 require_once '../../../config/constantes.php';
 
-// 2. Seguridad: Redirigir usando HOST
-if (!isset($_SESSION['rol']) || $_SESSION['rol'] != 1) {
+// 2. Seguridad
+if (!isset($_SESSION['rol']) || !in_array($_SESSION['rol'], [1, 2, 3])) {
     header("Location: " . HOST . "app/views/portal/login.php");
     exit();
 }
 
-// Cargas de listas (igual que antes)
-$artistas = $conexion->query("SELECT * FROM artistas WHERE estatus_artista = 1")->fetchAll(PDO::FETCH_ASSOC);
+$es_admin = ($_SESSION['rol'] == 1);
+$mi_id_artista = null;
+
+if (!$es_admin) {
+    $stmt = $conexion->prepare("SELECT id_artista FROM artistas WHERE id_usuario = :uid");
+    $stmt->execute([':uid' => $_SESSION['id_usuario']]);
+    $res = $stmt->fetch(PDO::FETCH_ASSOC);
+    if ($res) {
+        $mi_id_artista = $res['id_artista'];
+    } else {
+        echo "<script>alert('Crea tu perfil de artista primero.'); window.location.href='artistas.php';</script>";
+        exit();
+    }
+}
+
+// Cargas de listas
+if ($es_admin) {
+    $artistas = $conexion->query("SELECT * FROM artistas WHERE estatus_artista = 1")->fetchAll(PDO::FETCH_ASSOC);
+}
 $generos = $conexion->query("SELECT * FROM generos WHERE estatus_genero = 1")->fetchAll(PDO::FETCH_ASSOC);
 
-// Listar Canciones (seleccionando imagen_cancion)
+// Listar Canciones
 $sql_list = "SELECT c.*, a.pseudonimo_artista, g.nombre_genero 
              FROM canciones c 
              INNER JOIN artistas a ON c.id_artista = a.id_artista
              LEFT JOIN generos g ON c.id_genero = g.id_genero
-             WHERE c.estatus_cancion = 1
-             ORDER BY c.id_cancion DESC";
+             WHERE c.estatus_cancion = 1";
+
+if (!$es_admin) {
+    $sql_list .= " AND c.id_artista = " . $mi_id_artista;
+}
+
+$sql_list .= " ORDER BY c.id_cancion DESC";
 $lista_canciones = $conexion->query($sql_list)->fetchAll(PDO::FETCH_ASSOC);
 ?>
 
@@ -27,7 +49,7 @@ $lista_canciones = $conexion->query($sql_list)->fetchAll(PDO::FETCH_ASSOC);
 <html lang="es">
 <head>
     <meta charset="UTF-8">
-    <title>Gestionar Canciones - Admin</title>
+    <title>Gestionar Canciones</title>
     <link rel="stylesheet" href="<?php echo HOST; ?>recursos/assets/css/reset.css">
     <link rel="stylesheet" href="<?php echo HOST; ?>recursos/assets/css/root.css">
     <link rel="stylesheet" href="<?php echo HOST; ?>recursos/assets/css/menu-lateral.css">
@@ -38,7 +60,7 @@ $lista_canciones = $conexion->query($sql_list)->fetchAll(PDO::FETCH_ASSOC);
     <?php include '../../../recursos/recursos_panel/menu_lateral.php'; ?>
 
     <main>
-        <h1>Gestión de Canciones</h1>
+        <h1><?php echo $es_admin ? 'Gestión de Canciones' : 'Mis Canciones'; ?></h1>
 
         <div class="formulario-caja">
             <h3>Registrar Nueva Canción</h3>
@@ -49,13 +71,17 @@ $lista_canciones = $conexion->query($sql_list)->fetchAll(PDO::FETCH_ASSOC);
                 <label>Nombre de la Canción:</label>
                 <input type="text" name="nombre" required placeholder="Ej: Monaco">
 
-                <label>Artista:</label>
-                <select name="id_artista" required>
-                    <option value="">-- Selecciona Artista --</option>
-                    <?php foreach ($artistas as $a): ?>
-                        <option value="<?php echo $a['id_artista']; ?>"><?php echo $a['pseudonimo_artista']; ?></option>
-                    <?php endforeach; ?>
-                </select>
+                <?php if ($es_admin): ?>
+                    <label>Artista:</label>
+                    <select name="id_artista" required>
+                        <option value="">-- Selecciona Artista --</option>
+                        <?php foreach ($artistas as $a): ?>
+                            <option value="<?php echo $a['id_artista']; ?>"><?php echo $a['pseudonimo_artista']; ?></option>
+                        <?php endforeach; ?>
+                    </select>
+                <?php else: ?>
+                    <input type="hidden" name="id_artista" value="<?php echo $mi_id_artista; ?>">
+                <?php endif; ?>
 
                 <label>Género:</label>
                 <select name="id_genero" required>
@@ -83,13 +109,13 @@ $lista_canciones = $conexion->query($sql_list)->fetchAll(PDO::FETCH_ASSOC);
             </form>
         </div>
 
-        <h3>Biblioteca de Canciones</h3>
+        <h3><?php echo $es_admin ? 'Biblioteca de Canciones' : 'Mis Pistas'; ?></h3>
         <table>
             <thead>
                 <tr>
                     <th>Portada</th>
                     <th>Nombre</th>
-                    <th>Artista</th>
+                    <?php if($es_admin): ?><th>Artista</th><?php endif; ?>
                     <th>Género</th>
                     <th>Acciones</th>
                 </tr>
@@ -106,7 +132,9 @@ $lista_canciones = $conexion->query($sql_list)->fetchAll(PDO::FETCH_ASSOC);
                     </td>
                     
                     <td><?php echo $c['nombre_cancion']; ?></td>
-                    <td><?php echo $c['pseudonimo_artista']; ?></td>
+                    <?php if($es_admin): ?>
+                        <td><?php echo $c['pseudonimo_artista']; ?></td>
+                    <?php endif; ?>
                     <td><?php echo $c['nombre_genero']; ?></td>
                     <td>
                         <a href="../../backend/panel/acc_canciones.php?accion=borrar&id=<?php echo $c['id_cancion']; ?>" 
@@ -115,6 +143,9 @@ $lista_canciones = $conexion->query($sql_list)->fetchAll(PDO::FETCH_ASSOC);
                     </td>
                 </tr>
                 <?php endforeach; ?>
+                <?php if(empty($lista_canciones)): ?>
+                    <tr><td colspan="5">No hay canciones registradas.</td></tr>
+                <?php endif; ?>
             </tbody>
         </table>
 
