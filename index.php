@@ -21,9 +21,7 @@
     <div class="hero">
         <div class="hero__container">
             <h1>MTV VMAs 2025</h1>
-            <span>
-                Decide cuál de tus celebridades favoritas ganará a lo grande y se llevara a casa una Moon Person en el show de este año.
-            </span> <br>
+            <span>Decide cuál de tus celebridades favoritas ganará a lo grande.</span> <br>
             <a class="votar" href="app/views/portal/votar.php"> IR A VOTAR</a>
         </div>
     </div>
@@ -42,8 +40,7 @@
 
             <div class="mtv-music-container">
                 <h2>MTV Video Music Awards</h2>
-                <p>Los MTV Video Music Awards están dedicados a celebrar a los artistas y videos musicales más importantes del año con actuaciones, honores y más.</p>
-                <p>Somos el puente directo entre los artistas y sus seguidores.</p>
+                <p>Los MTV Video Music Awards están dedicados a celebrar a los artistas y videos musicales más importantes.</p>
                 <ul>
                     <li><a href="https://www.facebook.com/VMAs/"><i class="fa-brands fa-square-facebook"></i></a></li>
                     <li><a href="https://www.instagram.com/vmas/"><i class="fa-brands fa-instagram"></i></a></li>
@@ -55,9 +52,7 @@
                 <h2>Sobre los MTV Awards</h2>
                 <p>
                     Los MTV Awards son la premiación definitiva que celebra la excelencia musical. 
-                    Reconocemos la trayectoria de los artistas más influyentes y las producciones 
-                    discográficas que marcaron el año. Tu voz es lo más importante: decide quién 
-                    se lleva el galardón votando por tus favoritos en categorías como Mejor Artista y Mejor Álbum.
+                    Tu voz es lo más importante: decide quién se lleva el galardón votando por tus favoritos.
                 </p>
             </section>
             
@@ -74,7 +69,7 @@
                         <span class="nombre">Faraón Love Shady</span>
                         <div style="margin-top: auto; display: flex; gap: 5px; justify-content: center;">
                             <a href="https://open.spotify.com/artist/3j8f1t1g2y2z3x4k5l6m7n" target="_blank">Spotify</a>
-                            <a href="app/views/portal/detalles.php?tipo=artista&id=10" style="background-color: var(--neon-pink);">Detalles</a>
+                            <a href="app/views/portal/detalles.php?tipo=artista&id=1" style="background-color: var(--neon-pink);">Detalles</a>
                         </div>
                     </div>
 
@@ -82,7 +77,7 @@
                         <span class="nombre">Bad Bunny</span>
                         <div style="margin-top: auto; display: flex; gap: 5px; justify-content: center;">
                             <a href="https://open.spotify.com/artist/4q3ewBCX7sLwd24euuV69X" target="_blank">Spotify</a>
-                            <a href="app/views/portal/detalles.php?tipo=artista&id=11" style="background-color: var(--neon-pink);">Detalles</a>
+                            <a href="app/views/portal/detalles.php?tipo=artista&id=2" style="background-color: var(--neon-pink);">Detalles</a>
                         </div>
                     </div>
 
@@ -90,7 +85,7 @@
                         <span class="nombre">Romeo Santos</span>
                         <div style="margin-top: auto; display: flex; gap: 5px; justify-content: center;">
                             <a href="https://open.spotify.com/artist/5lwmRuXgjX8xIvF36k7jx4" target="_blank">Spotify</a>
-                            <a href="app/views/portal/detalles.php?tipo=artista&id=12" style="background-color: var(--neon-pink);">Detalles</a>
+                            <a href="app/views/portal/detalles.php?tipo=artista&id=3" style="background-color: var(--neon-pink);">Detalles</a>
                         </div>
                     </div>
 
@@ -98,7 +93,7 @@
                         <span class="nombre">The Weeknd</span>
                         <div style="margin-top: auto; display: flex; gap: 5px; justify-content: center;">
                             <a href="https://open.spotify.com/artist/1Xyo4u8uXC1ZmMpatF05PJ" target="_blank">Spotify</a>
-                            <a href="app/views/portal/detalles.php?tipo=artista&id=13" style="background-color: var(--neon-pink);">Detalles</a>
+                            <a href="app/views/portal/detalles.php?tipo=artista&id=4" style="background-color: var(--neon-pink);">Detalles</a>
                         </div>
                     </div>
 
@@ -106,7 +101,7 @@
                         <span class="nombre">XXXTentacion</span>
                         <div style="margin-top: auto; display: flex; gap: 5px; justify-content: center;">
                             <a href="https://open.spotify.com/artist/15UsOTVnJzReFVN1VCnxy4" target="_blank">Spotify</a>
-                            <a href="app/views/portal/detalles.php?tipo=artista&id=14" style="background-color: var(--neon-pink);">Detalles</a>
+                            <a href="app/views/portal/detalles.php?tipo=artista&id=5" style="background-color: var(--neon-pink);">Detalles</a>
                         </div>
                     </div>
 
@@ -114,7 +109,7 @@
                         <span class="nombre">Canserbero</span>
                         <div style="margin-top: auto; display: flex; gap: 5px; justify-content: center;">
                             <a href="https://open.spotify.com/artist/1bAftSH8umNcGZ0uyV7LMg" target="_blank">Spotify</a>
-                            <a href="app/views/portal/detalles.php?tipo=artista&id=15" style="background-color: var(--neon-pink);">Detalles</a>
+                            <a href="app/views/portal/detalles.php?tipo=artista&id=6" style="background-color: var(--neon-pink);">Detalles</a>
                         </div>
                     </div>
                 </div>
@@ -126,7 +121,7 @@
                         <span class="nombre">Stars Dance</span>
                         <div style="margin-top: auto; display: flex; gap: 5px; justify-content: center;">
                             <a href="https://open.spotify.com/album/6AorUqeD0b6zXU5JgS2Q4H" target="_blank">Spotify</a>
-                            <a href="app/views/portal/detalles.php?tipo=album&id=20" style="background-color: var(--neon-pink);">Detalles</a>
+                            <a href="app/views/portal/detalles.php?tipo=album&id=14" style="background-color: var(--neon-pink);">Detalles</a>
                         </div>
                     </div>
 
@@ -134,7 +129,7 @@
                         <span class="nombre">Un Verano Sin Ti</span>
                         <div style="margin-top: auto; display: flex; gap: 5px; justify-content: center;">
                             <a href="https://open.spotify.com/album/3RQQmkQEvNCY4prGKE6oc5" target="_blank">Spotify</a>
-                            <a href="app/views/portal/detalles.php?tipo=album&id=21" style="background-color: var(--neon-pink);">Detalles</a>
+                            <a href="app/views/portal/detalles.php?tipo=album&id=17" style="background-color: var(--neon-pink);">Detalles</a>
                         </div>
                     </div>
 
@@ -142,7 +137,7 @@
                         <span class="nombre">Fórmula, Vol. 3</span>
                         <div style="margin-top: auto; display: flex; gap: 5px; justify-content: center;">
                             <a href="https://open.spotify.com/album/151w1FgRZfvjnWTkVKsvry" target="_blank">Spotify</a>
-                            <a href="app/views/portal/detalles.php?tipo=album&id=22" style="background-color: var(--neon-pink);">Detalles</a>
+                            <a href="app/views/portal/detalles.php?tipo=album&id=2" style="background-color: var(--neon-pink);">Detalles</a>
                         </div>
                     </div>
 
@@ -150,7 +145,7 @@
                         <span class="nombre">GÉNESIS</span>
                         <div style="margin-top: auto; display: flex; gap: 5px; justify-content: center;">
                             <a href="https://open.spotify.com/album/4jOXszrE3t7QYlFqpF4wK6" target="_blank">Spotify</a>
-                            <a href="app/views/portal/detalles.php?tipo=album&id=23" style="background-color: var(--neon-pink);">Detalles</a>
+                            <a href="app/views/portal/detalles.php?tipo=album&id=24" style="background-color: var(--neon-pink);">Detalles</a>
                         </div>
                     </div>
 
@@ -158,7 +153,7 @@
                         <span class="nombre">Muerte</span>
                         <div style="margin-top: auto; display: flex; gap: 5px; justify-content: center;">
                             <a href="https://open.spotify.com/album/3fC24U9L6U3zR5W5zF5z5z" target="_blank">Spotify</a>
-                            <a href="app/views/portal/detalles.php?tipo=album&id=24" style="background-color: var(--neon-pink);">Detalles</a>
+                            <a href="app/views/portal/detalles.php?tipo=album&id=33" style="background-color: var(--neon-pink);">Detalles</a>
                         </div>
                     </div>
 
@@ -166,7 +161,7 @@
                         <span class="nombre">17</span>
                         <div style="margin-top: auto; display: flex; gap: 5px; justify-content: center;">
                             <a href="https://open.spotify.com/album/2Ti79nwTsont5ZHfdxIzAm" target="_blank">Spotify</a>
-                            <a href="app/views/portal/detalles.php?tipo=album&id=25" style="background-color: var(--neon-pink);">Detalles</a>
+                            <a href="app/views/portal/detalles.php?tipo=album&id=34" style="background-color: var(--neon-pink);">Detalles</a>
                         </div>
                     </div>
                 </div>
@@ -174,9 +169,7 @@
         </main>
     </div>
 
-    <footer>
-        <?php include('recursos/recursos_portal/footer.php'); ?>
-    </footer>
+    <footer><?php include('recursos/recursos_portal/footer.php'); ?></footer>
     <script src="https://kit.fontawesome.com/e2dc84faef.js" crossorigin="anonymous"></script>
     <script src="recursos/assets/js/cuenta-regresiva.js"></script>
 </body>

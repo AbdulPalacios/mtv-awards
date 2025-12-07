@@ -26,6 +26,34 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         exit();
     }
 
+    // --- NUEVO: Procesar IMAGEN DE PERFIL ---
+    $ruta_imagen_bd = null; // Por defecto NULL si no sube nada
+
+    if (isset($_FILES['imagen']) && $_FILES['imagen']['error'] == 0) {
+        
+        // 1. Obtener extensión y crear nombre único
+        $extension = pathinfo($_FILES['imagen']['name'], PATHINFO_EXTENSION);
+        $nombre_archivo = time() . "_" . uniqid() . "." . $extension;
+        
+        // 2. Definir rutas
+        // Ruta física para mover el archivo (subimos 3 niveles para llegar a la raíz)
+        $carpeta_destino = "../../../recursos/assets/uploads/usuarios/";
+        
+        // Crear carpeta si no existe
+        if (!file_exists($carpeta_destino)) {
+            mkdir($carpeta_destino, 0777, true);
+        }
+
+        $ruta_fisica = $carpeta_destino . $nombre_archivo;
+        
+        // Ruta relativa para guardar en la BD (lo que usará el HTML)
+        $ruta_imagen_bd = "recursos/assets/uploads/usuarios/" . $nombre_archivo;
+        
+        // 3. Mover el archivo del temporal al destino final
+        move_uploaded_file($_FILES['imagen']['tmp_name'], $ruta_fisica);
+    }
+    // ----------------------------------------
+
     // 3. Encriptar contraseña (Nunca guardar texto plano)
     // Usamos PASSWORD_DEFAULT que genera un hash seguro de 60 caracteres (cabe en tu varchar(64))
     $pass_hash = password_hash($password, PASSWORD_DEFAULT);
@@ -36,8 +64,9 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
     // 5. Insertar usuario
     try {
-        $sql_insert = "INSERT INTO usuarios (estatus_usuario, nombre_usuario, ap_usuario, am_usuario, sexo_usuario, correo_usuario, password_usuario, id_rol) 
-                       VALUES (:estatus, :nombre, :ap, :am, :sexo, :email, :pass, :rol)";
+        // MODIFICADO: Se agregó 'imagen_usuario' en los campos y ':img' en los valores
+        $sql_insert = "INSERT INTO usuarios (estatus_usuario, nombre_usuario, ap_usuario, am_usuario, sexo_usuario, correo_usuario, password_usuario, imagen_usuario, id_rol) 
+                       VALUES (:estatus, :nombre, :ap, :am, :sexo, :email, :pass, :img, :rol)";
         
         $stmt = $conexion->prepare($sql_insert);
         $stmt->bindParam(':estatus', $estatus);
@@ -47,6 +76,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         $stmt->bindParam(':sexo', $sexo);
         $stmt->bindParam(':email', $email);
         $stmt->bindParam(':pass', $pass_hash);
+        $stmt->bindParam(':img', $ruta_imagen_bd); // NUEVO: Vinculamos la ruta de la imagen
         $stmt->bindParam(':rol', $id_rol);
 
         if ($stmt->execute()) {
@@ -66,6 +96,4 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         echo "Error: " . $e->getMessage();
     }
 }
-
-
 ?>

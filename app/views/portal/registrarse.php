@@ -23,7 +23,7 @@ require_once '../../../config/constantes.php';
         <main class="container register-container">
             <h2><i class="fa-solid fa-address-card"></i> Crear Cuenta</h2>
             
-            <form action="../../backend/portal/register.php" method="POST">
+            <form action="../../backend/portal/register.php" method="POST" enctype="multipart/form-data">
                 
                 <label for="nombre">Nombre:</label>
                 <div class="input-group">
@@ -61,6 +61,11 @@ require_once '../../../config/constantes.php';
                     <i class="fa-solid fa-chevron-down arrow-icon"></i>
                 </div>
 
+                <label for="imagen">Foto de Perfil (Opcional):</label>
+                <div class="input-group">
+                    <i class="fa-solid fa-camera icon"></i>
+                    <input type="file" name="imagen" accept="image/*" style="padding-top: 10px;">
+                </div>
                 <label for="email">Correo Electrónico:</label>
                 <div class="input-group">
                     <i class="fa-solid fa-envelope icon"></i>

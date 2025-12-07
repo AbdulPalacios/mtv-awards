@@ -8,8 +8,8 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $email = $_POST['email'];
     $password = $_POST['password'];
 
-    // 1. Buscar usuario por correo
-    $sql = "SELECT id_usuario, nombre_usuario, password_usuario, id_rol, estatus_usuario 
+    // 1. Buscar usuario por correo (AGREGADO: imagen_usuario)
+    $sql = "SELECT id_usuario, nombre_usuario, password_usuario, id_rol, estatus_usuario, imagen_usuario 
             FROM usuarios WHERE correo_usuario = :email LIMIT 1";
     
     $stmt = $conexion->prepare($sql);
@@ -29,7 +29,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                 $_SESSION['id_usuario'] = $usuario['id_usuario'];
                 $_SESSION['nombre'] = $usuario['nombre_usuario'];
                 $_SESSION['rol'] = $usuario['id_rol'];
-                $_SESSION['imagen'] = $usuario['imagen_usuario']; // <--- NUEVA LÍNEA
+                $_SESSION['imagen'] = $usuario['imagen_usuario']; // <--- Ahora sí funcionará porque está en el SELECT
 
                 // 5. Redireccionar según rol (Usando HOST)
                 // En tu SQL actual: 1 = Admin
