@@ -73,6 +73,9 @@ $lista_canciones = $conexion->query($sql_list)->fetchAll(PDO::FETCH_ASSOC);
                 <label>Portada de la Canción (Imagen):</label>
                 <input type="file" name="imagen" accept="image/*" required>
 
+                <label>Archivo de Audio (MP3):</label>
+                <input type="file" name="audio" accept="audio/mpeg, audio/mp3">
+
                 <label>Link Video YouTube (Opcional):</label>
                 <input type="text" name="video_url" placeholder="https://youtube.com/...">
 
