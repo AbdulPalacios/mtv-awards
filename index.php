@@ -1,4 +1,34 @@
-<?php include('config/constantes.php');?>
+<?php 
+require_once 'config/conexion-bd.php';
+require_once 'config/constantes.php';
+
+// --- LÓGICA DE "LOS MEJORES" (TOP 10) ---
+
+// 1. TOP 10 ARTISTAS
+// Traemos al artista Y sus votos, ordenados de mayor a menor.
+$sql_artistas = "SELECT a.*, n.contador_nominacion 
+                 FROM artistas a 
+                 INNER JOIN nominaciones n ON a.id_artista = n.id_artista
+                 WHERE a.estatus_artista = 1 
+                 AND n.id_categoria_nominacion = 1 
+                 AND n.contador_nominacion > 0 
+                 ORDER BY n.contador_nominacion DESC 
+                 LIMIT 10"; // <--- AQUÍ ESTÁ EL CAMBIO A TOP 10
+
+$artistas = $conexion->query($sql_artistas)->fetchAll(PDO::FETCH_ASSOC);
+
+// 2. TOP 10 ÁLBUMES
+$sql_albumes = "SELECT al.*, n.contador_nominacion 
+                FROM albumes al 
+                INNER JOIN nominaciones n ON al.id_album = n.id_album
+                WHERE al.estatus_album = 1 
+                AND n.id_categoria_nominacion = 2 
+                AND n.contador_nominacion > 0 
+                ORDER BY n.contador_nominacion DESC 
+                LIMIT 10"; // <--- CAMBIO A TOP 10
+
+$albumes = $conexion->query($sql_albumes)->fetchAll(PDO::FETCH_ASSOC);
+?>
 
 <!DOCTYPE html>
 <html lang="en">
@@ -6,7 +36,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>MTV Video Music Awards 2025</title>
-
+    
     <link rel="stylesheet" href="<?php echo HOST; ?>recursos/assets/css/reset.css">
     <link rel="stylesheet" href="<?php echo HOST; ?>recursos/assets/css/root.css">
     <link rel="stylesheet" href="<?php echo HOST; ?>recursos/assets/css/header.css">
@@ -21,9 +51,7 @@
     <div class="hero">
         <div class="hero__container">
             <h1>MTV VMAs 2025</h1>
-            <span>
-                Decide cuál de tus celebridades favoritas ganará a lo grande y se llevara a casa una Moon Person en el show de este año.
-            </span> <br>
+            <span>Decide cuál de tus celebridades favoritas ganará a lo grande.</span> <br>
             <a class="votar" href="app/views/portal/votar.php"> IR A VOTAR</a>
         </div>
     </div>
@@ -43,7 +71,6 @@
             <div class="mtv-music-container">
                 <h2>MTV Video Music Awards</h2>
                 <p>Los MTV Video Music Awards están dedicados a celebrar a los artistas y videos musicales más importantes del año con actuaciones, honores y más.</p>
-                <p>Somos el puente directo entre los artistas y sus seguidores.</p>
                 <ul>
                     <li><a href="https://www.facebook.com/VMAs/"><i class="fa-brands fa-square-facebook"></i></a></li>
                     <li><a href="https://www.instagram.com/vmas/"><i class="fa-brands fa-instagram"></i></a></li>
@@ -67,116 +94,75 @@
                     <a href="app/views/portal/votar.php">Ver Más</a>
                 </div>
 
-                <h3 class="nominados-h3">Mejor Artista</h3>
+                <h3 class="nominados-h3">Mejor Artista (Top 10)</h3>
+                
                 <div class="nominados__container">
                     
-                    <div class="card" id="faraon">
-                        <span class="nombre">Faraón Love Shady</span>
-                        <div style="margin-top: auto; display: flex; gap: 5px; justify-content: center;">
-                            <a href="https://open.spotify.com/artist/3j8f1t1g2y2z3x4k5l6m7n" target="_blank">Spotify</a>
-                            <a href="app/views/portal/detalles.php?tipo=artista&id=10" style="background-color: var(--neon-pink);">Detalles</a>
-                        </div>
-                    </div>
+                    <?php if(count($artistas) > 0): ?>
+                        <?php foreach($artistas as $art): ?>
+                            <?php 
+                                $img = !empty($art['imagen_artista']) ? HOST . ltrim($art['imagen_artista'], '/') : 'https://via.placeholder.com/300x400?text=No+Image';
+                            ?>
+                            
+                            <div class="card" style="background-image: linear-gradient(to top, rgba(0,0,0,0.9) 10%, rgba(0,0,0,0) 60%), url('<?php echo $img; ?>');">
+                                
+                                <span class="nombre"><?php echo htmlspecialchars($art['pseudonimo_artista']); ?></span>
+                                
+                                <span style="color: var(--neon-lime); font-size: 0.8rem; font-weight: bold; margin-bottom: 5px;">
+                                    <i class="fa-solid fa-fire"></i> <?php echo $art['contador_nominacion']; ?> Votos
+                                </span>
 
-                    <div class="card" id="badbunny">
-                        <span class="nombre">Bad Bunny</span>
-                        <div style="margin-top: auto; display: flex; gap: 5px; justify-content: center;">
-                            <a href="https://open.spotify.com/artist/4q3ewBCX7sLwd24euuV69X" target="_blank">Spotify</a>
-                            <a href="app/views/portal/detalles.php?tipo=artista&id=11" style="background-color: var(--neon-pink);">Detalles</a>
-                        </div>
-                    </div>
+                                <a href="app/views/portal/detalles.php?tipo=artista&id=<?php echo $art['id_artista']; ?>" class="btn-detalles">
+                                   Detalles
+                                </a>
 
-                    <div class="card" id="romeo_santos">
-                        <span class="nombre">Romeo Santos</span>
-                        <div style="margin-top: auto; display: flex; gap: 5px; justify-content: center;">
-                            <a href="https://open.spotify.com/artist/5lwmRuXgjX8xIvF36k7jx4" target="_blank">Spotify</a>
-                            <a href="app/views/portal/detalles.php?tipo=artista&id=12" style="background-color: var(--neon-pink);">Detalles</a>
-                        </div>
-                    </div>
+                            </div>
+                        <?php endforeach; ?>
+                    <?php else: ?>
+                        <p style="color: #666; font-style: italic; padding: 20px;">
+                            Aún no hay suficientes votos para mostrar el Top Artistas. ¡Sé el primero en votar!
+                        </p>
+                    <?php endif; ?>
 
-                    <div class="card" id="the_weeknd">
-                        <span class="nombre">The Weeknd</span>
-                        <div style="margin-top: auto; display: flex; gap: 5px; justify-content: center;">
-                            <a href="https://open.spotify.com/artist/1Xyo4u8uXC1ZmMpatF05PJ" target="_blank">Spotify</a>
-                            <a href="app/views/portal/detalles.php?tipo=artista&id=13" style="background-color: var(--neon-pink);">Detalles</a>
-                        </div>
-                    </div>
-
-                    <div class="card" id="xxxtentacion">
-                        <span class="nombre">XXXTentacion</span>
-                        <div style="margin-top: auto; display: flex; gap: 5px; justify-content: center;">
-                            <a href="https://open.spotify.com/artist/15UsOTVnJzReFVN1VCnxy4" target="_blank">Spotify</a>
-                            <a href="app/views/portal/detalles.php?tipo=artista&id=14" style="background-color: var(--neon-pink);">Detalles</a>
-                        </div>
-                    </div>
-
-                    <div class="card" id="canserbero">
-                        <span class="nombre">Canserbero</span>
-                        <div style="margin-top: auto; display: flex; gap: 5px; justify-content: center;">
-                            <a href="https://open.spotify.com/artist/1bAftSH8umNcGZ0uyV7LMg" target="_blank">Spotify</a>
-                            <a href="app/views/portal/detalles.php?tipo=artista&id=15" style="background-color: var(--neon-pink);">Detalles</a>
-                        </div>
-                    </div>
                 </div>
 
-                <h3 class="nominados-h3">Mejor Álbum</h3>
+                <h3 class="nominados-h3" style="margin-top: 40px;">Mejor Álbum (Top 10)</h3>
+                
                 <div class="nominados__container">
                     
-                    <div class="card" id="stars_dance">
-                        <span class="nombre">Stars Dance</span>
-                        <div style="margin-top: auto; display: flex; gap: 5px; justify-content: center;">
-                            <a href="https://open.spotify.com/album/6AorUqeD0b6zXU5JgS2Q4H" target="_blank">Spotify</a>
-                            <a href="app/views/portal/detalles.php?tipo=album&id=20" style="background-color: var(--neon-pink);">Detalles</a>
-                        </div>
-                    </div>
+                    <?php if(count($albumes) > 0): ?>
+                        <?php foreach($albumes as $alb): ?>
+                            <?php 
+                                $img_alb = !empty($alb['imagen_album']) ? HOST . ltrim($alb['imagen_album'], '/') : 'https://via.placeholder.com/300x400?text=No+Image';
+                            ?>
+                            
+                            <div class="card" style="background-image: linear-gradient(to top, rgba(0,0,0,0.9) 10%, rgba(0,0,0,0) 60%), url('<?php echo $img_alb; ?>');">
+                                
+                                <span class="nombre"><?php echo htmlspecialchars($alb['titulo_album']); ?></span>
+                                
+                                <span style="color: var(--neon-lime); font-size: 0.8rem; font-weight: bold; margin-bottom: 5px;">
+                                    <i class="fa-solid fa-fire"></i> <?php echo $alb['contador_nominacion']; ?> Votos
+                                </span>
 
-                    <div class="card" id="verano">
-                        <span class="nombre">Un Verano Sin Ti</span>
-                        <div style="margin-top: auto; display: flex; gap: 5px; justify-content: center;">
-                            <a href="https://open.spotify.com/album/3RQQmkQEvNCY4prGKE6oc5" target="_blank">Spotify</a>
-                            <a href="app/views/portal/detalles.php?tipo=album&id=21" style="background-color: var(--neon-pink);">Detalles</a>
-                        </div>
-                    </div>
+                                <a href="app/views/portal/detalles.php?tipo=album&id=<?php echo $alb['id_album']; ?>" class="btn-detalles">
+                                   Detalles
+                                </a>
 
-                    <div class="card" id="formula">
-                        <span class="nombre">Fórmula, Vol. 3</span>
-                        <div style="margin-top: auto; display: flex; gap: 5px; justify-content: center;">
-                            <a href="https://open.spotify.com/album/151w1FgRZfvjnWTkVKsvry" target="_blank">Spotify</a>
-                            <a href="app/views/portal/detalles.php?tipo=album&id=22" style="background-color: var(--neon-pink);">Detalles</a>
-                        </div>
-                    </div>
+                            </div>
+                        <?php endforeach; ?>
+                    <?php else: ?>
+                        <p style="color: #666; font-style: italic; padding: 20px;">
+                            Aún no hay suficientes votos para mostrar el Top Álbumes.
+                        </p>
+                    <?php endif; ?>
 
-                    <div class="card" id="genesis">
-                        <span class="nombre">GÉNESIS</span>
-                        <div style="margin-top: auto; display: flex; gap: 5px; justify-content: center;">
-                            <a href="https://open.spotify.com/album/4jOXszrE3t7QYlFqpF4wK6" target="_blank">Spotify</a>
-                            <a href="app/views/portal/detalles.php?tipo=album&id=23" style="background-color: var(--neon-pink);">Detalles</a>
-                        </div>
-                    </div>
-
-                    <div class="card" id="muerte">
-                        <span class="nombre">Muerte</span>
-                        <div style="margin-top: auto; display: flex; gap: 5px; justify-content: center;">
-                            <a href="https://open.spotify.com/album/3fC24U9L6U3zR5W5zF5z5z" target="_blank">Spotify</a>
-                            <a href="app/views/portal/detalles.php?tipo=album&id=24" style="background-color: var(--neon-pink);">Detalles</a>
-                        </div>
-                    </div>
-
-                    <div class="card" id="x17">
-                        <span class="nombre">17</span>
-                        <div style="margin-top: auto; display: flex; gap: 5px; justify-content: center;">
-                            <a href="https://open.spotify.com/album/2Ti79nwTsont5ZHfdxIzAm" target="_blank">Spotify</a>
-                            <a href="app/views/portal/detalles.php?tipo=album&id=25" style="background-color: var(--neon-pink);">Detalles</a>
-                        </div>
-                    </div>
                 </div>
+
             </section>
         </main>
     </div>
 
-    <footer>
-        <?php include('recursos/recursos_portal/footer.php'); ?>
-    </footer>
+    <footer><?php include('recursos/recursos_portal/footer.php'); ?></footer>
     <script src="https://kit.fontawesome.com/e2dc84faef.js" crossorigin="anonymous"></script>
     <script src="recursos/assets/js/cuenta-regresiva.js"></script>
 </body>

@@ -1,5 +1,10 @@
 <?php
 session_start();
+// Activamos reporte de errores por si acaso, para no ver pantalla blanca
+ini_set('display_errors', 1);
+ini_set('display_startup_errors', 1);
+error_reporting(E_ALL);
+
 require_once '../../../config/conexion-bd.php';
 require_once '../../../config/constantes.php';
 
@@ -12,14 +17,16 @@ if (!isset($_GET['id']) || !isset($_GET['tipo'])) {
 $id = $_GET['id'];
 $tipo = $_GET['tipo'];
 $datos = null;
+$canciones_album = []; // Array vacío por defecto
 
 try {
     if ($tipo == 'artista') {
-        // Obtenemos artista + nombre de su género
-        $stmt = $conexion->prepare("SELECT a.*, g.nombre_genero 
-                                    FROM artistas a 
-                                    LEFT JOIN generos g ON a.id_genero = g.id_genero 
-                                    WHERE id_artista = :id");
+        // Consulta para Artista
+        $sql = "SELECT a.*, g.nombre_genero 
+                FROM artistas a 
+                LEFT JOIN generos g ON a.id_genero = g.id_genero 
+                WHERE id_artista = :id";
+        $stmt = $conexion->prepare($sql);
         $stmt->execute([':id' => $id]);
         $datos = $stmt->fetch(PDO::FETCH_ASSOC);
         
@@ -28,15 +35,16 @@ try {
             $desc = $datos['biografia_artista'];
             $img = $datos['imagen_artista'];
             $extra = "Nacionalidad: " . $datos['nacionalidad_artista'];
-            $subtitulo = "Artista • " . $datos['nombre_genero'];
+            $subtitulo = "Artista • " . ($datos['nombre_genero'] ?? 'Sin género');
         }
 
     } elseif ($tipo == 'album') {
-        // Obtenemos álbum + nombre del artista
-        $stmt = $conexion->prepare("SELECT al.*, ar.pseudonimo_artista 
-                                    FROM albumes al 
-                                    INNER JOIN artistas ar ON al.id_artista = ar.id_artista 
-                                    WHERE id_album = :id");
+        // Consulta para Álbum
+        $sql = "SELECT al.*, ar.pseudonimo_artista 
+                FROM albumes al 
+                INNER JOIN artistas ar ON al.id_artista = ar.id_artista 
+                WHERE id_album = :id";
+        $stmt = $conexion->prepare($sql);
         $stmt->execute([':id' => $id]);
         $datos = $stmt->fetch(PDO::FETCH_ASSOC);
 
@@ -46,11 +54,17 @@ try {
             $img = $datos['imagen_album'];
             $extra = "Fecha Lanzamiento: " . $datos['fecha_lanzamiento_album'];
             $subtitulo = "Álbum de " . $datos['pseudonimo_artista'];
+
+            // Lógica para obtener canciones (Ahora sí funciona porque ya tienes la columna id_album)
+            $stmt_songs = $conexion->prepare("SELECT * FROM canciones WHERE id_album = :id AND estatus_cancion = 1");
+            $stmt_songs->execute([':id' => $id]);
+            $canciones_album = $stmt_songs->fetchAll(PDO::FETCH_ASSOC);
         }
     }
-} catch (Exception $e) { die("Error de conexión"); }
+} catch (PDOException $e) { 
+    die("Error en base de datos: " . $e->getMessage()); 
+}
 
-// Si no hay datos (por si el ID no existe)
 if (!$datos) {
     echo "<h2 style='color:white; text-align:center; margin-top:50px;'>Información no encontrada.</h2>";
     echo "<center><a href='".HOST."index.php' style='color:cyan;'>Volver</a></center>";
@@ -63,12 +77,15 @@ if (!$datos) {
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title><?php echo $titulo; ?> | Detalles</title>
+    <title><?php echo htmlspecialchars($titulo); ?> | Detalles</title>
+    
     <link rel="stylesheet" href="<?php echo HOST; ?>recursos/assets/css/reset.css">
     <link rel="stylesheet" href="<?php echo HOST; ?>recursos/assets/css/root.css">
     <link rel="stylesheet" href="<?php echo HOST; ?>recursos/assets/css/header.css">
     <link rel="stylesheet" href="<?php echo HOST; ?>recursos/assets/css/footer.css">
     <link rel="stylesheet" href="<?php echo HOST; ?>recursos/assets/css/detalles.css">
+    
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 </head>
 <body>
     
@@ -86,17 +103,45 @@ if (!$datos) {
             </div>
             
             <div class="info-col">
-                <h1><?php echo $titulo; ?></h1>
-                <div class="subtitle"><?php echo $subtitulo; ?></div>
+                <h1><?php echo htmlspecialchars($titulo); ?></h1>
+                <div class="subtitle"><?php echo htmlspecialchars($subtitulo); ?></div>
                 
                 <div class="desc-box">
-                    <p><?php echo !empty($desc) ? $desc : "Sin biografía disponible."; ?></p>
+                    <p><?php echo !empty($desc) ? nl2br(htmlspecialchars($desc)) : "Sin descripción disponible."; ?></p>
                 </div>
                 
                 <div class="extra-data">
-                    <i class="fa-solid fa-circle-info"></i> <?php echo $extra; ?>
+                    <i class="fa-solid fa-circle-info"></i> <?php echo htmlspecialchars($extra); ?>
                 </div>
-                
+
+                <?php if($tipo == 'album' && !empty($canciones_album)): ?>
+                    <div class="track-list-container" style="margin-top: 20px;">
+                        <h3 style="color: var(--neon-pink); border-bottom: 1px solid #333; padding-bottom: 5px; margin-bottom: 15px;">Lista de Canciones</h3>
+                        
+                        <div class="track-list">
+                            <?php foreach($canciones_album as $cancion): ?>
+                                <div class="track-item" style="display: flex; justify-content: space-between; align-items: center; padding: 10px; background: rgba(255,255,255,0.05); margin-bottom: 8px; border-radius: 5px;">
+                                    
+                                    <div class="track-info" style="display: flex; align-items: center; gap: 10px;">
+                                        <i class="fa-solid fa-music" style="color: var(--neon-cyan);"></i>
+                                        <span><?php echo htmlspecialchars($cancion['nombre_cancion']); ?></span>
+                                    </div>
+                                    
+                                    <?php if(!empty($cancion['mp3_cancion'])): ?>
+                                        <audio controls style="height: 30px; max-width: 200px;">
+                                            <source src="<?php echo HOST . ltrim($cancion['mp3_cancion'], '/'); ?>" type="audio/mpeg">
+                                        </audio>
+                                    <?php else: ?>
+                                        <span style="font-size: 0.8rem; color: #666; font-style: italic;">Sin audio</span>
+                                    <?php endif; ?>
+
+                                </div>
+                            <?php endforeach; ?>
+                        </div>
+                    </div>
+                    <br>
+                <?php endif; ?>
+
                 <a href="javascript:history.back()" class="btn-back">
                     <i class="fa-solid fa-arrow-left"></i> Regresar
                 </a>

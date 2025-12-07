@@ -10,7 +10,7 @@ if (!isset($_SESSION['rol']) || $_SESSION['rol'] != 1) {
 }
 
 // ---------------------------------------------------
-// 1. CREAR CANCIÓN (Ahora con Imagen)
+// 1. CREAR CANCIÓN (Con Imagen y Audio)
 // ---------------------------------------------------
 if (isset($_POST['accion']) && $_POST['accion'] == 'crear') {
     $nombre = $_POST['nombre'];
@@ -22,29 +22,38 @@ if (isset($_POST['accion']) && $_POST['accion'] == 'crear') {
     $estatus = 1;
 
     // --- PROCESAR IMAGEN DE LA CANCIÓN ---
-    $ruta_imagen = null; // Por defecto null
+    $ruta_imagen = null; 
     
-    // Verificamos si subieron un archivo en el campo 'imagen'
     if (isset($_FILES['imagen']) && $_FILES['imagen']['error'] == 0) {
+        $nombre_img = time() . "_" . preg_replace("/[^a-zA-Z0-9.]/", "", $_FILES['imagen']['name']);
+        $ruta_fisica_img = "../../../recursos/assets/uploads/canciones/" . $nombre_img;
+        $ruta_bd_img = "recursos/assets/uploads/canciones/" . $nombre_img;
         
-        $nombre_archivo = time() . "_" . preg_replace("/[^a-zA-Z0-9.]/", "", $_FILES['imagen']['name']);
+        if (move_uploaded_file($_FILES['imagen']['tmp_name'], $ruta_fisica_img)) {
+            $ruta_imagen = $ruta_bd_img;
+        }
+    }
+
+    // --- NUEVO: PROCESAR AUDIO DE LA CANCIÓN ---
+    $ruta_audio = null;
+
+    if (isset($_FILES['audio']) && $_FILES['audio']['error'] == 0) {
+        // Generar nombre único para el audio
+        $nombre_audio = time() . "_audio_" . preg_replace("/[^a-zA-Z0-9.]/", "", $_FILES['audio']['name']);
         
-        // Rutas definidas
-        // 1. Ruta física donde PHP guardará el archivo (subiendo 2 niveles desde actions/admin_actions)
-        $ruta_fisica = "../../../recursos/assets/uploads/canciones/" . $nombre_archivo;
+        // Usamos la misma carpeta de canciones para simplificar
+        $ruta_fisica_audio = "../../../recursos/assets/uploads/canciones/" . $nombre_audio;
+        $ruta_bd_audio = "recursos/assets/uploads/canciones/" . $nombre_audio;
         
-        // Ruta para guardar en la BD (limpia)
-        $ruta_bd = "recursos/assets/uploads/canciones/" . $nombre_archivo;
-        
-        if (move_uploaded_file($_FILES['imagen']['tmp_name'], $ruta_fisica)) {
-            $ruta_imagen = $ruta_bd;
+        if (move_uploaded_file($_FILES['audio']['tmp_name'], $ruta_fisica_audio)) {
+            $ruta_audio = $ruta_bd_audio;
         }
     }
 
     try {
-        // Insertamos en 'imagen_cancion' y ya NO en 'mp3_cancion'
-        $sql = "INSERT INTO canciones (estatus_cancion, nombre_cancion, fecha_lanzamiento_cancion, duracion_cancion, url_video_cancion, imagen_cancion, id_artista, id_genero) 
-                VALUES (:estatus, :nom, :fecha, :dur, :vid, :img, :art, :gen)";
+        // Insertamos en 'imagen_cancion' Y TAMBIÉN en 'mp3_cancion'
+        $sql = "INSERT INTO canciones (estatus_cancion, nombre_cancion, fecha_lanzamiento_cancion, duracion_cancion, url_video_cancion, imagen_cancion, mp3_cancion, id_artista, id_genero) 
+                VALUES (:estatus, :nom, :fecha, :dur, :vid, :img, :aud, :art, :gen)";
         
         $stmt = $conexion->prepare($sql);
         $stmt->bindParam(':estatus', $estatus);
@@ -52,7 +61,8 @@ if (isset($_POST['accion']) && $_POST['accion'] == 'crear') {
         $stmt->bindParam(':fecha', $fecha);
         $stmt->bindParam(':dur', $duracion);
         $stmt->bindParam(':vid', $video_url);
-        $stmt->bindParam(':img', $ruta_imagen); // Guardamos la ruta de la imagen
+        $stmt->bindParam(':img', $ruta_imagen);
+        $stmt->bindParam(':aud', $ruta_audio); // Guardamos la ruta del audio
         $stmt->bindParam(':art', $id_artista);
         $stmt->bindParam(':gen', $id_genero);
         $stmt->execute();

@@ -14,6 +14,12 @@ require_once '../../../config/constantes.php';
     <link rel="stylesheet" href="<?php echo HOST; ?>recursos/assets/css/header.css">
     <link rel="stylesheet" href="<?php echo HOST; ?>recursos/assets/css/login.css">
     <link rel="stylesheet" href="<?php echo HOST; ?>recursos/assets/css/footer.css">
+
+    <style>
+        .navbar-right .paramount-btn {
+            display: none !important;
+        }
+    </style>
 </head>
 <body>
 
