@@ -1,11 +1,18 @@
 <?php 
+// Iniciamos sesión para saber si el visitante es Admin, Manager o Audiencia
+if (session_status() === PHP_SESSION_NONE) {
+    session_start();
+}
+
 require_once 'config/conexion-bd.php';
 require_once 'config/constantes.php';
+
+// Detectamos el rol actual (0 si no está logueado)
+$rol_actual = isset($_SESSION['rol']) ? $_SESSION['rol'] : 0;
 
 // --- LÓGICA DE "LOS MEJORES" (TOP 10) ---
 
 // 1. TOP 10 ARTISTAS
-// Traemos al artista Y sus votos, ordenados de mayor a menor.
 $sql_artistas = "SELECT a.*, n.contador_nominacion 
                  FROM artistas a 
                  INNER JOIN nominaciones n ON a.id_artista = n.id_artista
@@ -13,7 +20,7 @@ $sql_artistas = "SELECT a.*, n.contador_nominacion
                  AND n.id_categoria_nominacion = 1 
                  AND n.contador_nominacion > 0 
                  ORDER BY n.contador_nominacion DESC 
-                 LIMIT 10"; // <--- AQUÍ ESTÁ EL CAMBIO A TOP 10
+                 LIMIT 10"; 
 
 $artistas = $conexion->query($sql_artistas)->fetchAll(PDO::FETCH_ASSOC);
 
@@ -25,7 +32,7 @@ $sql_albumes = "SELECT al.*, n.contador_nominacion
                 AND n.id_categoria_nominacion = 2 
                 AND n.contador_nominacion > 0 
                 ORDER BY n.contador_nominacion DESC 
-                LIMIT 10"; // <--- CAMBIO A TOP 10
+                LIMIT 10"; 
 
 $albumes = $conexion->query($sql_albumes)->fetchAll(PDO::FETCH_ASSOC);
 ?>
@@ -52,7 +59,24 @@ $albumes = $conexion->query($sql_albumes)->fetchAll(PDO::FETCH_ASSOC);
         <div class="hero__container">
             <h1>MTV VMAs 2025</h1>
             <span>Decide cuál de tus celebridades favoritas ganará a lo grande.</span> <br>
-            <a class="votar" href="app/views/portal/votar.php"> IR A VOTAR</a>
+            
+            <?php 
+            // LÓGICA DE BOTONES DEL HERO
+            
+            // CASO 1: Staff (Admin, Manager, Artista) -> Solo ven "IR AL PANEL"
+            if (in_array($rol_actual, [1, 2, 3])): 
+            ?>
+                <a class="votar" href="app/views/panel/dashboard.php" style="background-color: var(--neon-cyan); color: #000; border-color: var(--neon-cyan);">
+                    <i class="fa-solid fa-gear"></i> IR AL PANEL
+                </a>
+
+            <?php 
+            // CASO 2: Audiencia (Rol 4) o Público no logueado (Rol 0) -> Ven "IR A VOTAR"
+            else: 
+            ?>
+                <a class="votar" href="app/views/portal/votar.php"> IR A VOTAR</a>
+            <?php endif; ?>
+
         </div>
     </div>
     
