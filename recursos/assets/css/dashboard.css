@@ -53,3 +53,19 @@
     font-style: italic;
     margin-top: 15px;
 }
+
+aside {
+            overflow-y: auto; /* Habilita el scroll vertical si el contenido es largo */
+            max-height: 100vh; /* Asegura que no se pase del alto de la pantalla */
+        }
+        /* Estilo para que la barra se vea bonita y delgada */
+        aside::-webkit-scrollbar {
+            width: 6px;
+        }
+        aside::-webkit-scrollbar-thumb {
+            background-color: var(--neon-pink);
+            border-radius: 3px;
+        }
+        aside::-webkit-scrollbar-track {
+            background: rgba(0,0,0,0.3);
+        }

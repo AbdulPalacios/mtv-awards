@@ -62,17 +62,9 @@ $albumes = $conexion->query($sql_albumes)->fetchAll(PDO::FETCH_ASSOC);
             
             <?php 
             // LÓGICA DE BOTONES DEL HERO
-            
-            // CASO 1: Staff (Admin, Manager, Artista) -> Solo ven "IR AL PANEL"
-            if (in_array($rol_actual, [1, 2, 3])): 
-            ?>
-                <a class="votar" href="app/views/panel/dashboard.php" style="background-color: var(--neon-cyan); color: #000; border-color: var(--neon-cyan);">
-                    <i class="fa-solid fa-gear"></i> IR AL PANEL
-                </a>
-
-            <?php 
-            // CASO 2: Audiencia (Rol 4) o Público no logueado (Rol 0) -> Ven "IR A VOTAR"
-            else: 
+            // Si es Audiencia (4) o Visitante (0), mostramos "IR A VOTAR"
+            // Si es Admin/Manager (1,2,3), NO mostramos nada aquí (usan el botón del Header)
+            if ($rol_actual == 4 || $rol_actual == 0): 
             ?>
                 <a class="votar" href="app/views/portal/votar.php"> IR A VOTAR</a>
             <?php endif; ?>

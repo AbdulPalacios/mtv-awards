@@ -7,7 +7,6 @@ $rol = $_SESSION['rol'] ?? 0;
 <aside>
     <h3>
         <?php 
-            // TÍTULO DINÁMICO SEGÚN ROL
             if ($rol == 1) echo 'Admin Panel';
             elseif ($rol == 2) echo 'Panel Manager';
             else echo 'Panel Artista'; 
@@ -19,7 +18,7 @@ $rol = $_SESSION['rol'] ?? 0;
         <a href="<?php echo HOST; ?>app/views/panel/dashboard.php">Inicio</a>
 
         <?php if ($rol == 1): ?>
-            <a href="<?php echo HOST; ?>app/views/panel/generos.php">Gestionar Géneros</a>
+            <a href="<?php echo HOST; ?>app/views/panel/usuarios.php">Gestionar Usuarios</a> <a href="<?php echo HOST; ?>app/views/panel/generos.php">Gestionar Géneros</a>
         <?php endif; ?>
 
         <a href="<?php echo HOST; ?>app/views/panel/artistas.php">
