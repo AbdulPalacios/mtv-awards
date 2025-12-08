@@ -24,6 +24,14 @@ if (!$es_admin) {
     }
 }
 
+// Lógica para cargar datos si vamos a EDITAR (NUEVO)
+$cancion_editar = null;
+if (isset($_GET['editar_id'])) {
+    $stmt_edit = $conexion->prepare("SELECT * FROM canciones WHERE id_cancion = :id");
+    $stmt_edit->execute([':id' => $_GET['editar_id']]);
+    $cancion_editar = $stmt_edit->fetch(PDO::FETCH_ASSOC);
+}
+
 // Cargas de listas
 if ($es_admin) {
     $artistas = $conexion->query("SELECT * FROM artistas WHERE estatus_artista = 1")->fetchAll(PDO::FETCH_ASSOC);
@@ -54,6 +62,10 @@ $lista_canciones = $conexion->query($sql_list)->fetchAll(PDO::FETCH_ASSOC);
     <link rel="stylesheet" href="<?php echo HOST; ?>recursos/assets/css/root.css">
     <link rel="stylesheet" href="<?php echo HOST; ?>recursos/assets/css/menu-lateral.css">
     <link rel="stylesheet" href="<?php echo HOST; ?>recursos/assets/css/canciones.css">
+    <style>
+        .btn-editar { background-color: var(--btn-edit); color: black; margin-right: 5px; }
+        .btn { text-decoration: none; padding: 8px 12px; border-radius: 4px; font-size: 0.8rem; font-weight: bold; display: inline-block; }
+    </style>
 </head>
 <body>
 
@@ -63,15 +75,21 @@ $lista_canciones = $conexion->query($sql_list)->fetchAll(PDO::FETCH_ASSOC);
         <h1><?php echo $es_admin ? 'Gestión de Canciones' : 'Mis Canciones'; ?></h1>
 
         <div class="formulario-caja">
-            <h3>Registrar Nueva Canción</h3>
+            <h3><?php echo $cancion_editar ? 'Editar Canción' : 'Registrar Nueva Canción'; ?></h3>
             
             <form action="../../backend/panel/acc_canciones.php" method="POST" enctype="multipart/form-data">
-                <input type="hidden" name="accion" value="crear">
+                <input type="hidden" name="accion" value="<?php echo $cancion_editar ? 'editar' : 'crear'; ?>">
+                
+                <?php if($cancion_editar): ?>
+                    <input type="hidden" name="id_cancion" value="<?php echo $cancion_editar['id_cancion']; ?>">
+                <?php endif; ?>
 
                 <label>Nombre de la Canción:</label>
-                <input type="text" name="nombre" required placeholder="Ej: Monaco">
+                <input type="text" name="nombre" required placeholder="Ej: Monaco" 
+                       value="<?php echo $cancion_editar ? $cancion_editar['nombre_cancion'] : ''; ?>">
 
                 <?php if ($es_admin): ?>
+                    <?php if(!$cancion_editar): ?>
                     <label>Artista:</label>
                     <select name="id_artista" required>
                         <option value="">-- Selecciona Artista --</option>
@@ -79,6 +97,7 @@ $lista_canciones = $conexion->query($sql_list)->fetchAll(PDO::FETCH_ASSOC);
                             <option value="<?php echo $a['id_artista']; ?>"><?php echo $a['pseudonimo_artista']; ?></option>
                         <?php endforeach; ?>
                     </select>
+                    <?php endif; ?>
                 <?php else: ?>
                     <input type="hidden" name="id_artista" value="<?php echo $mi_id_artista; ?>">
                 <?php endif; ?>
@@ -86,26 +105,35 @@ $lista_canciones = $conexion->query($sql_list)->fetchAll(PDO::FETCH_ASSOC);
                 <label>Género:</label>
                 <select name="id_genero" required>
                     <?php foreach ($generos as $g): ?>
-                        <option value="<?php echo $g['id_genero']; ?>"><?php echo $g['nombre_genero']; ?></option>
+                        <option value="<?php echo $g['id_genero']; ?>"
+                            <?php if($cancion_editar && $cancion_editar['id_genero'] == $g['id_genero']) echo 'selected'; ?>>
+                            <?php echo $g['nombre_genero']; ?>
+                        </option>
                     <?php endforeach; ?>
                 </select>
 
                 <label>Duración (HH:MM:SS):</label>
-                <input type="text" name="duracion" value="00:03:00">
+                <input type="text" name="duracion" value="<?php echo $cancion_editar ? $cancion_editar['duracion_cancion'] : '00:03:00'; ?>">
 
                 <label>Fecha de Lanzamiento:</label>
-                <input type="date" name="fecha" required>
+                <input type="date" name="fecha" required value="<?php echo $cancion_editar ? $cancion_editar['fecha_lanzamiento_cancion'] : ''; ?>">
 
                 <label>Portada de la Canción (Imagen):</label>
-                <input type="file" name="imagen" accept="image/*" required>
+                <input type="file" name="imagen" accept="image/*" <?php echo $cancion_editar ? '' : 'required'; ?>>
 
                 <label>Archivo de Audio (MP3):</label>
                 <input type="file" name="audio" accept="audio/mpeg, audio/mp3">
 
                 <label>Link Video YouTube (Opcional):</label>
-                <input type="text" name="video_url" placeholder="https://youtube.com/...">
+                <input type="text" name="video_url" placeholder="https://youtube.com/..." value="<?php echo $cancion_editar ? $cancion_editar['url_video_cancion'] : ''; ?>">
 
-                <button type="submit" class="btn btn-guardar">Guardar Canción</button>
+                <button type="submit" class="btn btn-guardar">
+                    <?php echo $cancion_editar ? 'Actualizar Canción' : 'Guardar Canción'; ?>
+                </button>
+                
+                <?php if($cancion_editar): ?>
+                    <a href="canciones.php" style="display:block; text-align:center; margin-top:10px; color:#aaa;">Cancelar Edición</a>
+                <?php endif; ?>
             </form>
         </div>
 
@@ -137,6 +165,8 @@ $lista_canciones = $conexion->query($sql_list)->fetchAll(PDO::FETCH_ASSOC);
                     <?php endif; ?>
                     <td><?php echo $c['nombre_genero']; ?></td>
                     <td>
+                        <a href="canciones.php?editar_id=<?php echo $c['id_cancion']; ?>" class="btn btn-editar">Editar</a>
+
                         <a href="../../backend/panel/acc_canciones.php?accion=borrar&id=<?php echo $c['id_cancion']; ?>" 
                            class="btn btn-borrar"
                            onclick="return confirm('¿Eliminar esta canción?');">Borrar</a>

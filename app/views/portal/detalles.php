@@ -18,6 +18,7 @@ $id = $_GET['id'];
 $tipo = $_GET['tipo'];
 $datos = null;
 $canciones_album = []; // Array vacío por defecto
+$albumes_artista = []; // NUEVO: Array para álbumes del artista
 
 try {
     if ($tipo == 'artista') {
@@ -36,6 +37,11 @@ try {
             $img = $datos['imagen_artista'];
             $extra = "Nacionalidad: " . $datos['nacionalidad_artista'];
             $subtitulo = "Artista • " . ($datos['nombre_genero'] ?? 'Sin género');
+
+            // AGREGADO: Consultar álbumes del artista (DISCOGRAFÍA)
+            $stmt_albums = $conexion->prepare("SELECT * FROM albumes WHERE id_artista = :id AND estatus_album = 1");
+            $stmt_albums->execute([':id' => $id]);
+            $albumes_artista = $stmt_albums->fetchAll(PDO::FETCH_ASSOC);
         }
 
     } elseif ($tipo == 'album') {
@@ -55,7 +61,7 @@ try {
             $extra = "Fecha Lanzamiento: " . $datos['fecha_lanzamiento_album'];
             $subtitulo = "Álbum de " . $datos['pseudonimo_artista'];
 
-            // Lógica para obtener canciones (Ahora sí funciona porque ya tienes la columna id_album)
+            // Lógica para obtener canciones
             $stmt_songs = $conexion->prepare("SELECT * FROM canciones WHERE id_album = :id AND estatus_cancion = 1");
             $stmt_songs->execute([':id' => $id]);
             $canciones_album = $stmt_songs->fetchAll(PDO::FETCH_ASSOC);
@@ -136,6 +142,23 @@ if (!$datos) {
                                     <?php endif; ?>
 
                                 </div>
+                            <?php endforeach; ?>
+                        </div>
+                    </div>
+                    <br>
+                <?php endif; ?>
+
+                <?php 
+                // --- NUEVO: MOSTRAR DISCOGRAFÍA (ÁLBUMES) ---
+                if($tipo == 'artista' && !empty($albumes_artista)): ?>
+                    <div class="track-list-container" style="margin-top: 20px;">
+                        <h3 style="color: var(--neon-pink); border-bottom: 1px solid #333; padding-bottom: 5px; margin-bottom: 15px;">Discografía</h3>
+                        <div style="display:flex; gap:15px; flex-wrap:wrap;">
+                            <?php foreach($albumes_artista as $alb): ?>
+                                <a href="detalles.php?tipo=album&id=<?php echo $alb['id_album']; ?>" style="width:120px; text-align:center; text-decoration:none;">
+                                    <img src="<?php echo HOST . ltrim($alb['imagen_album'], '/'); ?>" style="width:100%; border-radius:8px; border:1px solid #444; margin-bottom:5px;">
+                                    <span style="color:white; font-size:0.8rem; display:block;"><?php echo htmlspecialchars($alb['titulo_album']); ?></span>
+                                </a>
                             <?php endforeach; ?>
                         </div>
                     </div>
