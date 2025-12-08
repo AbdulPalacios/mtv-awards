@@ -52,7 +52,7 @@ h1{
 
 .votar{
     display: block;
-    width: 15%;
+    width: 30%;
     text-align: center;
     color: var(--text-on-edit);
     background-color: #fcb114;
