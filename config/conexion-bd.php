@@ -1,7 +1,7 @@
 <?php
 
 $host = "localhost";
-$db_name = "mtvawards1.0";
+$db_name = "mtvawards";
 $username = "root";
 $password = "";
 $conexion = null;
