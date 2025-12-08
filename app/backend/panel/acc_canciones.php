@@ -3,7 +3,7 @@ session_start();
 require_once '../../../config/conexion-bd.php';
 require_once '../../../config/constantes.php';
 
-// Validar Admin con HOST
+// Validar Admin
 if (!isset($_SESSION['rol']) || !in_array($_SESSION['rol'], [1, 2, 3])) {
     header("Location: " . HOST . "app/views/portal/login.php");
     exit();
@@ -90,6 +90,69 @@ if (isset($_GET['accion']) && $_GET['accion'] == 'borrar') {
         $stmt->bindParam(':id', $id);
         $stmt->execute();
         header("Location: " . HOST . "app/views/panel/canciones.php?msj=borrado");
+    } catch (PDOException $e) {
+        echo "Error: " . $e->getMessage();
+    }
+}
+
+// 3. EDITAR CANCIÓN (NUEVO)
+if (isset($_POST['accion']) && $_POST['accion'] == 'editar') {
+    $id_cancion = $_POST['id_cancion'];
+    $nombre = $_POST['nombre'];
+    $fecha = $_POST['fecha'];
+    $duracion = $_POST['duracion'];
+    $video_url = $_POST['video_url'];
+    $id_genero = $_POST['id_genero'];
+
+    // Lógica Imagen
+    $sql_img = "";
+    $ruta_imagen = null;
+    if (isset($_FILES['imagen']) && $_FILES['imagen']['error'] == 0) {
+        $nombre_img = time() . "_" . preg_replace("/[^a-zA-Z0-9.]/", "", $_FILES['imagen']['name']);
+        $ruta_fisica_img = "../../../recursos/assets/uploads/canciones/" . $nombre_img;
+        $ruta_bd_img = "recursos/assets/uploads/canciones/" . $nombre_img;
+        if (move_uploaded_file($_FILES['imagen']['tmp_name'], $ruta_fisica_img)) {
+            $sql_img = ", imagen_cancion = :img";
+            $ruta_imagen = $ruta_bd_img;
+        }
+    }
+
+    // Lógica Audio
+    $sql_audio = "";
+    $ruta_audio = null;
+    if (isset($_FILES['audio']) && $_FILES['audio']['error'] == 0) {
+        $nombre_audio = time() . "_audio_" . preg_replace("/[^a-zA-Z0-9.]/", "", $_FILES['audio']['name']);
+        $ruta_fisica_audio = "../../../recursos/assets/uploads/canciones/" . $nombre_audio;
+        $ruta_bd_audio = "recursos/assets/uploads/canciones/" . $nombre_audio;
+        if (move_uploaded_file($_FILES['audio']['tmp_name'], $ruta_fisica_audio)) {
+            $sql_audio = ", mp3_cancion = :audio";
+            $ruta_audio = $ruta_bd_audio;
+        }
+    }
+
+    try {
+        $sql = "UPDATE canciones SET 
+                nombre_cancion = :nom, 
+                fecha_lanzamiento_cancion = :fecha, 
+                duracion_cancion = :dur, 
+                url_video_cancion = :vid,
+                id_genero = :gen" . $sql_img . $sql_audio . " 
+                WHERE id_cancion = :id";
+        
+        $stmt = $conexion->prepare($sql);
+        $stmt->bindParam(':nom', $nombre);
+        $stmt->bindParam(':fecha', $fecha);
+        $stmt->bindParam(':dur', $duracion);
+        $stmt->bindParam(':vid', $video_url);
+        $stmt->bindParam(':gen', $id_genero);
+        $stmt->bindParam(':id', $id_cancion);
+        
+        if($ruta_imagen) $stmt->bindParam(':img', $ruta_imagen);
+        if($ruta_audio) $stmt->bindParam(':audio', $ruta_audio);
+        
+        $stmt->execute();
+        
+        header("Location: " . HOST . "app/views/panel/canciones.php?msj=editado");
     } catch (PDOException $e) {
         echo "Error: " . $e->getMessage();
     }

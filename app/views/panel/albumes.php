@@ -21,10 +21,17 @@ if (!$es_admin) {
     if ($res) {
         $mi_id_artista = $res['id_artista'];
     } else {
-        // Si entra aquí es un Manager sin perfil creado. Lo mandamos a crear perfil.
         echo "<script>alert('Primero debes crear tu perfil de artista.'); window.location.href='artistas.php';</script>";
         exit();
     }
+}
+
+// Lógica para cargar datos si vamos a EDITAR (NUEVO)
+$album_editar = null;
+if (isset($_GET['editar_id'])) {
+    $stmt_edit = $conexion->prepare("SELECT * FROM albumes WHERE id_album = :id");
+    $stmt_edit->execute([':id' => $_GET['editar_id']]);
+    $album_editar = $stmt_edit->fetch(PDO::FETCH_ASSOC);
 }
 
 // Cargar listas
@@ -41,7 +48,6 @@ $sql_list = "SELECT al.*, ar.pseudonimo_artista, g.nombre_genero
              WHERE al.estatus_album = 1";
 
 if (!$es_admin) {
-    // FILTRO CLAVE: Solo mis álbumes
     $sql_list .= " AND al.id_artista = " . $mi_id_artista;
 }
 
@@ -57,6 +63,10 @@ $lista_albumes = $conexion->query($sql_list)->fetchAll(PDO::FETCH_ASSOC);
     <link rel="stylesheet" href="<?php echo HOST; ?>recursos/assets/css/root.css">
     <link rel="stylesheet" href="<?php echo HOST; ?>recursos/assets/css/menu-lateral.css">
     <link rel="stylesheet" href="<?php echo HOST; ?>recursos/assets/css/albumes.css">
+    <style>
+        .btn-editar { background-color: var(--btn-edit); color: black; margin-right: 5px; }
+        .btn { text-decoration: none; padding: 8px 12px; border-radius: 4px; font-size: 0.8rem; font-weight: bold; display: inline-block; }
+    </style>
 </head>
 <body>
 
@@ -66,15 +76,21 @@ $lista_albumes = $conexion->query($sql_list)->fetchAll(PDO::FETCH_ASSOC);
         <h1><?php echo $es_admin ? 'Gestión de Álbumes' : 'Mis Álbumes'; ?></h1>
 
         <div class="formulario-caja">
-            <h3>Registrar Nuevo Álbum</h3>
+            <h3><?php echo $album_editar ? 'Editar Álbum' : 'Registrar Nuevo Álbum'; ?></h3>
             
             <form action="../../backend/panel/acc_albumes.php" method="POST" enctype="multipart/form-data">
-                <input type="hidden" name="accion" value="crear">
+                <input type="hidden" name="accion" value="<?php echo $album_editar ? 'editar' : 'crear'; ?>">
+                
+                <?php if($album_editar): ?>
+                    <input type="hidden" name="id_album" value="<?php echo $album_editar['id_album']; ?>">
+                <?php endif; ?>
 
                 <label>Título del Álbum:</label>
-                <input type="text" name="titulo" required placeholder="Ej: Un Verano Sin Ti">
+                <input type="text" name="titulo" required placeholder="Ej: Un Verano Sin Ti"
+                       value="<?php echo $album_editar ? $album_editar['titulo_album'] : ''; ?>">
 
                 <?php if ($es_admin): ?>
+                    <?php if(!$album_editar): // Solo mostrar select si es nuevo o admin ?>
                     <label>Artista:</label>
                     <select name="id_artista" required>
                         <option value="">-- Selecciona Artista --</option>
@@ -82,6 +98,7 @@ $lista_albumes = $conexion->query($sql_list)->fetchAll(PDO::FETCH_ASSOC);
                             <option value="<?php echo $a['id_artista']; ?>"><?php echo $a['pseudonimo_artista']; ?></option>
                         <?php endforeach; ?>
                     </select>
+                    <?php endif; ?>
                 <?php else: ?>
                     <input type="hidden" name="id_artista" value="<?php echo $mi_id_artista; ?>">
                 <?php endif; ?>
@@ -89,20 +106,32 @@ $lista_albumes = $conexion->query($sql_list)->fetchAll(PDO::FETCH_ASSOC);
                 <label>Género Principal:</label>
                 <select name="id_genero" required>
                     <?php foreach ($generos as $g): ?>
-                        <option value="<?php echo $g['id_genero']; ?>"><?php echo $g['nombre_genero']; ?></option>
+                        <option value="<?php echo $g['id_genero']; ?>" 
+                            <?php if($album_editar && $album_editar['id_genero'] == $g['id_genero']) echo 'selected'; ?>>
+                            <?php echo $g['nombre_genero']; ?>
+                        </option>
                     <?php endforeach; ?>
                 </select>
 
                 <label>Fecha Lanzamiento:</label>
-                <input type="date" name="fecha" required>
+                <input type="date" name="fecha" required value="<?php echo $album_editar ? $album_editar['fecha_lanzamiento_album'] : ''; ?>">
 
                 <label>Descripción:</label>
-                <textarea name="descripcion" rows="2"></textarea>
+                <textarea name="descripcion" rows="2"><?php echo $album_editar ? $album_editar['descripcion_album'] : ''; ?></textarea>
 
                 <label>Portada (Imagen):</label>
-                <input type="file" name="imagen" accept="image/*" required>
+                <input type="file" name="imagen" accept="image/*" <?php echo $album_editar ? '' : 'required'; ?>>
+                <?php if($album_editar && $album_editar['imagen_album']): ?>
+                    <p style="font-size:0.8rem; color:#aaa;">Actual: <a href="#" style="color:cyan;">Ver imagen</a></p>
+                <?php endif; ?>
 
-                <button type="submit" class="btn btn-guardar">Guardar Álbum</button>
+                <button type="submit" class="btn btn-guardar">
+                    <?php echo $album_editar ? 'Actualizar Álbum' : 'Guardar Álbum'; ?>
+                </button>
+                
+                <?php if($album_editar): ?>
+                    <a href="albumes.php" style="display:block; text-align:center; margin-top:10px; color:#aaa;">Cancelar Edición</a>
+                <?php endif; ?>
             </form>
         </div>
 
@@ -133,6 +162,8 @@ $lista_albumes = $conexion->query($sql_list)->fetchAll(PDO::FETCH_ASSOC);
                     <?php endif; ?>
                     <td><?php echo $alb['fecha_lanzamiento_album']; ?></td>
                     <td>
+                        <a href="albumes.php?editar_id=<?php echo $alb['id_album']; ?>" class="btn btn-editar">Editar</a>
+                        
                         <a href="../../backend/panel/acc_albumes.php?accion=borrar&id=<?php echo $alb['id_album']; ?>" 
                            class="btn btn-borrar"
                            onclick="return confirm('¿Eliminar álbum?');">Borrar</a>
